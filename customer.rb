@@ -44,6 +44,7 @@ class Customer < Sinatra::Base
 
   configure do
     set :customerBackEnd, TurboCassandra::CustomerBackEnd.new
+    set :orderBackEnd, TurboCassandra::OrderBackEnd.new
   end
 
   before do
@@ -69,4 +70,15 @@ class Customer < Sinatra::Base
       halt 403
     end
   end
+
+  get '/order' do
+    scopes, customer = request.env.values_at :scopes, :customer
+
+    if scopes.include?('view_prices')
+      settings.orderBackEnd.get_order_by_customer_id(customer['id'].to_s)
+    else
+      halt 403
+    end
+  end
+
 end

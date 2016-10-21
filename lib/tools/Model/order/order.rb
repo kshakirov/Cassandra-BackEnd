@@ -1,20 +1,5 @@
 module TurboCassandra
-  class OrderBatch
-    def process_order_data order_hash
-      order_hash['data'].select { |k, v| not v.nil? }
-    end
 
-    def process_order_products order_hash
-      order_hash['products'].map { |product|
-        product[0].select { |k, v| not v.nil? }
-      }
-    end
-
-    def remove_null_values order_hash
-      order_hash['data'] = process_order_data(order_hash)
-      order_hash['products'] = process_order_products(order_hash)
-    end
-  end
   class Order
 
     def remove_null_values attr_properties
@@ -42,17 +27,32 @@ module TurboCassandra
       "INSERT INTO orders  (#{names})  VALUES (#{values})"
     end
 
-    def insert attr_properties
-      names, values, args = prepare_attributes attr_properties
-      cql = create_cql(names, values)
-      # args
-      execute(cql, args)
+    def create_where_id_cql
+      "SELECT * FROM orders  WHERE customer_id=? "
     end
 
-    def execute cql, args
+    def insert attr_properties
+      names, values, args = prepare_attributes attr_properties
+      execute_write(create_cql(names, values), args)
+    end
+
+    def find_by_customer_id id
+      execute_select(create_where_id_cql, [id])
+    end
+
+    def _execute cql
       session = TurboCluster.get_session
-      statement = session.prepare(cql)
+      return session.prepare(cql), session
+    end
+
+    def execute_write cql, args
+      statement, session = _execute(cql)
       session.execute(statement, arguments: args, consistency: :any)
+    end
+
+    def execute_select cql, args
+      statement, session = _execute(cql)
+      session.execute(statement, arguments: args)
     end
 
   end

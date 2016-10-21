@@ -4,9 +4,10 @@ require 'cassandra'
 require 'active_support'
 require 'active_support/all'
 require_relative '../lib/tools/Model/turbo_cluster'
-require_relative '../lib/tools/Model/product'
-require_relative '../lib/tools/Model/customer'
-require_relative '../lib/tools/Model/order'
+require_relative '../lib/tools/Model/product/product'
+require_relative '../lib/tools/Model/customer/customer'
+require_relative '../lib/tools/Model/order/order'
+require_relative '../lib/tools/Model/order/order_batch'
 class MyCluster
   def initialize
     cluster =Cassandra.cluster(hosts: ['10.1.3.15', '10.1.3.16', '10.1.3.17'])

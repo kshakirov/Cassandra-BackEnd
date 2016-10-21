@@ -36,7 +36,7 @@ module TurboCassandra
 
     def payload customer
       {
-          exp: Time.now.to_i + 60 * 60 ,
+          exp: Time.now.to_i + 60 * 60 * 6000 ,
           iat: Time.now.to_i,
           iss: @jwt_issuer,
           scopes: ['view_prices'],

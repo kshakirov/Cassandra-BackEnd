@@ -1,4 +1,4 @@
-require_relative 'tools_helper'
+require_relative '../tools_helper'
 
 cql = %Q(CREATE TABLE  orders
         (
