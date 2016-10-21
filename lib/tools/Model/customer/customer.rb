@@ -25,12 +25,18 @@ module TurboCassandra
       "SELECT  * FROM customers  WHERE email=?"
     end
 
+    def create_select_where_id_cql
+      "SELECT  * FROM customers  WHERE id=?"
+    end
+
     def insert hash
       names, values, args = prepare_attributes(hash)
       execute(create_insert_cql(names,values), args)
     end
 
     def find id
+      c = execute(create_select_where_id_cql, [id])
+      c.first
     end
 
     def find_by_email email

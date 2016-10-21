@@ -22,6 +22,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     i18n (0.7.0)
     ione (1.2.3)
+    jwt (1.5.6)
     minitest (5.9.1)
     multi_json (1.12.1)
     multipart-post (2.0.0)
@@ -53,6 +54,7 @@ DEPENDENCIES
   activesupport
   cassandra-driver
   elasticsearch
+  jwt
   minitest
   sinatra
   sinatra-contrib
