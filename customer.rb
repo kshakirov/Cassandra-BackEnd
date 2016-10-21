@@ -57,7 +57,7 @@ class Customer < Sinatra::Base
     if scopes.include?('view_prices')
       {money: customer_name}.to_json
     else
-      halt 500
+      halt 403
     end
   end
   get '/account' do
