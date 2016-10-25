@@ -1,5 +1,5 @@
 module TurboCassandra
-  class Customer
+  class GroupPrice
     def prepare_names hash
       hash.keys.map{|k| k.to_s}.join(",")
     end
@@ -7,27 +7,17 @@ module TurboCassandra
     def prepare_values values
       values.map{|v| "?" }.join(",")
     end
-
-    def prepare_args hash
-          hash.values
-    end
-
-    def prepare_attributes hash
-      return prepare_names(hash),
-          prepare_values(hash), prepare_args(hash)
-    end
-
     def create_insert_cql names, values
-      "INSERT INTO customers  (#{names}) " \
+      "INSERT INTO group_prices  (#{names}) " \
             "VALUES (#{values})"
     end
 
-    def create_select_where_email_cql
-      "SELECT  * FROM customers  WHERE email=?"
+    def create_select_where_sku_cql
+      "SELECT  * FROM group_prices  WHERE sku=?"
     end
 
-    def create_select_where_id_cql
-      "SELECT  * FROM customers  WHERE id=?"
+    def prepare_attributes hash
+      return prepare_names(hash), prepare_values(hash.values), hash.values
     end
 
     def insert hash
@@ -35,13 +25,8 @@ module TurboCassandra
       execute(create_insert_cql(names,values), args)
     end
 
-    def find id
-      c = execute(create_select_where_id_cql, [id])
-      c.first
-    end
-
-    def find_by_email email
-      c = execute(create_select_where_email_cql, [email])
+    def find sku
+      c = execute(create_select_where_sku_cql, [sku])
       c.first
     end
 
@@ -51,5 +36,4 @@ module TurboCassandra
       session.execute(statement, arguments: args, consistency: :one)
     end
   end
-
 end
