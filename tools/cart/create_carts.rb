@@ -7,5 +7,5 @@ cql = %Q(CREATE TABLE  carts
             currency int,
             subtotal double,
             size int,
-            items frozen <list<map<text,text>>>))
+            items frozen <map<bigint, map<text,text>>>))
 execute cql

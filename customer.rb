@@ -45,6 +45,7 @@ class Customer < Sinatra::Base
   configure do
     set :customerBackEnd, TurboCassandra::CustomerBackEnd.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
+    set :groupPriceBackEnd, TurboCassandra::GroupPriceBackEnd.new
   end
 
   before do
@@ -79,6 +80,14 @@ class Customer < Sinatra::Base
     else
       halt 403
     end
+  end
+
+  get '/product/:id/price' do
+    customer = request.env.values_at :customer
+    sku = params[:id].to_i
+    price = settings.groupPriceBackEnd.get_price(sku,  'W')
+    {price: price}.to_json
+
   end
 
 end
