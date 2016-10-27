@@ -104,8 +104,8 @@ class Customer < Sinatra::Base
   post '/cart/product' do
     customer_id = get_customer_id(request.env.values_at :customer)
     request_payload = JSON.parse request.body.read
-    settings.cartBackEnd.add_item(customer_id, request_payload[:product],
-                                  request_payload[:price], request_payload[:qty])
+    settings.cartBackEnd.add_item(customer_id, request_payload['product'],
+                                  request_payload['price'], request_payload['qty'])
   end
 
   delete '/cart/product/:id' do

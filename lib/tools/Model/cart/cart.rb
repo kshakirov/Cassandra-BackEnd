@@ -28,13 +28,6 @@ module TurboCassandra
       "UPDATE carts SET subtotal = ? WHERE id=?"
     end
 
-
-
-    def find_by_customer_id customer_id
-      cart = execute(create_select_where_id_cql, [customer_id])
-      cart.first
-    end
-
     def prepare_product_item product, price, qty
       {
            product['sku'] =>
