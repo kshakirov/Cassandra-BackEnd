@@ -42,10 +42,15 @@ class Customer < Sinatra::Base
     }
   end
 
+  def get_customer_id env_customer
+    env_customer.first['id']
+  end
+
   configure do
     set :customerBackEnd, TurboCassandra::CustomerBackEnd.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
     set :groupPriceBackEnd, TurboCassandra::GroupPriceBackEnd.new
+    set :cartBackEnd, TurboCassandra::CartBackEnd.new
   end
 
   before do
@@ -90,4 +95,21 @@ class Customer < Sinatra::Base
 
   end
 
+  get '/cart' do
+    customer = request.env.values_at :customer
+    customer_id = customer.first['id']
+    settings.cartBackEnd.find(customer_id)
+  end
+
+  post '/cart/product' do
+    customer_id = get_customer_id(request.env.values_at :customer)
+    request_payload = JSON.parse request.body.read
+    settings.cartBackEnd.add_item(customer_id, request_payload[:product],
+                                  request_payload[:price], request_payload[:qty])
+  end
+
+  delete '/cart/product/:id' do
+    customer_id = get_customer_id(request.env.values_at :customer)
+    settings.cartBackEnd.delete_item(customer_id, params[:id].to_i)
+  end
 end
