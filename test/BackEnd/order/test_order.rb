@@ -10,5 +10,10 @@ class TestOrder < Minitest::Test
     order = JSON.parse order
     p order
   end
+
+  def test_create_order
+    order = @order_model.create_order 487
+    assert true
+  end
 end
 

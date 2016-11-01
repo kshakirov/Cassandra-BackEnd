@@ -112,4 +112,11 @@ class Customer < Sinatra::Base
     customer_id = get_customer_id(request.env.values_at :customer)
     settings.cartBackEnd.delete_item(customer_id, params[:id].to_i)
   end
+
+  get '/order/new' do
+    customer = request.env.values_at :customer
+    customer_id = customer.first['id']
+    settings.orderBackEnd.create_order(customer_id)
+  end
+
 end
