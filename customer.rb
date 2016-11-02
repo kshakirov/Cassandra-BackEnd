@@ -119,4 +119,11 @@ class Customer < Sinatra::Base
     settings.orderBackEnd.create_order(customer_id)
   end
 
+  post '/order/save' do
+    customer = request.env.values_at :customer
+    customer_id = customer.first['id']
+    request_payload = JSON.parse request.body.read
+    settings.orderBackEnd.save(customer_id, request_payload)
+  end
+
 end

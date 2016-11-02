@@ -108,5 +108,10 @@ module TurboCassandra
       session.execute(statement, arguments: args, consistency: :one)
     end
 
+    def purge customer_id
+      cart = find_by_customer_id(customer_id)
+      execute(create_update_product_item_sql, [{}, cart['id']])
+    end
   end
+
 end

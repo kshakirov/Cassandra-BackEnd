@@ -70,5 +70,12 @@ module TurboCassandra
       _create_order(customer_id).to_json
     end
 
+    def save customer_id, order_data
+        next_id = @order.get_next_order_id
+        order_data['order_id'] = next_id + 1
+        order_data['customer_id'] = customer_id
+        @order.insert order_data
+        @cart.purge(customer_id)
+    end
   end
 end

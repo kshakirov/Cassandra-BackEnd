@@ -15,5 +15,10 @@ class TestOrder < Minitest::Test
     order = @order_model.create_order 487
     assert true
   end
+
+  def test_next_id
+    id  = @order_model.save 1, {}
+    p id
+  end
 end
 

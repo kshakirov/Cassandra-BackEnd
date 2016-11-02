@@ -27,6 +27,10 @@ module TurboCassandra
       "INSERT INTO orders  (#{names})  VALUES (#{values})"
     end
 
+    def creat_max_id_cql
+        "SELECT  MAX(order_id) FROM ORDERS"
+    end
+
     def create_where_id_cql
       "SELECT * FROM orders  WHERE customer_id=? "
     end
@@ -34,6 +38,11 @@ module TurboCassandra
     def insert attr_properties
       names, values, args = prepare_attributes attr_properties
       execute_write(create_cql(names, values), args)
+    end
+
+    def get_next_order_id
+      ids = execute_select(creat_max_id_cql,[])
+      ids.first.values.first.to_i
     end
 
     def find_by_customer_id id
