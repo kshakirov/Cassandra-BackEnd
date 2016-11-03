@@ -8,4 +8,4 @@ cql = %Q(CREATE TABLE  orders
             billing_address map<text,text>,
             shipping_address map<text,text>,
             products frozen <list<map<text,text>>>))
-execute cql
+execute_lazy cql, []

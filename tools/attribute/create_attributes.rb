@@ -18,4 +18,4 @@ cql = %Q(CREATE TABLE  attributes
             unit text,
             seq_num int,
             options list <text>))
-execute cql
+execute_lazy(cql, [])

@@ -81,7 +81,7 @@ class Customer < Sinatra::Base
     scopes, customer = request.env.values_at :scopes, :customer
 
     if scopes.include?('view_prices')
-      settings.orderBackEnd.get_order_by_customer_id(customer['id'].to_s)
+      settings.orderBackEnd.get_order_by_customer_id(customer['id'])
     else
       halt 403
     end

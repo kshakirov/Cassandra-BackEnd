@@ -1,9 +1,8 @@
 module TurboCassandra
   class TurboCluster
     @@session = nil
-    @@keyspace = 'trash1'
-    @@hosts = ['10.1.3.15', '10.1.3.16', '10.1.3.17']
-    def  self.get_session
+
+    def self.get_session
       if @@session.nil?
         @@session = create_cluster
       else
@@ -11,9 +10,45 @@ module TurboCassandra
       end
     end
 
+    def self.get_mode
+      ENV['TURBO_MODE']
+    end
+
+    def self.config config_data
+      @@hosts = config_data['hosts']
+      @@keyspace = config_data['keyspace']
+    end
+
+    def self.read_config
+      config = YAML::load_file(File.expand_path('../../../config/database.yml', File.dirname(__FILE__)))
+      mode = get_mode
+      if not mode.nil?
+          config config[mode]
+      else
+        puts "SET TURBO_MODE variable "
+        exit 1
+      end
+    end
+
     def self.create_cluster
+      read_config
       cluster =Cassandra.cluster(hosts: @@hosts)
       cluster.connect(@@keyspace)
+    end
+
+    def self.get_keyspacse
+      p File.dirname(__FILE__)
+      p __dir__ + '../../config'
+
+      filename = File.expand_path('../../../config/database.yml', File.dirname(__FILE__))
+      p filename
+      config = YAML::load_file( filename)
+      mode = get_mode
+      unless mode.nil?
+          return config[mode]['keyspace']
+      end
+      puts "SET TURBO_MODE variable "
+      exit 1
     end
   end
 end

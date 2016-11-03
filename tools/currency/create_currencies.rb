@@ -1,4 +1,4 @@
-require_relative 'tools_helper'
+require_relative '../tools_helper'
 
 cql = %Q(CREATE TABLE  currencies
         (
@@ -6,5 +6,5 @@ cql = %Q(CREATE TABLE  currencies
             base  boolean,
             rate double
            ))
-execute cql
+execute_lazy cql, []
 

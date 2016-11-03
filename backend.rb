@@ -3,6 +3,7 @@ require 'json'
 require 'cassandra'
 require 'digest'
 require 'jwt'
+require 'yaml'
 require_relative 'lib/sources'
 
 

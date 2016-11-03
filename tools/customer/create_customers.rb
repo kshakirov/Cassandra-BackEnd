@@ -12,4 +12,4 @@ cql = %Q(CREATE TABLE  customers
             suffix text,
             default_billing_address map <text,text>,
             default_shipping_address map <text,text>))
-execute cql
+execute_lazy cql, []

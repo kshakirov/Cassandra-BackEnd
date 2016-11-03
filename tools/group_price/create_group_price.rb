@@ -6,4 +6,4 @@ cql = %Q(CREATE TABLE group_prices
             standardPrice  double,
             prices map<text,double>,
             discount double))
-execute cql
+execute_lazy cql, []

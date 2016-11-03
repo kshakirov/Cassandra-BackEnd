@@ -8,4 +8,4 @@ cql = %Q(CREATE TABLE  carts
             subtotal double,
             size int,
             items frozen <map<bigint, map<text,text>>>))
-execute cql
+execute_lazy cql, []

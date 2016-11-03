@@ -16,4 +16,4 @@ cql = %Q(CREATE TABLE  products
             critical_decimal map<text,double>,
             critical_integer map<text,int>,
             critical_enum map<text,text>))
-execute cql
+execute_lazy cql,[]
