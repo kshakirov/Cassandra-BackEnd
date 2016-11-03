@@ -26,6 +26,7 @@ GEM
     minitest (5.9.1)
     multi_json (1.12.1)
     multipart-post (2.0.0)
+    puma (3.6.0-java)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -56,6 +57,7 @@ DEPENDENCIES
   elasticsearch
   jwt
   minitest
+  puma
   sinatra
   sinatra-contrib
 
