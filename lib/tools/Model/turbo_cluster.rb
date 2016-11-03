@@ -37,12 +37,7 @@ module TurboCassandra
     end
 
     def self.get_keyspacse
-      p File.dirname(__FILE__)
-      p __dir__ + '../../config'
-
-      filename = File.expand_path('../../../config/database.yml', File.dirname(__FILE__))
-      p filename
-      config = YAML::load_file( filename)
+      config = YAML::load_file( File.expand_path('../../../config/database.yml', File.dirname(__FILE__)))
       mode = get_mode
       unless mode.nil?
           return config[mode]['keyspace']
