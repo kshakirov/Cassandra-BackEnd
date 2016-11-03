@@ -30,5 +30,7 @@ task :db_populate do
   ruby "tools/fixtures/group_price/populate.rb"
   ruby "tools/fixtures/order/populate.rb"
   ruby "tools/fixtures/product/populate.rb"
+  ruby "tools/fixtures/currency/populate.rb"
+  ruby "tools/fixtures/featured_new_product/populate.rb"
 
 end
