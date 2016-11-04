@@ -1,4 +1,4 @@
-require_relative 'test_helper'
+require_relative 'inxexer_helper'
 
 index_manager = TurboCassandra::ElasticIndex.new
 

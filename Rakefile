@@ -38,6 +38,7 @@ end
 namespace :elastic do
   task :create_index do
     ruby "tools/elastic/product/create_index.rb"
+    ruby "tools/elastic/product/put_mapping.rb"
   end
   task :delete_index do
     ruby "tools/elastic/product/delete_index.rb"
