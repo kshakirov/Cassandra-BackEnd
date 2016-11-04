@@ -1,7 +1,7 @@
 module TurboCassandra
   class ElasticIndex
-    def initialize
-      @client = Elasticsearch::Client.new(host: '10.1.3.16', log: true)
+    def initialize host= '10.1.3.16'
+      @client = Elasticsearch::Client.new(host: host , log: true)
       @client.transport.reload_connections!
       @product_mapper = EsProductMapping.new
       @product_transformer = EsProductTransformer.new

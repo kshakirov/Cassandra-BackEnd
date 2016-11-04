@@ -34,3 +34,15 @@ task :db_populate do
   ruby "tools/fixtures/featured_new_product/populate.rb"
 
 end
+
+namespace :elastic do
+  task :create_index do
+    ruby "tools/elastic/product/create_index.rb"
+  end
+  task :delete_index do
+    ruby "tools/elastic/product/delete_index.rb"
+  end
+  task :index_product do
+    ruby "tools/elastic/product/product_indexer.rb"
+  end
+end
