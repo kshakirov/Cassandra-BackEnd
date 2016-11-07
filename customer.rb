@@ -126,4 +126,9 @@ class Customer < Sinatra::Base
     settings.orderBackEnd.save(customer_id, request_payload)
   end
 
+  get '/data' do
+    scopes, customer = request.env.values_at :scopes, :customer
+    settings.customerBackEnd.get_customer_data customer
+  end
+
 end

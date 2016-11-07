@@ -42,7 +42,8 @@ module TurboCassandra
           scopes: ['view_prices'],
           customer: {
               id: customer['id'],
-              group: customer['group_id']
+              group: customer['group_id'],
+              name: "#{customer['firstname']} #{customer['lastname']}"
           }
       }
     end
