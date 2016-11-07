@@ -13,6 +13,7 @@ require_relative '../../../lib/tools/Elastic/product/oe_ref_url'
 require_relative '../../../lib/tools/Elastic/product/critical_dimensions'
 require_relative '../../../lib/tools/Elastic/product/manufacturer'
 require_relative '../../../lib/tools/Elastic/product/part_type'
+require_relative '../../../lib/tools/Elastic/product/visibility'
 require_relative '../../../lib/tools/Elastic/product/utils'
 
 def read_attributes_from_file
