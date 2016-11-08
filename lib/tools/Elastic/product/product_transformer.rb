@@ -7,7 +7,8 @@ module TurboCassandra
       @manufacturer_manager = TurboCassandra::Manufacturer.new
       @part_type_manager = TurboCassandra::PartType.new
       @visibility_manager = TurboCassandra::Visibility.new
-      @group_price = TurboCassandra::GroupPrice.new
+      @price_manager = TurboCassandra::PriceManager.new
+
     end
 
     def _create_turbo_model product
@@ -69,9 +70,9 @@ module TurboCassandra
     end
 
     def add_price scheleton, product
-      price = @group_price.find(product['sku'])
+      price = @price_manager.get_price(product)
       unless price.nil?
-        scheleton['price'] = price['prices']
+        scheleton['price'] = price
       end
     end
 
