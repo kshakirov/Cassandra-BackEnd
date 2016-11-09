@@ -18,9 +18,15 @@ task :db_setup do
   ruby "tools/schema/order/add_customer_index.rb"
 end
 
-task :db_clean do
-
+namespace :db do
+  namespace :migrate do
+    task :currency do
+      ruby "tools/schema/currency/update_currencies_1.rb"
+      ruby "tools/schema/currency/update_currencies_2.rb"
+    end
+  end
 end
+
 
 task :db_populate do
   ruby "tools/fixtures/attribute/populate.rb"
