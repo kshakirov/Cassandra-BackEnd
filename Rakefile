@@ -24,6 +24,10 @@ namespace :db do
       ruby "tools/schema/currency/update_currencies_1.rb"
       ruby "tools/schema/currency/update_currencies_2.rb"
     end
+    task :attribute do
+      ruby "tools/schema/attribute/update_attributes_1.rb"
+      ruby "tools/schema/attribute/update_attributes_2.rb"
+    end
   end
 end
 

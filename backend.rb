@@ -28,7 +28,7 @@ class Public < Sinatra::Base
       :authentication => :login,
       :enable_starttls_auto => true,
       :user_name => 'kyrylo.shakirov@zorallabs.com',
-       :password => '',
+       :password => 'Servantes1',
   }
   ActionMailer::Base.view_paths = 'views/'
 
