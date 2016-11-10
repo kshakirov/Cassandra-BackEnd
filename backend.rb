@@ -23,12 +23,12 @@ class Public < Sinatra::Base
   end
 
   ActionMailer::Base.smtp_settings = {
-      :address => "10.1.1.254",
-      :port => '25'
-      # :authentication => :plain,
-      # :user_name => ENV['SENDGRID_USERNAME'],
-      # :password => ENV['SENDGRID_PASSWORD'],
-      # :domain => ENV['SENDGRID_DOMAIN'],
+      :address => "smtp.office365.com",
+      :port => '587',
+      :authentication => :login,
+      :enable_starttls_auto => true,
+      :user_name => 'kyrylo.shakirov@zorallabs.com',
+       :password => '',
   }
   ActionMailer::Base.view_paths = 'views/'
 
