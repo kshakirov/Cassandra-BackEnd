@@ -53,6 +53,8 @@ class Customer < Sinatra::Base
     set :cartBackEnd, TurboCassandra::CartBackEnd.new
   end
 
+
+
   before do
     content_type :json
   end

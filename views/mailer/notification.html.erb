@@ -1,0 +1,13 @@
+<h1>Customer <%= @mail_data['name']%> comments </h1>
+<p>
+  <%= @mail_data['comment'] %>
+</p>
+<p>
+  <a href="mailto:<%= @mail_data['email'] %>" target="_top">Reply to <%= @mail_data['email'] %></a>
+</p>
+<p>
+  <% if @mail_data['telephone']%>
+    Tel. <%= @mail_data['telephone']%>
+  <% end %>
+</p>
+
