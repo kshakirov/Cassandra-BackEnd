@@ -79,6 +79,10 @@ module TurboCassandra
       @catalog_manager.get_sorters
     end
 
+    def get_manufacturer_filters
+      @catalog_manager.get_manufacturer_filters
+    end
+
     def get_critical_headers part_type_id
         @critical_catalog_manager.get_headers(part_type_id).to_json
     end

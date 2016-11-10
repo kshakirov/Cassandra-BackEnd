@@ -28,7 +28,7 @@ class Public < Sinatra::Base
       :authentication => :login,
       :enable_starttls_auto => true,
       :user_name => 'kyrylo.shakirov@zorallabs.com',
-       :password => 'Servantes1',
+       :password => '',
   }
   ActionMailer::Base.view_paths = 'views/'
 
@@ -61,6 +61,10 @@ class Public < Sinatra::Base
 
   get '/frontend/menu/product/new' do
     settings.menuBackEnd.get_new_product
+  end
+
+  get '/frontend/menu/manufacturer/filter' do
+    settings.menuBackEnd.get_manufacturer_filters
   end
 
   get '/frontend/menu/standard/filter' do
