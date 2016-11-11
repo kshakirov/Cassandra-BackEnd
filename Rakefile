@@ -28,6 +28,9 @@ namespace :db do
       ruby "tools/schema/attribute/update_attributes_1.rb"
       ruby "tools/schema/attribute/update_attributes_2.rb"
     end
+    task :order do
+      ruby "tools/schema/order/update_orders_1.rb"
+    end
   end
 end
 
