@@ -9,4 +9,14 @@ class Mailer < ActionMailer::Base
       format.html
     end
   end
+  def place_order customer, order
+    @customer = customer
+    @order = order
+    mail(
+        :to      => "kirill.shakirov4@gmail.com",
+        :from    => "kyrylo.shakirov@zorallabs.com",
+        :subject => "Order Placement") do |format|
+      format.html
+    end
+  end
 end

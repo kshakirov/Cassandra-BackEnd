@@ -32,15 +32,17 @@ end
 class Customer < Sinatra::Base
   use JwtAuth
 
-  def initialize
-    super
+  ActionMailer::Base.smtp_settings = {
+      :address => "smtp.office365.com",
+      :port => '587',
+      :authentication => :login,
+      :enable_starttls_auto => true,
+      :user_name => 'kyrylo.shakirov@zorallabs.com',
+      :password => '',
+  }
+  ActionMailer::Base.view_paths = 'views/'
 
-    @accounts = {
-        tomdelonge: 10000,
-        markhoppus: 50000,
-        travisbarker: 1000000000
-    }
-  end
+
 
   def get_customer_id env_customer
     env_customer.first['id']
@@ -125,7 +127,9 @@ class Customer < Sinatra::Base
     customer = request.env.values_at :customer
     customer_id = customer.first['id']
     request_payload = JSON.parse request.body.read
-    settings.orderBackEnd.save(customer_id, request_payload)
+    order_data = settings.orderBackEnd.save(customer_id, request_payload)
+    email = Mailer.place_order customer.first, order_data
+    email.deliver
   end
 
   get '/data' do
