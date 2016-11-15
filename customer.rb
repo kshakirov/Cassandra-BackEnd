@@ -123,6 +123,10 @@ class Customer < Sinatra::Base
     settings.orderBackEnd.create_order(customer_id)
   end
 
+  get '/order/:id' do
+    settings.orderBackEnd.get_order(params[:id].to_i)
+  end
+
   post '/order/save' do
     customer = request.env.values_at :customer
     customer_id = customer.first['id']

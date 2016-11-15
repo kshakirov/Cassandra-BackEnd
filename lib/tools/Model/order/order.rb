@@ -31,8 +31,12 @@ module TurboCassandra
         "SELECT  MAX(order_id) FROM ORDERS"
     end
 
-    def create_where_id_cql
+    def create_where_customer_id_cql
       "SELECT * FROM orders  WHERE customer_id=? "
+    end
+
+    def create_where_id_cql
+      "SELECT * FROM orders  WHERE order_id=? "
     end
 
     def insert attr_properties
@@ -46,6 +50,10 @@ module TurboCassandra
     end
 
     def find_by_customer_id id
+      execute_select(create_where_customer_id_cql, [id])
+    end
+
+    def find_by_id id
       execute_select(create_where_id_cql, [id])
     end
 

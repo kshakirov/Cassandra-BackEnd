@@ -8,9 +8,16 @@ module TurboCassandra
     end
 
     private
-    def _get_order id
+
+    def _get_order_by_customer_id id
       order = @order.find_by_customer_id(id)
       order.map { |o| o }
+    end
+
+
+    def _get_order_by_id id
+      order = @order.find_by_id(id)
+      order.first
     end
 
     def get_customer_data customer_id
@@ -65,7 +72,7 @@ module TurboCassandra
     public
 
     def get_order_by_customer_id id
-      _get_order(id).to_json
+      _get_order_by_customer_id(id).to_json
     end
 
     def create_order customer_id
@@ -79,6 +86,11 @@ module TurboCassandra
         @order.insert order_data
         #@cart.purge(customer_id)
         order_data
+    end
+
+    def get_order order_id
+      order = _get_order_by_id (order_id)
+      order.to_json
     end
   end
 end
