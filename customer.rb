@@ -130,6 +130,7 @@ class Customer < Sinatra::Base
     order_data = settings.orderBackEnd.save(customer_id, request_payload)
     email = Mailer.place_order customer.first, order_data
     email.deliver
+    {order_id: order_data['order_id']}.to_json
   end
 
   get '/data' do

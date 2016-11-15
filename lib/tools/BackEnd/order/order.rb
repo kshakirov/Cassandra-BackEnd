@@ -20,7 +20,9 @@ module TurboCassandra
           customer_id: customer_id,
           data: {
               billing_address: customer_data['default_billing_address'],
-              shipping_address: customer_data['default_shipping_address']
+              shipping_address: customer_data['default_shipping_address'],
+              email: customer_data['email']
+
           }
       }
     end
