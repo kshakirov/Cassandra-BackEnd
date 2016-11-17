@@ -6,6 +6,8 @@ require 'jwt'
 require 'yaml'
 require 'logger'
 require 'action_mailer'
+require 'prawn'
+require 'prawn/table'
 require_relative 'lib/sources'
 require_relative 'mailer'
 
@@ -20,6 +22,7 @@ class Public < Sinatra::Base
     set :menuBackEnd, TurboCassandra::MenuBackEnd.new
     set :productBackEnd, TurboCassandra::ProductBackEnd.new
     set :loginBackEnd, TurboCassandra::Login.new
+    set :orderBackEnd, TurboCassandra::OrderBackEnd.new
   end
 
   ActionMailer::Base.smtp_settings = {
@@ -106,6 +109,12 @@ class Public < Sinatra::Base
     request_payload = JSON.parse request.body.read
     email = Mailer.notification request_payload
     email.deliver
+  end
+
+  get '/frontend/order/:id/print' do
+    content_type 'application/pdf'
+    settings.orderBackEnd.print(params[:id].to_i)
+
   end
 
 end

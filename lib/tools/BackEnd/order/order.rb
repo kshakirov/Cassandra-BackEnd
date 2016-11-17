@@ -1,5 +1,6 @@
 module TurboCassandra
   class OrderBackEnd
+    include TurboCassandra::OrderPrint
     public
     def initialize
       @order = Order.new
@@ -91,6 +92,12 @@ module TurboCassandra
     def get_order order_id
       order = _get_order_by_id (order_id)
       order.to_json
+    end
+
+
+    def print order_id
+      order = _get_order_by_id (order_id)
+      print_order(order)
     end
   end
 end
