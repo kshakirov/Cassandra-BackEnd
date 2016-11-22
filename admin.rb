@@ -1,5 +1,6 @@
 class Admin < Sinatra::Base
 
+  use JwtAuth
 
 
   configure do
