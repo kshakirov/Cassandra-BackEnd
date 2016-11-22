@@ -66,6 +66,10 @@ module TurboCassandra
         execute(select_all_cql, [])
     end
 
+    def find_all
+      execute(select_all_cql, []).map{|a| a}
+    end
+
     def execute cql, args
       session = TurboCluster.get_session
       statement = session.prepare(cql)
