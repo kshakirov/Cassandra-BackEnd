@@ -30,6 +30,11 @@ module TurboCassandra
       "SELECT  * FROM customers  WHERE id=?"
     end
 
+    def create_select_all_cql
+      "SELECT  * FROM customers"
+    end
+
+
     def insert hash
       names, values, args = prepare_attributes(hash)
       execute(create_insert_cql(names,values), args)
@@ -43,6 +48,11 @@ module TurboCassandra
     def find_by_email email
       c = execute(create_select_where_email_cql, [email])
       c.first
+    end
+
+    def find_all
+      c = execute(create_select_all_cql, [])
+      c.map{|customer| customer}
     end
 
     def execute cql, args

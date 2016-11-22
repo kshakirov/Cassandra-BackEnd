@@ -10,4 +10,9 @@ class TestCustomer < Minitest::Test
     cr = JSON.parse cr
     p cr
   end
+
+  def test_get_list
+    list = @order_model.get_list
+    refute_nil list
+  end
 end

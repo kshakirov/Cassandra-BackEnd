@@ -85,7 +85,7 @@ module TurboCassandra
         order_data['order_id'] = next_id + 1
         order_data['customer_id'] = customer_id
         @order.insert order_data
-        #@cart.purge(customer_id)
+        @cart.purge(customer_id)
         order_data
     end
 

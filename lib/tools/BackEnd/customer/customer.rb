@@ -17,6 +17,12 @@ module TurboCassandra
             wishlist: 3
         }.to_json
     end
+
+    def get_list
+      customers = @customer.find_all
+      customers.to_json
+    end
+
     private
 
     def get_name customer
@@ -29,5 +35,8 @@ module TurboCassandra
           cart['items'].keys.size
         end
     end
+
+
+
   end
 end
