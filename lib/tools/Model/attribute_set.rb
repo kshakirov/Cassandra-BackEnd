@@ -23,7 +23,7 @@ module TurboCassandra
     end
 
     def create_update_all_cql name
-      "UPDATE attribute_sets   SET #{name} = ?'"
+      "UPDATE attribute_sets   SET #{name} = ? WHERE code = ?"
     end
     def insert attribute_set_hash
         names, values = prepare_names_values attribute_set_hash
@@ -34,8 +34,8 @@ module TurboCassandra
         execute(create_update_cql(attribute_set_code, attribute_code), [])
     end
 
-    def update name, value
-        execute(create_update_all_cql(name), [value])
+    def update name, value, code
+        execute(create_update_all_cql(name), [value, code])
     end
 
     def find_all

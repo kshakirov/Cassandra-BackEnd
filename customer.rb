@@ -43,7 +43,6 @@ class Customer < Sinatra::Base
   ActionMailer::Base.view_paths = 'views/'
 
 
-
   def get_customer_id env_customer
     env_customer.first['id']
   end
@@ -54,7 +53,6 @@ class Customer < Sinatra::Base
     set :groupPriceBackEnd, TurboCassandra::GroupPriceBackEnd.new
     set :cartBackEnd, TurboCassandra::CartBackEnd.new
   end
-
 
 
   before do
@@ -94,7 +92,7 @@ class Customer < Sinatra::Base
   get '/product/:id/price' do
     customer = request.env.values_at :customer
     sku = params[:id].to_i
-    price = settings.groupPriceBackEnd.get_price(sku,  'W')
+    price = settings.groupPriceBackEnd.get_price(sku, 'W')
     {price: price}.to_json
 
   end
@@ -140,6 +138,21 @@ class Customer < Sinatra::Base
   get '/data' do
     scopes, customer = request.env.values_at :scopes, :customer
     settings.customerBackEnd.get_customer_data customer
+  end
+
+  put '/account/' do
+    customer_data = JSON.parse request.body.read
+    settings.customerBackEnd.update customer_data
+  end
+
+  put '/account/password/' do
+    customer_data = JSON.parse request.body.read
+    result = settings.customerBackEnd.update_password customer_data
+    if result
+      200
+    else
+      401
+    end
   end
 
 end

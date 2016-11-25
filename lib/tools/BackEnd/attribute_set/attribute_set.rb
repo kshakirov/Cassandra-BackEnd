@@ -16,7 +16,7 @@ module TurboCassandra
     end
 
     def update_critical_property set
-      @attribute_set.update('critical', set['critical'])
+      @attribute_set.update('critical', set['critical'], set['code'])
     end
   end
 end

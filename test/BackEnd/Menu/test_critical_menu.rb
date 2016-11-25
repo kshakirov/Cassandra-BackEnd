@@ -1,8 +1,19 @@
 require_relative 'test_helper'
 
-menu_manager = TurboCassandra::MenuBackEnd.new
+class TestCritical < Minitest::Test
+  def setup
+    @menu_manager = TurboCassandra::MenuBackEnd.new
+  end
 
+  def test_critical_parts
+    critical_parts   = @menu_manager.get_critical_parts
+    refute_nil critical_parts
+  end
 
-pps =  menu_manager.get_critical_sorters 4
-pp = JSON.parse pps
-p pp
+  def tets_critical_sorters
+    pps =  @menu_manager.get_critical_sorters 4
+    pp = JSON.parse pps
+    p pp
+  end
+
+end

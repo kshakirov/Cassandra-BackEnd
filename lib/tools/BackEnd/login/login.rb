@@ -9,7 +9,7 @@ module TurboCassandra
     end
 
     private
-    def hash_password data
+    def _hash_password data
       md5 = Digest::MD5.new
       md5.update data
     end
@@ -18,9 +18,9 @@ module TurboCassandra
       hash_with_salt = hash.split(':');
       case hash_with_salt.size
         when 1
-          hash_password(password) === hash
+          _hash_password(password) === hash
         when 2
-          hash_password(hash_with_salt[1] + password) === hash_with_salt[0]
+          _hash_password(hash_with_salt[1] + password) === hash_with_salt[0]
         else
           false
       end
@@ -61,6 +61,15 @@ module TurboCassandra
             result: 'failed'
         }.to_json
       end
+    end
+
+    def validate_customer password, customer_email
+      customer = get_customer customer_email
+      validate_hashes(password, customer['password'])
+    end
+
+    def hash_password password
+        _hash_password(password).to_s
     end
 
 

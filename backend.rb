@@ -6,6 +6,9 @@ require 'jwt'
 require 'yaml'
 require 'logger'
 require 'action_mailer'
+require 'active_support'
+require 'active_support/all'
+
 require 'prawn'
 require 'prawn/table'
 require_relative 'lib/sources'
@@ -45,13 +48,13 @@ class Public < Sinatra::Base
     settings.menuBackEnd.get_manufacturers
   end
 
-  get '/frontend/menu/critical' do
-    settings.menuBackEnd.get_parts
-  end
-
 
   get '/frontend/menu/part' do
     settings.menuBackEnd.get_parts
+  end
+
+  get '/frontend/menu/critical' do
+    settings.menuBackEnd.get_critical_parts
   end
 
   get '/frontend/menu/currency' do

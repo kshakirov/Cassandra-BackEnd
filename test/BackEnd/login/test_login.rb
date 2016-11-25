@@ -5,11 +5,11 @@ class TestProduct < Minitest::Test
   end
 
   def test_non_ti_interchange
-    p @login_manager.validate_password 'servantes1', 'kshakirov@zoral.com.ua'
+    @login_manager.validate_password 'servantes1', 'kshakirov@zoral.com.ua'
   end
 
   def test_ti_manufactured
-
+    assert @login_manager.validate_customer 'gogol', 'kshakirov@zoral.com.ua'
 
   end
 end

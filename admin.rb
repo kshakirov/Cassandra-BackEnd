@@ -38,7 +38,7 @@ class Admin < Sinatra::Base
     settings.attributeSetBackEnd.get_attribute_set('code', params[:code])
   end
 
-  post '/attribute_set/:code' do
+  post '/attribute_set/' do
     request_payload = JSON.parse request.body.read
     settings.attributeSetBackEnd.update_critical_property(request_payload)
   end

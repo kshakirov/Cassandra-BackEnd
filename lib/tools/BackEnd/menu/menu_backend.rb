@@ -2,6 +2,7 @@ module TurboCassandra
   class MenuBackEnd
     def initialize
       @attribute = Attribute.new
+      @attribute_set = AttributeSet.new
       @currency = Currency.new
       @featured = FeaturedProduct.new
       @new = NewProduct.new
@@ -9,7 +10,7 @@ module TurboCassandra
       @catalog_manager = CatalogManager.new
       @critical_catalog_manager = CriticalCatalogManager.new
     end
-
+    private
     def normalize_list list
       list.each_with_index.map { |l, i| [l, i] }
     end
@@ -20,22 +21,11 @@ module TurboCassandra
       normalize_list(options)
     end
 
-    def get_manufacturers
-      [_get_manufacturers, _get_parts].to_json
-    end
 
     def _get_parts
       attr = @attribute.find 'part'
       options = attr.first['options']
       normalize_list(options)
-    end
-
-    def get_parts
-      _get_parts.to_json
-    end
-
-    def get_critical_parts
-
     end
 
     def _get_base_currency currencies
@@ -45,6 +35,29 @@ module TurboCassandra
 
     def _get_rates currencies
       Hash[currencies.map { |sym| [sym['code'], sym['rate']] }]
+    end
+
+    def _get_critical_parts attrs, attr_sets
+      critical_parts = attr_sets.select{|a| a['critical']}
+      if critical_parts.size > 0
+        attrs.select{|attr|
+          critical_parts.select{|cp|attr[0] ==cp['name'] }.size > 0
+        }
+      end
+    end
+
+    public
+
+    def get_parts
+      _get_parts.to_json
+    end
+
+    def get_critical_parts
+        _get_critical_parts( _get_parts, @attribute_set.find_all).to_json
+    end
+
+    def get_manufacturers
+      [_get_manufacturers, _get_parts].to_json
     end
 
     def create_currency_response currencies
