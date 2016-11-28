@@ -26,6 +26,14 @@ class Admin < Sinatra::Base
     settings.customerBackEnd.get_customer_info(params['id'].to_i)
   end
 
+  get '/customer/:id/order/' do
+    settings.orderBackEnd.all(params[:id].to_i)
+  end
+
+  get '/customer/order/:id' do
+    settings.orderBackEnd.find(params[:id].to_i)
+  end
+
   get '/attribute/' do
     settings.attributeBackEnd.get_attributes_list
   end

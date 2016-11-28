@@ -94,6 +94,14 @@ module TurboCassandra
       order.to_json
     end
 
+    def find order_id
+      order = _get_order_by_id (order_id)
+      order.to_json
+    end
+
+    def all customer_id
+        get_order_by_customer_id(customer_id)
+    end
 
     def print order_id
       order = _get_order_by_id (order_id)
