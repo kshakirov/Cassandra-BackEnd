@@ -28,7 +28,7 @@
                             <tr>
                                 <td valign="top">
                                     <h1   style="font-size:22px; font-weight:normal; line-height:22px; margin:0 0 11px 0">
-                                        Hello, <%=@customer['name'] %>
+                                        Hello, <%= @customer['firstname'] %> <%= @customer['lastname'] %>
                                     </h1>
                                     <p style="font-size:12px; line-height:16px; margin:0 0 11px 0">Thank you for your
                                         order from Turbo International. You can check the status of your order by <a
@@ -69,7 +69,7 @@
                                         <tr>
                                             <td valign="top"
                                                 style="font-size:12px; padding:7px 9px 9px 9px; border-left:1px solid #EAEAEA; border-bottom:1px solid #EAEAEA; border-right:1px solid #EAEAEA">
-                                              <%= @customer['name'] %><br>
+                                              <%= @customer['firstname'] %> <%= @customer['lastname'] %> <br>
                                               <%= @order['billing_address']['company'] %><br>
                                               <%= @order['billing_address']['street'] %><br>
                                               <%= @order['billing_address']['city'] %>, <%= @order['shipping_address']['region_id'] %>, <%= @order['shipping_address']['postcode'] %><br>
@@ -103,7 +103,7 @@
                                         <tr>
                                             <td valign="top"
                                                 style="font-size:12px; padding:7px 9px 9px 9px; border-left:1px solid #EAEAEA; border-bottom:1px solid #EAEAEA; border-right:1px solid #EAEAEA">
-                                              <%= @customer['name'] %><br>
+                                              <%= @customer['firstname'] %>  <%= @customer['lastname'] %><br>
                                               <%= @order['shipping_address']['company'] %><br>
                                               <%= @order['shipping_address']['street'] %><br>
                                               <%= @order['shipping_address']['city'] %>, <%= @order['shipping_address']['region_id'] %>, <%= @order['shipping_address']['postcode'] %><br>
@@ -112,7 +112,7 @@
                                             <td>&nbsp;</td>
                                             <td valign="top"
                                                 style="font-size:12px; padding:7px 9px 9px 9px; border-left:1px solid #EAEAEA; border-bottom:1px solid #EAEAEA; border-right:1px solid #EAEAEA">
-                                              <%= @customer['shipping_method'] %> &nbsp; </td>
+                                              <%= @order['shipping_method'] %> &nbsp; </td>
                                         </tr>
                                         </tbody>
                                     </table>
