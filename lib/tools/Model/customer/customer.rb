@@ -81,6 +81,7 @@ module TurboCassandra
       c.map{|customer| customer}
     end
 
+
     def execute cql, args
       session = TurboCluster.get_session
       statement = session.prepare(cql)

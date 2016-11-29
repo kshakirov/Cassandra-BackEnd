@@ -131,8 +131,12 @@ class Customer < Sinatra::Base
     request_payload = JSON.parse request.body.read
     order_data = settings.orderBackEnd.save(customer_id, request_payload)
     email = Mailer.place_order customer.first, order_data
+    begin
     email.deliver
-    {order_id: order_data['order_id']}.to_json
+    {order_id: order_data['order_id'], mailed: true}.to_json
+    rescue
+      {order_id: order_data['order_id'], mailed: false}.to_json
+    end
   end
 
   get '/data' do

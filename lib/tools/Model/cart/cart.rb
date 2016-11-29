@@ -69,7 +69,7 @@ module TurboCassandra
     def update_grand_total result, cart
       if result
         grand_total = get_grand_total(cart)
-        execute(create_update_total_sql, [grand_total, cart['id']])
+        execute(create_update_total_sql, [grand_total.to_f, cart['id']])
       end
     end
 

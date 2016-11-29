@@ -51,6 +51,8 @@ module TurboCassandra
       end
     end
 
-
+    def create customer_data
+        @customer.insert(customer_data)
+    end
   end
 end

@@ -23,4 +23,8 @@ class TestCustomer < Minitest::Test
 
     @customer.update(hash)
   end
+
+  def test_create
+
+  end
 end
