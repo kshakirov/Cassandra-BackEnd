@@ -34,6 +34,9 @@ namespace :db do
     task :attribute_set do
       ruby "tools/schema/attribute_set/update_attribute_sets_1.rb"
     end
+    task :product do
+      ruby "tools/schema/product/update_products_2.rb"
+    end
   end
 end
 
@@ -51,6 +54,14 @@ task :db_populate do
 
 end
 
+namespace :db do
+  namespace :populate do
+      task :product do
+        ruby "tools/fixtures/product/populate.rb"
+      end
+  end
+end
+
 namespace :elastic do
   task :create_index do
     ruby "tools/elastic/product/create_index.rb"
@@ -59,7 +70,14 @@ namespace :elastic do
   task :delete_index do
     ruby "tools/elastic/product/delete_index.rb"
   end
+  task :map do
+    ruby "tools/elastic/product/put_mapping.rb"
+    ruby "tools/elastic/application/put_mapping.rb"
+  end
   task :index_product do
     ruby "tools/elastic/product/product_indexer.rb"
+  end
+  task :index_application do
+    ruby "tools/elastic/application/application_indexer.rb"
   end
 end

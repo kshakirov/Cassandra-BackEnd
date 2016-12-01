@@ -1,7 +1,7 @@
 module TurboCassandra
   class ProductBatch
     def remove_keys product_hash
-      keys = %w( where_used service_kits bill_of_materials group_price application_detail action)
+      keys = %w( where_used service_kits bill_of_materials group_price action)
       keys.each { |k| product_hash.delete(k) }
     end
 

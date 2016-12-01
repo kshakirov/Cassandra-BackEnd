@@ -8,7 +8,7 @@ module TurboCassandra
       @part_type_manager = TurboCassandra::PartType.new
       @visibility_manager = TurboCassandra::Visibility.new
       @price_manager = TurboCassandra::PriceManager.new
-
+      @application_manager = TurboCassandra::ApplicationManager.new
     end
 
     def _create_turbo_model product
@@ -75,7 +75,9 @@ module TurboCassandra
         scheleton['price'] = price
       end
     end
-
+    def set_application scheleton, product
+      scheleton['application'] = @application_manager.get_application(product)
+    end
     def run product
       scheleton = _create_scheleton product
       add_ti_part(scheleton, product)
@@ -84,6 +86,7 @@ module TurboCassandra
       add_manufacturer(scheleton, product)
       add_part_type(scheleton, product)
       set_catalog_visibility(scheleton, product)
+      set_application(scheleton, product)
       add_price(scheleton, product)
       scheleton
     end

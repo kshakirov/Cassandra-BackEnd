@@ -5,6 +5,8 @@ require 'elasticsearch'
 require 'yaml'
 require 'json'
 require_relative '../../../lib/sources'
+require_relative '../../../lib/tools/Elastic/application/mapping'
+require_relative '../../../lib/tools/Elastic/application/application_transformer'
 require_relative '../../../lib/tools/Elastic/product/index'
 require_relative '../../../lib/tools/Elastic/product/mapping'
 require_relative '../../../lib/tools/Elastic/product/product_transformer'
@@ -16,15 +18,9 @@ require_relative '../../../lib/tools/Elastic/product/part_type'
 require_relative '../../../lib/tools/Elastic/product/visibility'
 require_relative '../../../lib/tools/Elastic/product/price_manager'
 require_relative '../../../lib/tools/Elastic/product/application'
-require_relative '../../../lib/tools/Elastic/application/application_transformer'
-require_relative '../../../lib/tools/Elastic/application/mapping'
+
 require_relative '../../../lib/tools/Elastic/product/utils'
 
-def read_attributes_from_file
-  fd = File.open(File.expand_path('../../fixtures/data/attribute.json', File.dirname(__FILE__)), 'r')
-  data = fd.read
-  JSON.parse data
-end
 
 def get_elastic_host
   host = ENV['ELASTIC_INSTANCE']

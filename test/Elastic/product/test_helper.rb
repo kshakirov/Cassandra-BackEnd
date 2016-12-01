@@ -15,6 +15,7 @@ require_relative '../../../lib/tools/Elastic/product/part_type'
 require_relative '../../../lib/tools/Elastic/product/visibility'
 require_relative '../../../lib/tools/Elastic/product/price_manager'
 require_relative '../../../lib/tools/Elastic/product/utils'
+require_relative '../../../lib/tools/Elastic/product/application'
 require 'minitest/autorun'
 require 'minitest/pride'
 
