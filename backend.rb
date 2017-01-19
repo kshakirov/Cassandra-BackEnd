@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require "sinatra/cookies"
 require 'json'
 require 'cassandra'
 require 'digest'
@@ -8,15 +9,15 @@ require 'logger'
 require 'action_mailer'
 require 'active_support'
 require 'active_support/all'
-
+require 'securerandom'
 require 'prawn'
 require 'prawn/table'
 require_relative 'lib/sources'
 require_relative 'mailer'
 
 
-
 class Public < Sinatra::Base
+ helpers Sinatra::Cookies
 
   set :bind, '0.0.0.0'
   set :port, 4700
@@ -26,6 +27,8 @@ class Public < Sinatra::Base
     set :productBackEnd, TurboCassandra::ProductBackEnd.new
     set :loginBackEnd, TurboCassandra::Login.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
+    set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
+    set :md5, Digest::MD5.new
   end
 
   ActionMailer::Base.smtp_settings = {
@@ -34,10 +37,9 @@ class Public < Sinatra::Base
       :authentication => :login,
       :enable_starttls_auto => true,
       :user_name => 'kyrylo.shakirov@zorallabs.com',
-       :password => '',
+      :password => '',
   }
   ActionMailer::Base.view_paths = 'views/'
-
 
 
   before do
@@ -99,6 +101,13 @@ class Public < Sinatra::Base
 
   post '/frontend/product' do
     request_payload = JSON.parse request.body.read
+    if(cookies[:visitorid])
+        settings.logBackEnd.new({
+                                visitor_id: cookies[:visitorid].gsub('"',''),
+                                ip: env['REMOTE_ADDR'],
+                                product: request_payload['sku'].to_i
+                            })
+    end
     settings.productBackEnd.get_product(request_payload['sku'])
   end
 
@@ -118,6 +127,12 @@ class Public < Sinatra::Base
     content_type 'application/pdf'
     settings.orderBackEnd.print(params[:id].to_i)
 
+  end
+
+  get '/frontend/visitor/id/' do
+    {
+        visitor_id: SecureRandom.uuid
+    }.to_json
   end
 
 end

@@ -52,6 +52,7 @@ class Customer < Sinatra::Base
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
     set :groupPriceBackEnd, TurboCassandra::GroupPriceBackEnd.new
     set :cartBackEnd, TurboCassandra::CartBackEnd.new
+    set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
   end
 
 
@@ -92,6 +93,11 @@ class Customer < Sinatra::Base
   get '/product/:id/price' do
     customer = request.env.values_at :customer
     sku = params[:id].to_i
+    settings.logBackEnd.new({
+                                customer_id: customer.first['id'],
+                                ip: env['REMOTE_ADDR'],
+                                product: sku
+                            })
     price = settings.groupPriceBackEnd.get_price(sku, 'W')
     {price: price}.to_json
 
