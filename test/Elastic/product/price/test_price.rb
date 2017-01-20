@@ -23,4 +23,10 @@ class TestPrice < Minitest::Test
     refute_nil price
   end
 
+
+  def test_get_cartridge_price
+    price  = @price_manager.get_cartridge_price [{id: 1, sku: 6587}]
+    refute_nil price
+  end
+
 end

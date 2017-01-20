@@ -78,6 +78,13 @@ module TurboCassandra
       end
     end
 
+    def add_cartridge_price scheleton
+      price = @price_manager.get_cartridge_price(scheleton['ti_chra'])
+      unless price.nil?
+        scheleton['price'] = price
+      end
+    end
+
     def set_application scheleton, product
       scheleton['application'] = @application_manager.get_application(product)
     end
@@ -104,6 +111,7 @@ module TurboCassandra
       add_price(scheleton, product)
       if is_turbo? product
           add_chras(scheleton, product)
+          add_cartridge_price(scheleton)
       else
           add_na_chras(scheleton, product)
       end

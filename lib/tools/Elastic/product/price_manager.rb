@@ -30,6 +30,16 @@ module TurboCassandra
         end
     end
 
+    def  get_ti_chra_price ti_chra
+      if ti_chra.class.name == "Array" and ti_chra.size > 0
+          unless ti_chra.first[:id] .nil?
+            get_ti_part_price ti_chra.first[:sku]
+          end
+      end
+
+    end
+
+
     public
     def get_price product
         if is_ti_manufactured? product
@@ -39,5 +49,8 @@ module TurboCassandra
         end
     end
 
+    def get_cartridge_price ti_chra
+        get_ti_chra_price ti_chra
+    end
   end
 end
