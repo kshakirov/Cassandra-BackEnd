@@ -25,6 +25,18 @@ module TurboCassandra
             "name": "Ref Manufacturer ",
             "code": "manufacturer",
             "type": "string"
+        },
+
+        {
+            name: "CHRA",
+            code: "chra",
+            type: "string"
+        },
+
+        {
+            name: "TI CHRA",
+            code: "ti_chra",
+            type: "string"
         }
     ]
   end

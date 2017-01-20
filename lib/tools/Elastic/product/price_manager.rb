@@ -1,5 +1,6 @@
 module TurboCassandra
   class PriceManager
+    include TurboTools
     public
     def initialize
       @group_price = TurboCassandra::GroupPrice.new
@@ -31,7 +32,7 @@ module TurboCassandra
 
     public
     def get_price product
-        if TurboCassandra::is_ti_manufactured? product
+        if is_ti_manufactured? product
             get_ti_part_price(product['sku'])
         else
             get_non_ti_part_price(product)
