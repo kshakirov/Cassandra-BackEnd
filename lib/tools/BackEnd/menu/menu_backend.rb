@@ -80,8 +80,8 @@ module TurboCassandra
       @transformer.get_featured_products(@new.all).to_json
     end
 
-    def get_headers
-      @catalog_manager.get_headers
+    def get_headers part_type
+      @catalog_manager.get_headers part_type
     end
 
     def get_filters
