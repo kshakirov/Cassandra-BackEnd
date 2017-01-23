@@ -8,6 +8,15 @@ module TurboCassandra
 
     private
 
+    def is_applicable? k
+      if k[:value][:inches] < 0
+        k[:value][:inches] = nil
+        k[:value][:centimeters] = nil;
+        return false
+      end
+      true
+    end
+
     def get_attribute code
       attr = @attributes.select { |a| a['code'] == code }
       attr.first
@@ -16,9 +25,10 @@ module TurboCassandra
     def get_tolerance_attribute code
       tolerance = @attributes.select { |a| a['parent_id'] == code }
       if tolerance and tolerance.size > 0
+        v = tolerance.first['tolerance']  * (10  ** (-1 * tolerance.first['scale']))
         {
-            inches: 0,
-            centimeters: 0,
+            inches: v.to_f,
+            centimeters: v.to_f * 2.54,
             scale: tolerance.first['scale']
         }
       end
@@ -28,16 +38,21 @@ module TurboCassandra
     def prepare_decimal_attributes product
 
       product.keys.map { |k|
-        {k => {
-            value: {
-                inches: product[k],
-                centimeters: product[k] * 2.54
-            },
-            scale: get_attribute(k)['scale'],
-            units: get_attribute(k)['unit'],
-            tolerance: get_tolerance_attribute(k),
-            applicable: true
-        }} }
+        value = {
+            k => {
+                value: {
+                    inches: product[k],
+                    centimeters: product[k] * 2.54
+                },
+                scale: get_attribute(k)['scale'],
+                units: get_attribute(k)['unit'],
+                tolerance: get_tolerance_attribute(k),
+                applicable: true
+            }
+        }
+        value[k][:applicable] = is_applicable?(value[k])
+        value
+      }
     end
 
     def array_to_hash array
