@@ -64,7 +64,12 @@ module TurboCassandra
     end
 
     public
-    def get_headers
+    def get_headers part_type
+      #TODO hardcoded turbo part tipe id needs correct way
+      unless part_type=='catalog' or part_type == "1"
+        last = @headers.size - 3
+        return @headers[0.. last].to_json
+      end
         @headers.to_json
     end
     def get_filters

@@ -64,7 +64,8 @@ part_types = [
     "Thrust Spacer",
     "Thrust Washer",
     "Turbine Housing",
-    "Washer"
+    "Washer",
+    "Gasket Kit"
 ]
 
 

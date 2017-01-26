@@ -1,5 +1,6 @@
 module TurboCassandra
   class ElasticIndex
+    include TurboCassandra::TurboTools
     def initialize host= '10.1.3.16'
       @client = Elasticsearch::Client.new(host: host , log: true)
       @client.transport.reload_connections!

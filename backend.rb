@@ -80,7 +80,7 @@ class Public < Sinatra::Base
   end
 
   get '/frontend/menu/standard/header' do
-    settings.menuBackEnd.get_headers
+    settings.menuBackEnd.get_headers(params[:part_type])
   end
 
   get '/frontend/menu/standard/sorter' do
