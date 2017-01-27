@@ -1,4 +1,4 @@
-require_relative 'populate_helper'
+require_relative '../tools_helper'
 
 currency_manager = TurboCassandra::Currency.new
 currencies =  [

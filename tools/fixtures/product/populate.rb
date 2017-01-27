@@ -1,4 +1,4 @@
-require_relative 'populate_helper'
+require_relative '../tools_helper'
 
 product = TurboCassandra::Product.new
 product_batch = TurboCassandra::ProductBatch.new

@@ -1,0 +1,260 @@
+---
+sku: 64958
+name: 
+manufacturer: Turbo International
+description: Shaft Wheel, GTA1749VK
+part_number: 2-A-6398
+part_type: Turbine Wheel
+has_ti_interchange: false
+has_ti_chra: false
+has_foreign_interchange: false
+interchanges: ''
+group_price:
+  partId: 64958
+  standardPrice: 0.0
+  prices:
+    E: 0.0
+    R: 0.0
+    W: 0.0
+    X: 0.0
+    '0': 0.0
+    '1': 0.0
+    '2': 0.0
+    '3': 0.0
+    '4': 0.0
+    '5': 0.0
+turbo_model:
+- GTA1749VK
+turbo_type:
+- GT17V
+- GTA17
+application_detail: BMW!!120 d!!2006!!2.0/4!!D||BMW!!320 d!!2006!!2.0/4!!D||BMW!!320
+  d!!2004!!2.0/4!!D||BMW!!120 d!!2004!!2.0/4!!D
+custom_attrs:
+  trbnwhlInducerdiaa:
+    value: 1.693
+    type: DECIMAL
+  trbnwhlInducerdiaatol:
+    value: 0.005
+    type: DECIMAL
+  trbnwhlExducerdiab:
+    value: 1.417
+    type: DECIMAL
+  trbnwhlExducerdiabtol:
+    value: 0.002
+    type: DECIMAL
+  trbnwhlTipheightc:
+    value: 0.244
+    type: DECIMAL
+  trbnwhlTipheightctol:
+    value: 0.005
+    type: DECIMAL
+  trbnwhlPlatformheighth:
+    value: 1.67
+    type: DECIMAL
+  trbnwhlShroudtype:
+    value: PARTIAL
+    type: ENUMERATION
+  trbnwhlBladeheight:
+    value: 1.91
+    type: DECIMAL
+  trbnwhlBladecount:
+    value: 9
+    type: INTEGER
+  trbnwhlJournaltype:
+    value: SLENDER
+    type: ENUMERATION
+  trbnwhlMaxjournaldiameterd:
+    value: 0.3104
+    type: DECIMAL
+  trbnwhlMinjournaldiameterd:
+    value: 0.31
+    type: DECIMAL
+  trbnwhlMaxstemdiametere:
+    value: 0.2002
+    type: DECIMAL
+  trbnwhlMinstemdiametere:
+    value: 0.1998
+    type: DECIMAL
+  trbnwhlStemlengthf:
+    value: 1.26
+    type: DECIMAL
+  trbnwhlStemlengthftol:
+    value: 0.01
+    type: DECIMAL
+  trbnwhlThreadhand:
+    value: LH
+    type: ENUMERATION
+  trbnwhlThreadlengthg:
+    value: 0.72
+    type: DECIMAL
+  trbnwhlPstnrnggrvmjrd:
+    value: 0.6
+    type: DECIMAL
+  trbnwhlPstnrnggrvmjrdtl:
+    value: 0.003
+    type: DECIMAL
+  trbnwhlPstnrnggrvmnrdj:
+    value: 0.5
+    type: DECIMAL
+  trbnwhlPstnrnggrvmnrdjtl:
+    value: 0.005
+    type: DECIMAL
+  trbnwhlPistonringgroovewidthk:
+    value: 0.065
+    type: DECIMAL
+  trbnwhlPstnrnggrvwdthktl:
+    value: 0.001
+    type: DECIMAL
+  trbnwhlTh2ndpstnrnggrvmjrd:
+    value: 0.6
+    type: DECIMAL
+  trbnwhlTh2ndpstnrnggrvmjrdtl:
+    value: 0.003
+    type: DECIMAL
+  trbnwhlTh2ndpstnrnggrvmnrd:
+    value: 0.5
+    type: DECIMAL
+  trbnwhlTh2ndpstnrnggrvmnrdtl:
+    value: 0.005
+    type: DECIMAL
+  trbnwhlTh2ndpstnrnggrvwdth:
+    value: 0.065
+    type: DECIMAL
+  trbnwhlTh2ndpstnrnggrvwdthtl:
+    value: 0.001
+    type: DECIMAL
+  trbnwhlRotation:
+    value: STD
+    type: ENUMERATION
+  trbnwhlWeight:
+    value: 103.0
+    type: DECIMAL
+  trbnwhlThread:
+    value: M5x0.8-6g (ext.)
+    type: ENUMERATION
+  trbnwhlExtendedtips:
+    value: 'NO'
+    type: ENUMERATION
+  trbnwhlDiagram:
+    value: 
+    type: INTEGER
+---
+action: update
+sku: 64690
+name: 
+manufacturer: Turbo International
+description: "*ND* BP, GT1746V"
+part_number: 5-A-6381
+part_type: Backplate
+has_ti_interchange: false
+has_ti_chra: false
+has_foreign_interchange: false
+interchanges: ''
+group_price:
+  partId: 64690
+  standardPrice: 7.16
+  prices:
+    E: 5.728
+    R: 7.16
+    W: 5.4416
+    X: 5.1552
+    '0': 6.444
+    '1': 6.802
+    '2': 7.16
+    '3': 7.518
+    '4': 7.876
+    '5': 8.95
+turbo_model:
+- GT1746V
+- GT1746LV
+turbo_type:
+- GT17V
+application_detail: Renault!!LAGUNA dCi!!2005!!1.9/4!!D||Renault!!SCENIC dCi!!2005!!1.9/4!!D||Renault!!Megane
+  dCi!!2005!!1.9/4!!D
+custom_attrs:
+  bckpltDiaa:
+    value: 4.929
+    type: DECIMAL
+  bckpltDiaatol:
+    value: 
+    type: DECIMAL
+  bckpltDiab:
+    value: 4.645
+    type: DECIMAL
+  bckpltDiabtol:
+    value: 
+    type: DECIMAL
+  bckpltDiac:
+    value: 
+    type: DECIMAL
+  bckpltDiactol:
+    value: 
+    type: DECIMAL
+  bckpltDiad:
+    value: 
+    type: DECIMAL
+  bckpltDiadtol:
+    value: 
+    type: DECIMAL
+  bckpltCwcdiae:
+    value: 1.862
+    type: DECIMAL
+  bckpltCwcdiaetol:
+    value: 
+    type: DECIMAL
+  bckpltBoredia:
+    value: 0.393
+    type: DECIMAL
+  bckpltBorediatol:
+    value: 
+    type: DECIMAL
+  bckpltMountingholes:
+    value: 
+    type: INTEGER
+  bckpltMountingholedia:
+    value: 
+    type: DECIMAL
+  bckpltMntnghlthrdcllt:
+    value: 
+    type: ENUMERATION
+  bckpltDyncs:
+    value: 
+    type: ENUMERATION
+  bckpltMatl:
+    value: 
+    type: ENUMERATION
+  bckpltOal:
+    value: 0.472
+    type: DECIMAL
+  bckpltOaltol:
+    value: 
+    type: DECIMAL
+  bckpltHubposf:
+    value: 
+    type: DECIMAL
+  bckpltHubposftol:
+    value: 
+    type: DECIMAL
+  bckpltCclocposg:
+    value: 
+    type: DECIMAL
+  bckpltCclocposgtol:
+    value: 
+    type: DECIMAL
+  bckpltLeadinchmfr12angle:
+    value: 
+    type: DECIMAL
+  bckpltLeadinchmfrlen:
+    value: 
+    type: DECIMAL
+  bckpltSuperbackflatback:
+    value: 
+    type: ENUMERATION
+  bckpltWeight:
+    value: 
+    type: DECIMAL
+  bckpltDiagram:
+    value: 
+    type: INTEGER
+---

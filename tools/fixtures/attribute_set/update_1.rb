@@ -1,4 +1,4 @@
-require_relative 'populate_helper'
+require_relative '../tools_helper'
 
 attr_set = TurboCassandra::AttributeSet.new
 attributes = read_attributes_from_file

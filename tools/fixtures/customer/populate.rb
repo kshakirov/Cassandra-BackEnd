@@ -1,4 +1,4 @@
-require_relative 'populate_helper'
+require_relative '../tools_helper'
 
 customers_hashes = read_customers_from_file
 customer = TurboCassandra::Customer.new

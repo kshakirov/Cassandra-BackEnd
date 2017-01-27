@@ -1,4 +1,4 @@
-require_relative 'populate_helper'
+require_relative '../tools_helper'
 
 group_price = TurboCassandra::GroupPrice.new
 group_price_batch = TurboCassandra::GroupPriceBatch.new

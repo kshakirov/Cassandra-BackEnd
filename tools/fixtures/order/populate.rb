@@ -1,4 +1,4 @@
-require_relative 'populate_helper'
+require_relative '../tools_helper'
 
 order = TurboCassandra::Order.new
 order_batch = TurboCassandra::OrderBatch.new

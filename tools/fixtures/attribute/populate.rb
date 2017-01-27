@@ -1,4 +1,4 @@
-require_relative 'populate_helper.rb'
+require_relative '../tools_helper.rb'
 
 attribute_batch = TurboCassandra::AttributeBatch.new
 attribute = TurboCassandra::Attribute.new

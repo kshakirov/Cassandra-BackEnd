@@ -32,12 +32,6 @@ module TurboCassandra
           prepare_values(product_hash), prepare_args(product_hash)
     end
 
-    def insert product_hash
-      names, values, args = prepare_attributes(product_hash)
-      execute(create_insert_cql(names, values), args)
-
-    end
-
     def update_attribute_list attribute_set_code, attribute_code
       "UPDATE attribute_sets   SET attributes = [ '#{attribute_code}' ] + attributes WHERE code = '#{attribute_set_code}'"
     end
@@ -78,6 +72,12 @@ module TurboCassandra
     def start_iteration
       session = TurboCluster.get_session
       session.execute("SELECT * FROM products", page_size: 5)
+    end
+
+    def insert product_hash
+      names, values, args = prepare_attributes(product_hash)
+      execute(create_insert_cql(names, values), args)
+
     end
 
   end

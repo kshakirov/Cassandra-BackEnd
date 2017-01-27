@@ -1,0 +1,90 @@
+[
+
+  {
+    "id": "12",
+    "firstname": "Paul",
+    "lastname": "Thiry",
+    "email": "pthiry1@dbicapital.com",
+    "password": [
+      {
+        "value": "f6e3aaf0c36aac23b55574e01c7d3f66:Hv"
+      }
+    ],
+    "group_id": "7",
+    "prefix": null,
+    "suffix": null
+  },
+  {
+    "id": "13",
+    "firstname": "Federico",
+    "lastname": "Gugliemi",
+    "email": "info@m2rettifiche.it",
+    "password": [
+      {
+        "value": "99e5cfb64e5f1398d80dfde06671b82e:rM"
+      }
+    ],
+    "group_id": "13",
+    "prefix": null,
+    "suffix": null
+  },
+
+  {
+    "id": "627",
+    "firstname": "FELIPE",
+    "lastname": "OCONITRILLO",
+    "email": "foconitrillo@americadieselcr.com",
+    "password": [
+      {
+        "value": "507334f5d3718784784c8f43f758b39f:dY"
+      }
+    ],
+    "group_id": "11",
+    "prefix": null,
+    "suffix": null,
+    "default_billing_address": {
+      "street": "SANTA ROSA SANTO DOMINGO\nDEL PERI MERCADO 300 M SUR, APT POSTAL 625-3001",
+      "country_id": "CR",
+      "city": "HEREDIA",
+      "region_id": "0",
+      "postcode": "625301",
+      "telephone": "011-506-2244-1234",
+      "fax": null,
+      "company": "AMERICA DIESEL"
+    }
+  },
+  {
+    "id": "628",
+    "firstname": "Kirill",
+    "lastname": "Shakirov",
+    "email": "kshakirov@lusfiber.net",
+    "password": [
+      {
+        "value": "d5e05c38f03645e802e02cba62982bf7:e9"
+      }
+    ],
+    "group_id": "9",
+    "prefix": null,
+    "suffix": null,
+    "default_billing_address": {
+      "street": "1000 Eraste Landry Rd.",
+      "country_id": "US",
+      "city": "Lafayette",
+      "region_id": "28",
+      "postcode": "70506",
+      "telephone": "337-237-1876",
+      "fax": null,
+      "company": "L & M Fuel Injection"
+    },
+    "default_shipping_address": {
+      "street": "1000 Eraste Landry Rd.",
+      "country_id": "US",
+      "city": "Lafayette",
+      "region_id": "28",
+      "postcode": "70506",
+      "telephone": "337-237-1876",
+      "fax": null,
+      "company": "L & M Fuel Injection"
+    }
+  }
+]
