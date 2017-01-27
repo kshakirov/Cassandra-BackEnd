@@ -39,8 +39,9 @@ namespace :db do
     end
   end
   namespace :setup do
-      task :'visitor_logs.rb' do
-        ruby "tools/schema/visitor_log/create_visitor_logs.rb"
+      task :visitor_log do
+        ruby "tools/schema/visitor_log/create_visitor_log.rb"
+        ruby "tools/schema/visitor_log/create_customer_log.rb"
       end
   end
 end

@@ -2,6 +2,7 @@ module TurboCassandra
   class FeaturedTransformer
     def initialize
       @product_manager = Product.new
+      @product_backend = TurboCassandra::ProductBackEnd.new
     end
     def _get_scheleton product
       {
@@ -18,11 +19,12 @@ module TurboCassandra
     end
 
     def _create_response products
-      products.map{|p| _get_scheleton(p.first)}
+      products.map{|p| _get_scheleton(p)}
     end
 
     def get_featured_products featureds
-         products = featureds.map{|f| @product_manager.find f['sku']}
+         #products = featureds.map{|f| @product_backend.f f['sku']}
+         products = @product_backend.get_products(featureds.map{|f| f['sku']})
           _create_response(products)
     end
   end

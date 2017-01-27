@@ -3,8 +3,9 @@ module TurboCassandra
     private
     def initialize
       @visitor_logs = TurboCassandra::VisitorLog.new
+      @customer_logs = TurboCassandra::CustomerLog.new
       @generator = Cassandra::Uuid::Generator.new
-      @customer_default_uuid = '79e5893d-2f60-4fbe-aa7a-84d28d6e614f'
+      @product_backend = TurboCassandra::ProductBackEnd.new
     end
 
     def add_customer_id hash
@@ -14,31 +15,44 @@ module TurboCassandra
     end
 
     def add_visitor_id  hash
-      if hash.key? :visitor_id
+      if hash.key? :visitor_id and hash[:visitor_id]
         hash[:visitor_id] = Cassandra::Types::Uuid.new(hash[:visitor_id])
-      else
-        hash[:visitor_id] = Cassandra::Types::Uuid.new(@customer_default_uuid)
       end
     end
+
 
     def prepare_data  hash
       hash[:ip] = Cassandra::Types::Inet.new(hash[:ip])
       hash[:date] = Time.now.to_time
       hash[:id] =  @generator.now
-      add_visitor_id(hash)
-      add_customer_id(hash)
       hash
     end
+
+
     public
-    def new hash
-      @visitor_logs.insert(prepare_data(hash))
+    def new_visit hash
+      log = prepare_data(hash)
+      add_visitor_id(log)
+      @visitor_logs.insert(log)
+    end
+    def new_customer_visit hash
+      log = prepare_data(hash)
+      add_visitor_id(log)
+      @customer_logs.insert(log)
     end
     def last5_customer id
-      @visitor_logs.last({ :key  => 'customer_id', :value => id })
+      skus = @customer_logs.last({ :key  => 'customer_id', :value => id }).map{|cl| cl['product']}
+      unless skus.nil?
+        @product_backend.get_products(skus).map{|p| {sku: p['sku'], name:  "#{p['part_type']} - #{p['part_number']}"  }}.to_json
+      end
     end
 
     def last5_visitor id
-      @visitor_logs.last({ :key  => 'visitor_id' , :value => id})
+      uuid = Cassandra::Types::Uuid.new(id)
+      skus = @visitor_logs.last({ :key  => 'visitor_id' , :value => uuid}).map{|vl| vl['product']}
+      unless skus.nil?
+          @product_backend.get_products(skus).map{|p| {sku: p['sku'], name: "#{p['part_type']} - #{p['part_number']}"  }}.to_json
+      end
     end
 
   end

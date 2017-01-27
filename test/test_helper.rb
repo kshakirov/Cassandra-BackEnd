@@ -7,9 +7,12 @@ require_relative '../lib/tools/Model/turbo_cluster'
 require_relative '../lib/tools/Model/product/product'
 require_relative '../lib/tools/Model/customer/customer'
 require_relative '../lib/tools/Model/order/order'
+require_relative '../lib/tools/Model/attribute'
 require_relative '../lib/tools/Model/order/order_batch'
 require_relative '../lib/tools/Model/visitor_log/visitor_logs'
+require_relative '../lib/tools/Model/visitor_log/customer_logs'
 require_relative '../lib/tools/BackEnd/visitor_log/visitor_logs'
+require_relative '../lib/tools/BackEnd/product/product'
 class MyCluster
   def initialize
     cluster =Cassandra.cluster(hosts: ['10.1.3.15', '10.1.3.16', '10.1.3.17'])

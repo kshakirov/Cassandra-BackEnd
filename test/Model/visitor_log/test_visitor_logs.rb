@@ -21,17 +21,27 @@ class TestVisitorsLog < Minitest::Test
 
   def test_insert
     hash = {
-        visitor_id: 'cef86c37-aedb-485b-a785-be04d1a99829',
+        visitor_id: 'cef86c37-aedb-485b-a785-be04d1a99821',
         ip: '192.168.1.1',
         customer_id: 1,
-        product: 123
+        product: rand(10000)
     }
-    @visitor_log_backend.new hash
+    @visitor_log_backend.new_visit(hash)
+    hash2 = {
+        visitor_id: 'cef86c37-aedb-485b-a785-be04d1a99831',
+        ip: '192.168.3.25',
+        customer_id: 1,
+        product: rand(10000)
+    }
+    @visitor_log_backend.new_customer_visit(hash2)
+
   end
 
   def test_select
 
-    results  = @visitor_log_backend.last5_customer(487)
+    results  = @visitor_log_backend.last5_customer(1)
+    p results
+    results  = @visitor_log_backend.last5_visitor('cef86c37-aedb-485b-a785-be04d1a99821')
     p results
   end
 end

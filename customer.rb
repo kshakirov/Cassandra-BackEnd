@@ -93,7 +93,7 @@ class Customer < Sinatra::Base
   get '/product/:id/price' do
     customer = request.env.values_at :customer
     sku = params[:id].to_i
-    settings.logBackEnd.new({
+    settings.logBackEnd.new_customer_visit({
                                 customer_id: customer.first['id'],
                                 ip: env['REMOTE_ADDR'],
                                 product: sku
@@ -149,6 +149,13 @@ class Customer < Sinatra::Base
   get '/data' do
     scopes, customer = request.env.values_at :scopes, :customer
     settings.customerBackEnd.get_customer_data customer
+  end
+
+
+  get '/product/viewed' do
+    customer = request.env.values_at :customer
+    customer_id = customer.first['id']
+    settings.logBackEnd.last5_customer(customer_id)
   end
 
   put '/account/' do

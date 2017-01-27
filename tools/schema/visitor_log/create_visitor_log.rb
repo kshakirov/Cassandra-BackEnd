@@ -7,5 +7,5 @@ cql = %Q(CREATE TABLE  visitor_logs
             id timeuuid,
             ip inet,
             customer_id bigint,
-            product bigint, Primary Key(visitor_id, date, id, ip, customer_id)))
+            product bigint, Primary Key(visitor_id, date, id, ip)))
 execute_lazy cql, []

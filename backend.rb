@@ -17,7 +17,7 @@ require_relative 'mailer'
 
 
 class Public < Sinatra::Base
- helpers Sinatra::Cookies
+  helpers Sinatra::Cookies
 
   set :bind, '0.0.0.0'
   set :port, 4700
@@ -101,12 +101,12 @@ class Public < Sinatra::Base
 
   post '/frontend/product' do
     request_payload = JSON.parse request.body.read
-    if(cookies[:visitorid])
-        settings.logBackEnd.new({
-                                visitor_id: cookies[:visitorid].gsub('"',''),
-                                ip: env['REMOTE_ADDR'],
-                                product: request_payload['sku'].to_i
-                            })
+    if (cookies[:visitorid])
+      settings.logBackEnd.new_visit({
+                                        visitor_id: cookies[:visitorid].gsub('"', ''),
+                                        ip: env['REMOTE_ADDR'],
+                                        product: request_payload['sku'].to_i
+                                    })
     end
     settings.productBackEnd.get_product(request_payload['sku'])
   end
@@ -128,6 +128,14 @@ class Public < Sinatra::Base
     settings.orderBackEnd.print(params[:id].to_i)
 
   end
+
+  get '/frontend/product/viewed' do
+    if cookies[:visitorid]
+      settings.logBackEnd.last5_visitor(cookies[:visitorid].gsub('"', ''))
+    end
+  end
+
+
 
   get '/frontend/visitor/id/' do
     {

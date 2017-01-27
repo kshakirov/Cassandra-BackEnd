@@ -18,6 +18,7 @@ module TurboCassandra
           prepare_values(hash), prepare_args(hash)
     end
   end
+
   class VisitorLog
     include Tools
 
@@ -28,7 +29,7 @@ module TurboCassandra
     end
 
     def create_select_last name
-      "SELECT * FROM visitor_logs WHERE #{name}=?  order by date Desc"
+      "SELECT * FROM visitor_logs WHERE #{name}=?  order by date Desc Limit 5"
     end
 
     def execute cql, args
@@ -45,7 +46,7 @@ module TurboCassandra
     end
 
     def last  pair
-        execute(create_select_last(pair[:key]),  pair[:value])
+        execute(create_select_last(pair[:key]),  [pair[:value]])
     end
   end
 end
