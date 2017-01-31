@@ -11,7 +11,7 @@ module TurboCassandra
     end
 
     def create_select_last name
-      "SELECT * FROM customer_logs WHERE #{name}=?  order by date Desc"
+      "SELECT * FROM customer_logs WHERE #{name}=?  order by date Desc Limit 5"
     end
 
     def execute cql, args

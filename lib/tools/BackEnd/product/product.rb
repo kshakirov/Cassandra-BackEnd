@@ -80,7 +80,12 @@ module TurboCassandra
     def _get_products skus
       skus = skus.map{|sku| sku.to_i}
       products = @product.where skus
-      products.map { |p| p}
+      products.map { |p|
+        if p.key? 'critical_decimal' and not p['critical_decimal'].nil?
+          p['critical'] = add_critical_attributes(p)
+        end
+        p
+      }
     end
 
     public

@@ -26,7 +26,7 @@ module TurboCassandra
               part_type: p['part_type'],
               description: p['description'],
               prices:  get_price(p['sku'], customer_group),
-              critical: prepare_criticals(p)
+              critical: p['critical']
           }
           }.to_json
         end
