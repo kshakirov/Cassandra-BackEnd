@@ -49,6 +49,10 @@ namespace :db do
       ruby "tools/schema/visitor_log/create_customer_log.rb"
     end
 
+    task :compared_products do
+      ruby "tools/schema/compared_products/create_compared_products.rb"
+    end
+
     task :all do
       Rake::Task['db:setup:base'].execute
       Rake::Task['db:setup:visitor_log'].execute

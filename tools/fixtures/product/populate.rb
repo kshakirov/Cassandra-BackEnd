@@ -2,7 +2,7 @@ require_relative '../tools_helper'
 
 product = TurboCassandra::Product.new
 product_batch = TurboCassandra::ProductBatch.new
-product_hashes = YAML.load_stream(open(File.expand_path( '../data/all_products.yml', File.dirname(__FILE__))))
+product_hashes = read_product_from_file
 
 product_hashes.each_with_index do |product_hash, index|
   sku = product_hash['sku']

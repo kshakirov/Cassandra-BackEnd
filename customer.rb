@@ -53,6 +53,7 @@ class Customer < Sinatra::Base
     set :groupPriceBackEnd, TurboCassandra::GroupPriceBackEnd.new
     set :cartBackEnd, TurboCassandra::CartBackEnd.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
+    set :comparedProductsBackEnd, TurboCassandra::ComparedProductsBackEnd.new
   end
 
 
@@ -98,7 +99,7 @@ class Customer < Sinatra::Base
                                 ip: env['REMOTE_ADDR'],
                                 product: sku
                             })
-    price = settings.groupPriceBackEnd.get_price(sku, 'W')
+    price = settings.groupPriceBackEnd.get_price(sku, customer.first['group'])
     {price: price}.to_json
 
   end
@@ -171,6 +172,22 @@ class Customer < Sinatra::Base
     else
       401
     end
+  end
+
+  get '/compared_product/' do
+    customer = request.env.values_at(:customer).first
+    settings.comparedProductsBackEnd.find_by_customer(customer['id'], customer['group'])
+  end
+
+  put '/compared_product/:id' do
+    customer = request.env.values_at(:customer).first
+    payload = {product: params['id'].to_i, customer_id: customer['id']}
+    settings.comparedProductsBackEnd.update(payload)
+  end
+
+  delete '/compared_product/:id' do
+    customer = request.env.values_at(:customer).first
+    settings.comparedProductsBackEnd.delete( customer['id'], params['id'].to_i)
   end
 
 end

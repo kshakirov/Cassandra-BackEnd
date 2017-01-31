@@ -17,6 +17,14 @@ module TurboCassandra
       return prepare_names(hash),
           prepare_values(hash), prepare_args(hash)
     end
+
+    def execute_query cql, args
+      session = TurboCluster.get_session
+      statement = session.prepare(cql)
+      session.execute(statement, arguments: args, consistency: :one)
+    end
+
+
   end
 
   class FeaturedProduct
@@ -43,7 +51,6 @@ module TurboCassandra
 
     def insert hash
       names, values, args = prepare_attributes(hash)
-      p names, values, args
       execute(create_insert_cql(names, values), args)
     end
   end

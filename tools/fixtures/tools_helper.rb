@@ -24,7 +24,7 @@ require_relative '../../lib/tools/Model/turbo_cluster'
 def check_environment r_path
    if ENV['TURBO_MODE']=='test'
      puts "TEST MODE"
-     return "../../test/" + r_path
+     return  "../../test/" + r_path
    end
    puts "PRODUCTION MODE"
   r_path
@@ -32,9 +32,7 @@ end
 
 
 def read_product_from_file
-  YAML.load_file(
-      File.expand_path(check_environment('data/all_products.yml'), File.dirname(__FILE__))
-  )
+  YAML.load_stream(open(File.expand_path(  check_environment( 'data/all_products.yml'), File.dirname(__FILE__))))
 end
 
 def read_orders_from_file

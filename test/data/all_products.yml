@@ -1,4 +1,47 @@
 ---
+action: update
+sku: 1
+name:
+manufacturer: Garrett
+description:
+part_number: 700177-0001
+part_type: Cartridge
+has_ti_interchange: false
+has_ti_chra: false
+has_foreign_interchange: false
+interchanges: ''
+group_price:
+  partId: 1
+  standardPrice:
+  prices:
+  warning: Standard unit price not found.
+turbo_model:
+- GT30BB
+turbo_type:
+- GT30
+---
+action: update
+sku: 2
+name:
+manufacturer: Garrett
+description:
+part_number: 444378-0001
+part_type: Cartridge
+has_ti_interchange: false
+has_ti_chra: false
+has_foreign_interchange: false
+interchanges: ''
+group_price:
+  partId: 2
+  standardPrice:
+  prices:
+  warning: Standard unit price not found.
+turbo_model:
+- TL7804
+turbo_type:
+- TL78
+application_detail: Caterpillar!!245B!!not specified!!14600!!
+---
 sku: 64958
 name: 
 manufacturer: Turbo International
@@ -258,3 +301,523 @@ custom_attrs:
     value: 
     type: INTEGER
 ---
+action: update
+sku: 62923
+name:
+manufacturer: Turbo International
+description: "*DL4*,BH,S200G"
+part_number: 4-C-5336
+part_type: Bearing Housing
+has_ti_interchange: false
+has_ti_chra: false
+has_foreign_interchange: false
+interchanges: ''
+group_price:
+  partId: 62923
+  standardPrice: 67.5
+  prices:
+    E: 54.0
+    R: 67.5
+    W: 51.3
+    X: 48.6
+    '0': 60.75
+    '1': 64.125
+    '2': 67.5
+    '3': 70.875
+    '4': 74.25
+    '5': 84.375
+turbo_model:
+- S200G
+turbo_type:
+- S200G
+custom_attrs:
+  brnghsngWatercooled:
+    value: 'NO'
+    type: ENUMERATION
+  brnghsngCediaa:
+    value: 4.996
+    type: DECIMAL
+  brnghsngCediaatol:
+    value:
+    type: DECIMAL
+  brnghsngCediab:
+    value: 4.698
+    type: DECIMAL
+  brnghsngCediabtol:
+    value:
+    type: DECIMAL
+  brnghsngCediac:
+    value:
+    type: DECIMAL
+  brnghsngCediactol:
+    value:
+    type: DECIMAL
+  brnghsngCwcdia:
+    value: 2.539
+    type: DECIMAL
+  brnghsngCwcdiatol:
+    value:
+    type: DECIMAL
+  brnghsngBorediamax:
+    value:
+    type: DECIMAL
+  brnghsngBorediamin:
+    value:
+    type: DECIMAL
+  brnghsngPrboredia:
+    value:
+    type: DECIMAL
+  brnghsngPrborediatol:
+    value:
+    type: DECIMAL
+  brnghsngSingledualoilfeed:
+    value:
+    type: ENUMERATION
+  brnghsngSpinningbearing:
+    value:
+    type: ENUMERATION
+  brnghsngOilinletthread:
+    value: M8x1.25-6H (int.)
+    type: ENUMERATION
+  brnghsngOildrainthread:
+    value: M14x1.5-6H (int.)
+    type: ENUMERATION
+  brnghsngOildrainflangethread:
+    value:
+    type: ENUMERATION
+  brnghsngCoolantportthread1:
+    value: "-99"
+    type: ENUMERATION
+  brnghsngCoolantportthread2:
+    value:
+    type: ENUMERATION
+  brnghsngTediad:
+    value: 2.383
+    type: DECIMAL
+  brnghsngTediadtol:
+    value:
+    type: DECIMAL
+  brnghsngTediae:
+    value: 2.913
+    type: DECIMAL
+  brnghsngTediaetol:
+    value:
+    type: DECIMAL
+  brnghsngTediaf:
+    value:
+    type: DECIMAL
+  brnghsngTediaftol:
+    value:
+    type: DECIMAL
+  brnghsngArmangle:
+    value:
+    type: DECIMAL
+  brnghsngQuadrant:
+    value: "-99"
+    type: ENUMERATION
+  brnghsngOal:
+    value: 3.6
+    type: DECIMAL
+  brnghsngOaltol:
+    value:
+    type: DECIMAL
+  brnghsngWeight:
+    value:
+    type: DECIMAL
+  brnghsngDiagram:
+    value:
+    type: INTEGER
+  brnghsngOilinletflangethread:
+    value:
+    type: ENUMERATION
+  brnghsngLeadinchmfr05angle:
+    value:
+    type: DECIMAL
+  brnghsngLeadinchmfrlen:
+    value:
+    type: DECIMAL
+---
+action: update
+sku: 62923
+name:
+manufacturer: Turbo International
+description: "*DL4*,BH,S200G"
+part_number: 4-C-5336
+part_type: Bearing Housing
+has_ti_interchange: false
+has_ti_chra: false
+has_foreign_interchange: false
+interchanges: ''
+group_price:
+  partId: 62923
+  standardPrice: 67.5
+  prices:
+    E: 54.0
+    R: 67.5
+    W: 51.3
+    X: 48.6
+    '0': 60.75
+    '1': 64.125
+    '2': 67.5
+    '3': 70.875
+    '4': 74.25
+    '5': 84.375
+turbo_model:
+- S200G
+turbo_type:
+- S200G
+custom_attrs:
+  brnghsngWatercooled:
+    value: 'NO'
+    type: ENUMERATION
+  brnghsngCediaa:
+    value: 4.996
+    type: DECIMAL
+  brnghsngCediaatol:
+    value:
+    type: DECIMAL
+  brnghsngCediab:
+    value: 4.698
+    type: DECIMAL
+  brnghsngCediabtol:
+    value:
+    type: DECIMAL
+  brnghsngCediac:
+    value:
+    type: DECIMAL
+  brnghsngCediactol:
+    value:
+    type: DECIMAL
+  brnghsngCwcdia:
+    value: 2.539
+    type: DECIMAL
+  brnghsngCwcdiatol:
+    value:
+    type: DECIMAL
+  brnghsngBorediamax:
+    value:
+    type: DECIMAL
+  brnghsngBorediamin:
+    value:
+    type: DECIMAL
+  brnghsngPrboredia:
+    value:
+    type: DECIMAL
+  brnghsngPrborediatol:
+    value:
+    type: DECIMAL
+  brnghsngSingledualoilfeed:
+    value:
+    type: ENUMERATION
+  brnghsngSpinningbearing:
+    value:
+    type: ENUMERATION
+  brnghsngOilinletthread:
+    value: M8x1.25-6H (int.)
+    type: ENUMERATION
+  brnghsngOildrainthread:
+    value: M14x1.5-6H (int.)
+    type: ENUMERATION
+  brnghsngOildrainflangethread:
+    value:
+    type: ENUMERATION
+  brnghsngCoolantportthread1:
+    value: "-99"
+    type: ENUMERATION
+  brnghsngCoolantportthread2:
+    value:
+    type: ENUMERATION
+  brnghsngTediad:
+    value: 2.383
+    type: DECIMAL
+  brnghsngTediadtol:
+    value:
+    type: DECIMAL
+  brnghsngTediae:
+    value: 2.913
+    type: DECIMAL
+  brnghsngTediaetol:
+    value:
+    type: DECIMAL
+  brnghsngTediaf:
+    value:
+    type: DECIMAL
+  brnghsngTediaftol:
+    value:
+    type: DECIMAL
+  brnghsngArmangle:
+    value:
+    type: DECIMAL
+  brnghsngQuadrant:
+    value: "-99"
+    type: ENUMERATION
+  brnghsngOal:
+    value: 3.6
+    type: DECIMAL
+  brnghsngOaltol:
+    value:
+    type: DECIMAL
+  brnghsngWeight:
+    value:
+    type: DECIMAL
+  brnghsngDiagram:
+    value:
+    type: INTEGER
+  brnghsngOilinletflangethread:
+    value:
+    type: ENUMERATION
+  brnghsngLeadinchmfr05angle:
+    value:
+    type: DECIMAL
+  brnghsngLeadinchmfrlen:
+    value:
+    type: DECIMAL
+---
+action: update
+sku: 65019
+name:
+manufacturer: Turbo International
+description: COMPRESSOR WHEEL, GT2260V
+part_number: 3-A-6401
+part_type: Compressor Wheel
+has_ti_interchange: false
+has_ti_chra: false
+has_foreign_interchange: false
+interchanges: ''
+group_price:
+  partId: 65019
+  standardPrice: 0.0
+  prices:
+    E: 0.0
+    R: 0.0
+    W: 0.0
+    X: 0.0
+    '0': 0.0
+    '1': 0.0
+    '2': 0.0
+    '3': 0.0
+    '4': 0.0
+    '5': 0.0
+turbo_model:
+- GTA2260V
+turbo_type:
+- GT22V
+application_detail: Iveco!!DAILY!!2005!!3.0/4!!D||Iveco!!DAILY!!2006!!3.0/4!!D
+custom_attrs:
+  cmprssrwhlInducerdiametera:
+    value: 1.59
+    type: DECIMAL
+  cmprssrwhlInducerdiameteratol:
+    value: 0.002
+    type: DECIMAL
+  cmprssrwhlExducerdiameterb:
+    value: 2.362
+    type: DECIMAL
+  cmprssrwhlExducerdiameterbtol:
+    value: 0.005
+    type: DECIMAL
+  cmprssrwhlRotation:
+    value: STD
+    type: ENUMERATION
+  cmprssrwhlOverallheightc:
+    value: 1.27
+    type: DECIMAL
+  cmprssrwhlTipheightd:
+    value: 0.165
+    type: DECIMAL
+  cmprssrwhlTipheightdtol:
+    value: 0.004
+    type: DECIMAL
+  cmprssrwhlPlatformheighte:
+    value: 0.145
+    type: DECIMAL
+  cmprssrwhlExtendedtips:
+    value: 'NO'
+    type: ENUMERATION
+  cmprssrwhlPlatformdiameterf:
+    value: 2.362
+    type: DECIMAL
+  cmprssrwhlPlatformdiameterftol:
+    value: 0.005
+    type: DECIMAL
+  cmprssrwhlThreadedbore:
+    value: 'NO'
+    type: ENUMERATION
+  cmprssrwhlBoreless:
+    value: 'NO'
+    type: ENUMERATION
+  cmprssrwhlThreadcallout:
+    value: "-99"
+    type: ENUMERATION
+  cmprssrwhlThreadhand:
+    value: "-99"
+    type: ENUMERATION
+  cmprssrwhlMaxborediameter:
+    value: 0.2002
+    type: DECIMAL
+  cmprssrwhlMinborediameter:
+    value: 0.1998
+    type: DECIMAL
+  cmprssrwhlNosediameterg:
+    value: 0.57
+    type: DECIMAL
+  cmprssrwhlFootdiameterh:
+    value: 0.56
+    type: DECIMAL
+  cmprssrwhlFlatbacksuperback:
+    value: SUPERBACK
+    type: ENUMERATION
+  cmprssrwhlBladeheight:
+    value: 1.0
+    type: DECIMAL
+  cmprssrwhlBladecount:
+    value: 5
+    type: INTEGER
+  cmprssrwhlWeight:
+    value: 50.3
+    type: DECIMAL
+  cmprssrwhlPlatformthickness:
+    value: 0.05
+    type: DECIMAL
+  cmprssrwhlPlatformthicknesstol:
+    value: 0.002
+    type: DECIMAL
+  cmprssrwhlTiplocation:
+    value: 0.31
+    type: DECIMAL
+  cmprssrwhlTiplocationtol:
+    value: 0.002
+    type: DECIMAL
+  cmprssrwhlDiagram:
+    value:
+    type: INTEGER
+  cmprssrwhlPlatformheighttol:
+    value: 0.002
+    type: DECIMAL
+---
+action: update
+sku: 66750
+name:
+manufacturer: Turbo International
+description: BACK PLATE, TV7504
+part_number: 5-A-6515
+part_type: Backplate
+has_ti_interchange: false
+has_ti_chra: false
+has_foreign_interchange: true
+interchanges: '44923'
+group_price:
+  partId: 66750
+  standardPrice: 20.87
+  prices:
+    E: 16.696
+    R: 20.87
+    W: 15.8612
+    X: 15.0264
+    '0': 18.783
+    '1': 19.8265
+    '2': 20.87
+    '3': 21.9135
+    '4': 22.957
+    '5': 26.0875
+turbo_model:
+- TV7514
+- UTV7507
+- UTV7506
+- UTV7801
+- TBP7501
+- TV7504
+- TV7508
+turbo_type:
+- TV75
+- UTV75
+- UTV78
+- TBP75
+application_detail: Scania!!144!!not specified!!14020!!||!!!!not specified!!14600!!||Scania!!144!!1998!!14020!!||Volvo!!L320!!not
+  specified!!!!||Caterpillar!!TRUCK, EARTH MOVING!!not specified!!3406B!!D||Caterpillar!!TRUCK,
+  EARTH MOVING!!not specified!!3406E!!D
+custom_attrs:
+  bckpltDiaa:
+    value: 7.852
+    type: DECIMAL
+  bckpltDiaatol:
+    value:
+    type: DECIMAL
+  bckpltDiab:
+    value: 7.001
+    type: DECIMAL
+  bckpltDiabtol:
+    value:
+    type: DECIMAL
+  bckpltDiac:
+    value:
+    type: DECIMAL
+  bckpltDiactol:
+    value:
+    type: DECIMAL
+  bckpltDiad:
+    value:
+    type: DECIMAL
+  bckpltDiadtol:
+    value:
+    type: DECIMAL
+  bckpltCwcdiae:
+    value: 4.1
+    type: DECIMAL
+  bckpltCwcdiaetol:
+    value:
+    type: DECIMAL
+  bckpltBoredia:
+    value: 0.688
+    type: DECIMAL
+  bckpltBorediatol:
+    value:
+    type: DECIMAL
+  bckpltMountingholes:
+    value:
+    type: INTEGER
+  bckpltMountingholedia:
+    value:
+    type: DECIMAL
+  bckpltMntnghlthrdcllt:
+    value:
+    type: ENUMERATION
+  bckpltDyncs:
+    value:
+    type: ENUMERATION
+  bckpltMatl:
+    value:
+    type: ENUMERATION
+  bckpltOal:
+    value: 1.028
+    type: DECIMAL
+  bckpltOaltol:
+    value:
+    type: DECIMAL
+  bckpltHubposf:
+    value:
+    type: DECIMAL
+  bckpltHubposftol:
+    value:
+    type: DECIMAL
+  bckpltCclocposg:
+    value:
+    type: DECIMAL
+  bckpltCclocposgtol:
+    value:
+    type: DECIMAL
+  bckpltLeadinchmfr12angle:
+    value:
+    type: DECIMAL
+  bckpltLeadinchmfrlen:
+    value:
+    type: DECIMAL
+  bckpltSuperbackflatback:
+    value:
+    type: ENUMERATION
+  bckpltWeight:
+    value:
+    type: DECIMAL
+  bckpltDiagram:
+    value:
+    type: INTEGER
