@@ -44,6 +44,8 @@ GEM
       faraday
       multi_json
     erubis (2.7.0)
+    etcd (0.3.0)
+      mixlib-log
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     globalid (0.3.7)
@@ -62,6 +64,7 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
     minitest (5.9.1)
+    mixlib-log (1.7.1)
     multi_json (1.12.1)
     multipart-post (2.0.0)
     netrc (0.11.0)
@@ -116,6 +119,7 @@ DEPENDENCIES
   activesupport
   cassandra-driver
   elasticsearch
+  etcd
   jwt
   minitest
   prawn
