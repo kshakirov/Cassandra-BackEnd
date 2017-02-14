@@ -6,6 +6,7 @@ require 'digest'
 require 'jwt'
 require 'yaml'
 require 'logger'
+require "march_hare"
 require 'action_mailer'
 require 'active_support'
 require 'active_support/all'
@@ -28,7 +29,9 @@ class Public < Sinatra::Base
     set :loginBackEnd, TurboCassandra::Login.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
+    set :messageLogController, TurboCassandra::Controller::MessageLog.new
     set :md5, Digest::MD5.new
+    set :admin_email, "kyrylo.shakirov@zorallabs.com"
   end
 
   ActionMailer::Base.smtp_settings = {
@@ -145,6 +148,11 @@ class Public < Sinatra::Base
     {
         visitor_id: SecureRandom.uuid
     }.to_json
+  end
+
+  post '/frontend/customer/password/reset/' do
+      settings.messageLogController.add_password_reset_msg(request.body.read,
+                                                    settings.admin_email)
   end
 
   after do
