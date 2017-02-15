@@ -3,8 +3,9 @@ require '../test_helper'
 class TestMessageLogController < Minitest::Test
   def setup
     @message_log_api = TurboCassandra::API::MessageLog.new
-    @message_log_controller = TurboCassandra::Controller::MessageLog.new
-    @generator = Cassandra::Uuid::Generator.new()
+    @rabbit_queue = TurboCassandra::Controller::RabbitQueue.new("localhost")
+    @message_log_controller = TurboCassandra::Controller::MessageLog.new(@rabbit_queue.connection)
+    @generator = Cassandra::Uuid::Generator.new
   end
 
   def test_add
@@ -13,7 +14,7 @@ class TestMessageLogController < Minitest::Test
     }
     result = @message_log_controller.add_password_reset_msg(request.to_json, "kshakirov@zoral.com.ua")
     assert_nil result
-    p "end"
+
   end
 
   def test_insert
@@ -32,6 +33,9 @@ class TestMessageLogController < Minitest::Test
     assert result.size > 0
   end
 
-
+  def teardown
+    p "Finishing tests"
+    @rabbit_queue.connection.close
+  end
 
 end

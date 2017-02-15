@@ -1,0 +1,13 @@
+test:
+  queue_host:  'localhost'
+
+development:
+  queue_host:  'localhost'
+
+staging:
+   queue_host:  '10.0.3.1'
+
+production:
+   queue_host:  '10.0.3.1'
+
+

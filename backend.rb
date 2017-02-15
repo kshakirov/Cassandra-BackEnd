@@ -19,9 +19,9 @@ require_relative 'mailer'
 
 class Public < Sinatra::Base
   helpers Sinatra::Cookies
-
   set :bind, '0.0.0.0'
   set :port, 4700
+  set :rabbit_queue,  TurboCassandra::Controller::RabbitQueue.new("localhost")
 
   configure do
     set :menuBackEnd, TurboCassandra::MenuBackEnd.new
@@ -29,7 +29,7 @@ class Public < Sinatra::Base
     set :loginBackEnd, TurboCassandra::Login.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
-    set :messageLogController, TurboCassandra::Controller::MessageLog.new
+    set :messageLogController, TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection)
     set :md5, Digest::MD5.new
     set :admin_email, "kyrylo.shakirov@zorallabs.com"
   end

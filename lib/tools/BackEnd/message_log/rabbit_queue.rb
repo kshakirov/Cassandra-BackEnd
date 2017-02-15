@@ -1,9 +1,9 @@
 module TurboCassandra
   module Controller
-    class RabbitConnection
-      attr_reader
+    class RabbitQueue
+      attr_reader :connection
       def initialize rabbit_host
-        @conn = MarchHare.connect(:hostname => rabbit_host)
+        @connection = MarchHare.connect(:hostname => rabbit_host)
       end
     end
   end

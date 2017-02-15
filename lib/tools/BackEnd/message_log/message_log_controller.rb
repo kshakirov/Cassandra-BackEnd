@@ -2,10 +2,9 @@ module TurboCassandra
   module Controller
     class MessageLog
       private
-      def prepare_queue rabbit_host, queue
-        conn = MarchHare.connect(:hostname => rabbit_host)
-        ch = conn.create_channel
-        return conn, ch.queue(queue)
+      def prepare_queue rabbit_conn, queue
+        channel = rabbit_conn.create_channel
+        channel.queue(queue)
       end
 
       def prepare_incoming_message request_payload, admin_email
@@ -32,10 +31,10 @@ module TurboCassandra
       end
 
       public
-      def initialize (rabbit_host ="localhost", queue='customer_email')
+      def initialize (rabbit_conn, queue='customer_email')
         @message_log_api = TurboCassandra::API::MessageLog.new
         @queue = queue
-        @conn, @channel = prepare_queue(rabbit_host, queue)
+        @channel = prepare_queue(rabbit_conn, queue)
       end
 
       def add_password_reset_msg read, admin_email
@@ -43,7 +42,6 @@ module TurboCassandra
         message_data = prepare_incoming_message(request_payload, admin_email)
         @message_log_api.add_message(message_data)
         @channel.publish(prepare_queue_payload_reset(request_payload["email"]), :routing_key => @queue)
-        @conn.close
       end
 
       def add_password_sent_msg read, admin_email

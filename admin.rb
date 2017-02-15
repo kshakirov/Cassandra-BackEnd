@@ -1,7 +1,7 @@
 class Admin < Sinatra::Base
 
   use JwtAuth
-
+  set :rabbit_queue,  TurboCassandra::Controller::RabbitQueue.new("localhost")
 
   configure do
     set :customerBackEnd, TurboCassandra::CustomerBackEnd.new
@@ -11,7 +11,7 @@ class Admin < Sinatra::Base
     set :attributeBackEnd, TurboCassandra::AttributeBackEnd.new
     set :attributeSetBackEnd, TurboCassandra::AttributeSetBackEnd.new
     set :adminBackEnd, TurboCassandra::AdminBackEnd.new
-    set :messageLogController, TurboCassandra::Controller::MessageLog.new
+    set :messageLogController,TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection)
     set :admin_email, "kyrylo.shakirov@zorallabs.com"
   end
 
