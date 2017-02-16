@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'sinatra/config_file'
 require "sinatra/cookies"
 require 'json'
 require 'cassandra'
@@ -18,10 +19,16 @@ require_relative 'mailer'
 
 
 class Public < Sinatra::Base
+  register Sinatra::ConfigFile
   helpers Sinatra::Cookies
+  #set :environments, %w{development test production staging}
+  config_file 'config/config.yaml'
+  set :rabbit_queue,
+      TurboCassandra::Controller::RabbitQueue.
+          new(self.send(ENV['TURBO_MODE'])['queue_host'])
   set :bind, '0.0.0.0'
   set :port, 4700
-  set :rabbit_queue,  TurboCassandra::Controller::RabbitQueue.new("localhost")
+
 
   configure do
     set :menuBackEnd, TurboCassandra::MenuBackEnd.new

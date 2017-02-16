@@ -55,11 +55,11 @@ module TurboCassandra
         {
             result: 'success',
             token: token(customer)
-        }.to_json
+        }
       else
         {
             result: 'failed'
-        }.to_json
+        }
       end
     end
 
