@@ -1,6 +1,7 @@
 module TurboCassandra
   module Controller
     class Admin
+      include TurboCassandra::AdminUtils
       private
 
       def get_customer_by_email email
@@ -55,7 +56,9 @@ module TurboCassandra
       def add_customer_info email
         {
             "email" => email,
-            "group_id" => '2'
+            "group_id" => '2',
+            "default_shipping_address" => add_default_shipping_address,
+            "default_billing_address" => add_default_billing_address
         }
       end
 
