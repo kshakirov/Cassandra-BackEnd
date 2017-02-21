@@ -26,16 +26,17 @@ module TurboCassandra
       def prepare_queue_payload email, action
         {
             "email": email,
-             "action": action
+            "action": action
         }.to_json
       end
 
       def _add_incomming sender_email, admin_email, body, payload
         message_data = prepare_incoming_message(sender_email, admin_email, body)
         @message_log_api.add_message(message_data)
-        @channel.publish( payload, :routing_key => @queue)
+        @channel.publish(payload, :routing_key => @queue)
       end
-      def _add_outcomming  recepient_email, admin_email, body
+
+      def _add_outcomming recepient_email, admin_email, body
         message_date = prepare_outcoming_message(recepient_email, admin_email, body)
         @message_log_api.add_message(message_date)
       end
@@ -51,7 +52,7 @@ module TurboCassandra
         request_payload = JSON.parse read
         payload = prepare_queue_payload(request_payload["email"], 'reset')
         _add_incomming(request_payload["email"],
-                       admin_email, 'Reset Password', payload )
+                       admin_email, 'Reset Password', payload)
       end
 
       def add_password_sent_msg read, admin_email
@@ -71,10 +72,6 @@ module TurboCassandra
         message = "New  Customer [#{request_payload['email']}],  new password   [ #{request_payload['password']}]"
         _add_outcomming(request_payload["email"], admin_email, message)
       end
-
-
-
-
     end
   end
 

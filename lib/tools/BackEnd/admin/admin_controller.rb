@@ -52,8 +52,15 @@ module TurboCassandra
         customer_hash
       end
 
+      def add_customer_info email
+        {
+            "email" => email,
+            "group_id" => '2'
+        }
+      end
+
       def _create_new_customer email
-        customer_hash = {"email" => email}
+        customer_hash = add_customer_info(email)
         password = create_password(customer_hash)
         @customer.new(customer_hash)
         respond_with_customer(customer_hash, password)
