@@ -4,13 +4,13 @@ class Admin < Sinatra::Base
   set :rabbit_queue,  TurboCassandra::Controller::RabbitQueue.new("localhost")
 
   configure do
-    set :customerBackEnd, TurboCassandra::CustomerBackEnd.new
+    set :customerController, TurboCassandra::Controller::Customer.new
     set :productBackEnd, TurboCassandra::ProductBackEnd.new
     set :loginBackEnd, TurboCassandra::Login.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
     set :attributeBackEnd, TurboCassandra::AttributeBackEnd.new
     set :attributeSetBackEnd, TurboCassandra::AttributeSetBackEnd.new
-    set :adminBackEnd, TurboCassandra::AdminBackEnd.new
+    set :adminController, TurboCassandra::Controller::Admin.new
     set :messageLogController,TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection)
     set :admin_email, "kyrylo.shakirov@zorallabs.com"
   end
@@ -21,11 +21,11 @@ class Admin < Sinatra::Base
   end
 
   get '/customer/' do
-    settings.customerBackEnd.get_list
+    settings.customerController.get_all
   end
 
   get '/customer/:id' do
-    settings.customerBackEnd.get_customer_info(params['id'].to_i)
+    settings.customerController.get_account(params['id'].to_i)
   end
 
   get '/customer/:id/order/' do
@@ -55,7 +55,12 @@ class Admin < Sinatra::Base
 
   put '/customer/password/reset/' do
     request_payload = JSON.parse request.body.read
-    settings.adminBackEnd.reset_password(request_payload['email'])
+    settings.adminController.reset_password(request_payload['email'])
+  end
+
+  put '/customer/new/' do
+    request_payload = JSON.parse request.body.read
+    settings.adminController.create_new_customer(request_payload['email'])
   end
 
   post '/message/' do

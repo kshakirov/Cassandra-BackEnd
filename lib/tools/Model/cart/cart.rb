@@ -2,7 +2,7 @@ module TurboCassandra
   class Cart
     public
     def initialize
-      @customer = Customer.new
+      @customer = TurboCassandra::API::Customer.new
     end
 
     private

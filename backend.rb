@@ -18,6 +18,10 @@ require_relative 'lib/sources'
 require_relative 'mailer'
 
 
+
+
+
+
 class Public < Sinatra::Base
   register Sinatra::ConfigFile
   helpers Sinatra::Cookies
@@ -133,11 +137,7 @@ class Public < Sinatra::Base
     email.deliver
   end
 
-  get '/frontend/order/:id/print' do
-    content_type 'application/pdf'
-    settings.orderBackEnd.print(params[:id].to_i)
 
-  end
 
   get '/frontend/product/viewed' do
     if cookies[:visitorid]
@@ -162,8 +162,17 @@ class Public < Sinatra::Base
                                                     settings.admin_email)
   end
 
-  after do
-    response.body = JSON.dump(response.body)
+  post '/frontend/customer/new/' do
+    settings.messageLogController.add_new_customer_msg(request.body.read,
+                                                         settings.admin_email)
+  end
+
+
+
+  after  do
+    unless  request.path_info.include?  "print"
+      response.body = JSON.dump(response.body)
+    end
   end
 
 end

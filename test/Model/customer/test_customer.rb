@@ -3,7 +3,7 @@ require_relative 'test_helper'
 
 class TestCustomer < Minitest::Test
   def setup
-    @customer = TurboCassandra::Customer.new
+    @customer = TurboCassandra::Model::Customer.new
   end
 
   def test_save
@@ -24,7 +24,7 @@ class TestCustomer < Minitest::Test
     @customer.update(hash)
   end
 
-  def test_create
-
+  def test_new
+       @customer.new ({'email' => "kirill.shakirov4@gmail.com", 'password' => "test"})
   end
 end

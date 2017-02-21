@@ -8,13 +8,21 @@ class TestMessageLogController < Minitest::Test
     @generator = Cassandra::Uuid::Generator.new
   end
 
-  def test_add
+  def test_add_reset_msg
     request = {
-        email: "kshakirov@zoral.com.ua"
+        'email' => "kshakirov@zoral.com.ua"
     }
     result = @message_log_controller.add_password_reset_msg(request.to_json, "kshakirov@zoral.com.ua")
-    assert_nil result
+    refute_nil result
 
+  end
+
+  def test_add_new_customer
+    request = {
+        'email' => "kshakirov@zoral.com.ua"
+    }
+    result = @message_log_controller.add_new_customer_msg(request.to_json, "kshakirov@zoral.com.ua")
+    refute_nil result
   end
 
   def test_insert

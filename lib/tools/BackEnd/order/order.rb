@@ -4,7 +4,7 @@ module TurboCassandra
     public
     def initialize
       @order = Order.new
-      @customer = Customer.new
+      @customer = TurboCassandra::API::Customer.new
       @cart = Cart.new
     end
 
@@ -22,7 +22,7 @@ module TurboCassandra
     end
 
     def get_customer_data customer_id
-      customer_data = @customer.find customer_id
+      customer_data = @customer.find_by_customer_id customer_id
       {
           order_id: 1,
           customer_id: customer_id,

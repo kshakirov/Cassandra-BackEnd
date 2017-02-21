@@ -48,7 +48,7 @@ class Customer < Sinatra::Base
   end
 
   configure do
-    set :customerBackEnd, TurboCassandra::CustomerBackEnd.new
+    set :customerController, TurboCassandra::Controller::Customer.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
     set :groupPriceBackEnd, TurboCassandra::GroupPriceBackEnd.new
     set :cartBackEnd, TurboCassandra::CartBackEnd.new
@@ -64,7 +64,7 @@ class Customer < Sinatra::Base
   get '/account' do
       scopes, customer = request.env.values_at :scopes, :customer
     if scopes.include?('view_prices')
-      settings.customerBackEnd.get_customer_info customer['id']
+      settings.customerController.get_account customer['id']
     else
       halt 403
     end
@@ -125,7 +125,7 @@ class Customer < Sinatra::Base
     customer_id = customer.first['id']
     request_payload = JSON.parse request.body.read
     order_data = settings.orderBackEnd.save(customer_id, request_payload)
-    customer = settings.customerBackEnd.get_customer_info customer_id
+    customer = settings.customerController.get_account customer_id
     email = Mailer.place_order customer, order_data
     begin
     email.deliver
@@ -137,7 +137,7 @@ class Customer < Sinatra::Base
 
   get '/data' do
     scopes, customer = request.env.values_at :scopes, :customer
-    settings.customerBackEnd.get_customer_data customer
+    settings.customerController.get_customer_data customer
   end
 
 
@@ -149,12 +149,12 @@ class Customer < Sinatra::Base
 
   put '/account/' do
     customer_data = JSON.parse request.body.read
-    settings.customerBackEnd.update customer_data
+    settings.customerController.update customer_data
   end
 
   put '/account/password/' do
     customer_data = JSON.parse request.body.read
-    result = settings.customerBackEnd.update_password customer_data
+    result = settings.customerController.update_password customer_data
     if result
       200
     else
@@ -177,6 +177,7 @@ class Customer < Sinatra::Base
     customer = request.env.values_at(:customer).first
     settings.comparedProductsBackEnd.delete( customer['id'], params['id'].to_i)
   end
+
 
   after do
     response.body = JSON.dump(response.body)

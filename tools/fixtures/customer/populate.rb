@@ -1,7 +1,7 @@
 require_relative '../tools_helper'
 
 customers_hashes = read_customers_from_file
-customer = TurboCassandra::Customer.new
+customer = TurboCassandra::Model::Customer.new
 customer_batch = TurboCassandra::CustomerBatch.new
 
 customers_hashes.each_with_index do |customer_hash|

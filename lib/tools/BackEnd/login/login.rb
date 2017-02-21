@@ -2,7 +2,7 @@ module TurboCassandra
   class Login
     public
     def initialize
-      @customer = Customer.new
+      @customer = TurboCassandra::API::Customer.new
       @jwt_issuer = 'zoral.com'
       @jwt_secret = 'keepitsecret'
 
