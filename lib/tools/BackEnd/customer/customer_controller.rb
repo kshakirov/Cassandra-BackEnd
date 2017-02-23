@@ -4,7 +4,7 @@ module TurboCassandra
       public
       def initialize
         @customer = TurboCassandra::API::Customer.new
-        @cart = Cart.new
+        @cart = TurboCassandra::API::Cart.new
         @login_manager = Login.new
       end
 
@@ -49,7 +49,7 @@ module TurboCassandra
       end
 
       def get_cart_items_number customer
-        cart = @cart.find_by_customer_id(customer['id'])
+        cart = @cart.find(customer['id'])
         unless cart.nil?
           cart['items'].keys.size
         end

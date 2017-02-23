@@ -3,7 +3,6 @@ module TurboCassandra
     class Cart
       public
       def initialize
-        @customer = TurboCassandra::API::Customer.new
       end
 
       private
@@ -19,6 +18,10 @@ module TurboCassandra
 
       def create_select_where_id_cql
         "SELECT  * FROM carts  WHERE id=?"
+      end
+
+      def select_items_where_id_cql
+        "SELECT  items FROM carts  WHERE id=?"
       end
 
       def create_update_product_item_sql
@@ -114,6 +117,14 @@ module TurboCassandra
         cart = find_by_customer_id(customer_id)
         execute(create_update_product_item_sql, [{}, cart['id']])
       end
+
+      def count_items customer_id
+        items = execute(select_items_where_id_cql, [customer_id])
+        unless items.nil? or items.first.nil?
+          items.first['items'].size
+        end
+      end
+
     end
   end
 end

@@ -29,6 +29,19 @@ module TurboCassandra
         product_id = product_id.to_i
         @cart_api.delete_product(customer_id, product_id)
       end
+
+      def empty_customer_cart customer_data
+        customer_id = get_customer_id(customer_data)
+        @cart_api.empty_cart(customer_id)
+      end
+
+      def get_products_count customer_data
+        customer_id = get_customer_id(customer_data)
+        {
+           count:  @cart_api.count_products(customer_id)
+        }
+      end
+
     end
   end
 end

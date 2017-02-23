@@ -96,9 +96,18 @@ class Customer < Sinatra::Base
     settings.cartController.get_customer_cart(request.env.values_at :customer)
   end
 
+  get '/cart/product/count' do
+    settings.cartController.get_products_count(request.env.values_at :customer)
+  end
+
   post '/cart/product' do
     settings.cartController.add_product_to_cart(
         request.env.values_at(:customer), request.body.read)
+  end
+
+  delete '/cart' do
+    settings.cartController.empty_customer_cart(
+        request.env.values_at(:customer))
   end
 
   delete '/cart/product/:id' do
