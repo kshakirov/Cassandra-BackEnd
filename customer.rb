@@ -51,7 +51,7 @@ class Customer < Sinatra::Base
     set :customerController, TurboCassandra::Controller::Customer.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
     set :groupPriceBackEnd, TurboCassandra::GroupPriceBackEnd.new
-    set :cartBackEnd, TurboCassandra::CartBackEnd.new
+    set :cartController, TurboCassandra::Controller::Cart.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
     set :comparedProductsBackEnd, TurboCassandra::ComparedProductsBackEnd.new
   end
@@ -62,7 +62,7 @@ class Customer < Sinatra::Base
   end
 
   get '/account' do
-      scopes, customer = request.env.values_at :scopes, :customer
+    scopes, customer = request.env.values_at :scopes, :customer
     if scopes.include?('view_prices')
       settings.customerController.get_account customer['id']
     else
@@ -83,31 +83,27 @@ class Customer < Sinatra::Base
     customer = request.env.values_at :customer
     sku = params[:id].to_i
     settings.logBackEnd.new_customer_visit({
-                                customer_id: customer.first['id'],
-                                ip: env['REMOTE_ADDR'],
-                                product: sku
-                            })
+                                               customer_id: customer.first['id'],
+                                               ip: env['REMOTE_ADDR'],
+                                               product: sku
+                                           })
     price = settings.groupPriceBackEnd.get_price(sku, customer.first['group'])
     {price: price}
 
   end
 
   get '/cart' do
-    customer = request.env.values_at :customer
-    customer_id = customer.first['id']
-    settings.cartBackEnd.find(customer_id)
+    settings.cartController.get_customer_cart(request.env.values_at :customer)
   end
 
   post '/cart/product' do
-    customer_id = get_customer_id(request.env.values_at :customer)
-    request_payload = JSON.parse request.body.read
-    settings.cartBackEnd.add_item(customer_id, request_payload['product'],
-                                  request_payload['price'], request_payload['qty'])
+    settings.cartController.add_product_to_cart(
+        request.env.values_at(:customer), request.body.read)
   end
 
   delete '/cart/product/:id' do
-    customer_id = get_customer_id(request.env.values_at :customer)
-    settings.cartBackEnd.delete_item(customer_id, params[:id].to_i)
+    settings.cartController.delete_product_from_cart(
+        request.env.values_at(:customer), params[:id])
   end
 
   get '/order/new' do
@@ -128,8 +124,8 @@ class Customer < Sinatra::Base
     customer = settings.customerController.get_account customer_id
     email = Mailer.place_order customer, order_data
     begin
-    email.deliver
-    {order_id: order_data['order_id'], mailed: true}
+      email.deliver
+      {order_id: order_data['order_id'], mailed: true}
     rescue
       {order_id: order_data['order_id'], mailed: false}
     end
@@ -148,8 +144,8 @@ class Customer < Sinatra::Base
   end
 
   put '/account/' do
-    customer_data = JSON.parse request.body.read
-    settings.customerController.update customer_data
+    settings.customerController.update_account(
+        JSON.parse request.body.read)
   end
 
   put '/account/password/' do
@@ -175,7 +171,7 @@ class Customer < Sinatra::Base
 
   delete '/compared_product/:id' do
     customer = request.env.values_at(:customer).first
-    settings.comparedProductsBackEnd.delete( customer['id'], params['id'].to_i)
+    settings.comparedProductsBackEnd.delete(customer['id'], params['id'].to_i)
   end
 
 

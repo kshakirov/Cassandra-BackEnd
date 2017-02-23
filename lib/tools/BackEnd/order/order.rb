@@ -5,7 +5,7 @@ module TurboCassandra
     def initialize
       @order = Order.new
       @customer = TurboCassandra::API::Customer.new
-      @cart = Cart.new
+      @cart =  TurboCassandra::API::Cart.new
     end
 
     private
@@ -52,7 +52,7 @@ module TurboCassandra
 
 
     def get_cart_data customer_id
-      @cart.find_by_customer_id(customer_id)
+      @cart.find(customer_id)
     end
 
     def add_cart_info cart
@@ -85,7 +85,7 @@ module TurboCassandra
         order_data['order_id'] = next_id + 1
         order_data['customer_id'] = customer_id
         @order.insert order_data
-        @cart.purge(customer_id)
+        @cart.empty_cart(customer_id)
         order_data
     end
 

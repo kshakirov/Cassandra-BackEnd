@@ -12,7 +12,7 @@ module TurboCassandra
         @customer.find_by_customer_id id
       end
 
-      def update_accout data
+      def update_account data
         @customer.update(data)
       end
 
@@ -21,7 +21,7 @@ module TurboCassandra
         if validated
           data['password'] = @login_manager.hash_password(data['password_new'])
           data.delete 'password_new'
-          update_accout(data)
+          update_account(data)
         end
         validated
       end

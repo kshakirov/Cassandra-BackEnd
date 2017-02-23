@@ -2,7 +2,7 @@ require_relative "test_helper"
 class TestCart < Minitest::Test
 
   def setup
-    @cart_model = TurboCassandra::CartBackEnd.new
+    @cart_model = TurboCassandra::Cart.new
     @product_model = TurboCassandra::ProductBackEnd.new
   end
 
