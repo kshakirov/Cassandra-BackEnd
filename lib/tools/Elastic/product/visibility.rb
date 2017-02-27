@@ -1,7 +1,7 @@
 module TurboCassandra
   class Visibility
     def initialize
-      @product = Product.new
+      @product = TurboCassandra::API::Product.new
     end
 
     def is_turbo? product

@@ -10,6 +10,9 @@ module TurboCassandra
         def where_skus skus
           @product_model.where skus
         end
+        def each &block
+          @product_model.each &block
+        end
 
     end
   end

@@ -2,7 +2,7 @@ require_relative 'inxexer_helper'
 
 
 elastic_host = get_elastic_host
-product = TurboCassandra::Product.new
+product = TurboCassandra::API::Product.new
 index_manager = TurboCassandra::ElasticIndex.new(elastic_host)
 
 product.each { |r|

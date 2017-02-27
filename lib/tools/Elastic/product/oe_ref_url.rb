@@ -3,12 +3,12 @@ module TurboCassandra
     include TurboTools
     public
     def initialize
-      @product = Product.new
+      @product_api = TurboCassandra::API::Product.new
     end
 
     private
     def _each_interchange sku
-        p = @product.find sku
+        p = @product_api.find_by_sku sku
         unless p.first.nil?
           p = p.first
           {

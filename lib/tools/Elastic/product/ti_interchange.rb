@@ -2,7 +2,7 @@ module TurboCassandra
   class TiInterchange
     public
     def initialize
-      @product = Product.new
+      @product = TurboCassandra::API::Product.new
     end
 
     private
@@ -26,7 +26,7 @@ module TurboCassandra
     def _get_ti_interchange intgerchanges
       response  = nil
       intgerchanges.select do |sku|
-       product = @product.find  sku
+       product = @product.find_by_sku  sku
        if is_ti_manufactured(product)
           response = prepare_response(product.first)
        end
