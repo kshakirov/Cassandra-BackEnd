@@ -1,4 +1,4 @@
-require_relative 'inxexer_helper'
+require_relative 'indexer_helper'
 
 
 elastic_host = get_elastic_host

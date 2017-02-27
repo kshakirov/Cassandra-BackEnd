@@ -1,17 +1,21 @@
 test:
   queue_host:  'localhost'
   elastic_host:  'localhost'
+  tcas_host:  'localhost:10000'
 
 development:
   queue_host:  'localhost'
   elastic_host:  'localhost'
+  tcas_host:  'localhost:10000'
 
 staging:
    queue_host:  '10.0.3.1'
    elastic_host:  'localhost'
+   tcas_host:  'localhost'
 
 production:
    queue_host:  '10.0.3.1'
    elastic_host:  'localhost'
+   tcas_host:  'localhost'
 
 
