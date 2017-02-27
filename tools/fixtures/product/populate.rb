@@ -1,7 +1,7 @@
 require_relative '../tools_helper'
 
-product = TurboCassandra::Product.new
-product_batch = TurboCassandra::ProductBatch.new
+product = TurboCassandra::Model::Product.new
+product_batch = TurboCassandra::API::ProductBatch.new
 product_hashes = read_product_from_file
 
 product_hashes.each_with_index do |product_hash, index|

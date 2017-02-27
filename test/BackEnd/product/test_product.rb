@@ -3,17 +3,28 @@ require_relative "../test_helper"
 class TestProduct < Minitest::Test
 
   def setup
-    @product_backend = TurboCassandra::ProductBackEnd.new
+    @product_api = TurboCassandra::API::Product.new
+    @product_controller = TurboCassandra::Controller::Product.new
   end
 
-  def test_get_products
-    prs = @product_backend.get_products [62923,65019]
-    refute_nil prs
+  def test_find_product
+    product = @product_api.find_by_sku 1
+    refute_nil product
   end
 
-  def test_get_product
-    prs = @product_backend.get_product 62923
-    refute_nil prs
+  def test_where_skus
+    products = @product_api.where_skus [1, 64958]
+    refute_nil products
+  end
+
+  def test_controller_get_product
+    product = @product_controller.get_product 1
+    refute_nil product
+  end
+
+  def test_controller_get_products
+    products = @product_controller.get_products [1, 64958]
+    refute_nil products
   end
 
 end

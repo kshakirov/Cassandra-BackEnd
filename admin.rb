@@ -5,7 +5,7 @@ class Admin < Sinatra::Base
 
   configure do
     set :customerController, TurboCassandra::Controller::Customer.new
-    set :productBackEnd, TurboCassandra::ProductBackEnd.new
+    set :product_controller, TurboCassandra::Controller::Product.new
     set :loginBackEnd, TurboCassandra::Login.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
     set :attributeBackEnd, TurboCassandra::AttributeBackEnd.new

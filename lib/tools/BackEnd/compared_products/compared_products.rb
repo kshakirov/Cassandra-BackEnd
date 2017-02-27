@@ -4,7 +4,7 @@ module TurboCassandra
     def_delegator :@group_price_backend, :get_price, :get_price
     def initialize
       @compared_products = ComparedProducts.new
-      @product_backend = TurboCassandra::ProductBackEnd.new
+      @product_controller = TurboCassandra::Controller::Product.new
       @group_price_backend = TurboCassandra::GroupPriceBackEnd.new
     end
     private
@@ -20,7 +20,7 @@ module TurboCassandra
     def _find_by_customer customer_id, customer_group
       skus = @compared_products.find(customer_id)
         unless skus.nil?
-          @product_backend.get_products(skus).map{|p| {
+          @product_controller.get_products(skus).map{|p| {
               sku: p['sku'],
               part_number:  p['part_number'],
               part_type: p['part_type'],

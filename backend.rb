@@ -36,7 +36,7 @@ class Public < Sinatra::Base
 
   configure do
     set :menuBackEnd, TurboCassandra::MenuBackEnd.new
-    set :productBackEnd, TurboCassandra::ProductBackEnd.new
+    set :productController, TurboCassandra::Controller::Product.new
     set :loginBackEnd, TurboCassandra::Login.new
     set :orderBackEnd, TurboCassandra::OrderBackEnd.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
@@ -122,7 +122,7 @@ class Public < Sinatra::Base
                                         product: request_payload['sku'].to_i
                                     })
     end
-    settings.productBackEnd.get_product(request_payload['sku'])
+    settings.productController.get_product(request_payload['sku'])
   end
 
 

@@ -1,8 +1,7 @@
 module TurboCassandra
   class FeaturedTransformer
     def initialize
-      @product_manager = Product.new
-      @product_backend = TurboCassandra::ProductBackEnd.new
+      @product_backend = TurboCassandra::Controller::Product.new
     end
     def _get_scheleton product
       {
