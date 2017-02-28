@@ -33,18 +33,23 @@ module TurboCassandra
       end
 
       def prepare_product_item product, price, qty
-        {
-            product['sku'] =>
-                {
-                    'part_type' => product['part_type'],
-                    'ti_part' => product['part_number'],
-                    'oem_part' => '1',
-                    'unit_price' => price.to_s,
-                    'qty' => qty.to_s,
-                    'subtotal' => (price * qty).to_s
-                }
+        item_hash = {}
+        item_content = {}
+        if not product['ti_part_sku'].nil?
+          item_hash[product['ti_part_sku']] = item_content
+          item_content['ti_part'] = product['ti_part_number']
+          item_content['oem_part'] = product['part_number']
+          item_content['oem_part_sku'] = product['sku'].to_s
 
-        }
+        else
+          item_hash[product['sku']] = item_content
+          item_content['ti_part'] = product['part_number']
+        end
+        item_content['part_type'] =product['part_type']
+        item_content['unit_price'] =price.to_s
+        item_content['qty'] =qty.to_s
+        item_content['subtotal'] =(price * qty).to_s
+        item_hash
       end
 
 
@@ -82,7 +87,10 @@ module TurboCassandra
         cart['items'].delete(product_sku)
         cql = create_update_product_item_sql
         execute(cql, [cart['items'], cart['id']])
+      end
 
+      def _count_items items
+        items.values.map{|i| i['qty']}.inject{|sum,q| sum.to_i + q.to_i}
       end
 
       public
@@ -121,7 +129,7 @@ module TurboCassandra
       def count_items customer_id
         items = execute(select_items_where_id_cql, [customer_id])
         unless items.nil? or items.first.nil?
-          items.first['items'].size
+          _count_items(items.first['items'])
         end
       end
 

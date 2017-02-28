@@ -1,21 +1,23 @@
-require_relative "test_helper"
+require_relative "../test_helper"
 class TestCart < Minitest::Test
 
   def setup
-    @cart_model = TurboCassandra::Cart.new
-    @product_model = TurboCassandra::ProductBackEnd.new
+    @cart_model = TurboCassandra::Model::Cart.new
+    @product_controller = TurboCassandra::Controller::Product.new
   end
 
   def test_find
     cart = @cart_model.find 487
-    cart  = JSON.parse cart
-    p cart
+    refute_nil  cart
   end
 
   def test_add_item
-    product = @product_model.get_product 41661
-    product = JSON.parse product
-    @cart_model.add_item 487, product, 74.8, 2
+    @cart_model.delete_product 487, 1
+    product = @product_controller.get_product 1
+    @cart_model.add_product 487, product, 74.8, 2
+    count  = @cart_model.count_items(487)
+    assert_equal 2, count
+
   end
 
   def test_delete_item
