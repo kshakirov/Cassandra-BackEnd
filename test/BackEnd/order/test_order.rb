@@ -19,5 +19,10 @@ class TestOrder < Minitest::Test
     id  = @order_controler.save 12, {}
     assert id
   end
+
+  def test_also_bought
+    products  = @order_controler.get_also_bought_products('42784')
+    refute_nil products
+  end
 end
 

@@ -35,7 +35,8 @@ module TurboCassandra
       end
 
       def execute_query_inconsistent cql, args
-        statement, session = _execute(cql)
+        session = TurboCluster.get_session
+        statement = session.prepare(cql)
         session.execute(statement, arguments: args)
       end
     end

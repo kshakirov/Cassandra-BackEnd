@@ -9,6 +9,9 @@ module TurboCassandra
       def_delegator :@order_model, :find_by_id, :find_by_id
       def_delegator :@order_model, :get_next_order_id, :get_next_order_id
       def_delegator :@order_model, :insert, :insert
+      def all
+          @order_model.find_all
+      end
     end
 
   end

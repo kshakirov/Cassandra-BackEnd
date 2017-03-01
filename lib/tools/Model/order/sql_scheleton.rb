@@ -16,6 +16,10 @@ module TurboCassandra
       def create_where_id_cql
         "SELECT * FROM orders  WHERE order_id=? "
       end
+
+      def create_select_all_cql
+        "SELECT * FROM orders"
+      end
     end
   end
 end

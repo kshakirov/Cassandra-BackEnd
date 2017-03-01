@@ -3,9 +3,10 @@ module TurboCassandra
     class Order
       attr_accessor :order
       include OrderPrint
+      include AlsoBought
       public
       def initialize
-        @order = TurboCassandra::Model::Order.new
+        @order = TurboCassandra::API::Order.new
         @customer = TurboCassandra::API::Customer.new
         @cart = TurboCassandra::API::Cart.new
       end

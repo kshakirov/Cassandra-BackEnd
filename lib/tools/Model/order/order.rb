@@ -23,9 +23,11 @@ module TurboCassandra
         execute_query_inconsistent(create_where_id_cql, [id])
       end
 
-      def _execute cql
-        session = TurboCluster.get_session
-        return session.prepare(cql), session
+      def find_all
+        orders = execute_query_inconsistent(create_select_all_cql,[])
+        unless orders.nil?
+          orders.map { |order| order }
+        end
       end
 
     end

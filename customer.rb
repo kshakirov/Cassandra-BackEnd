@@ -183,6 +183,9 @@ class Customer < Sinatra::Base
     settings.comparedProductsBackEnd.delete(customer['id'], params['id'].to_i)
   end
 
+  get '/product/:id/also_bought/' do
+    settings.orderController.get_also_bought_products(params['id'])
+  end
 
   after do
     response.body = JSON.dump(response.body)
