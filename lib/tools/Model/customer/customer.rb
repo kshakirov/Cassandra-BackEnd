@@ -1,7 +1,7 @@
 module TurboCassandra
   module Model
     class Customer
-      include TurboCassandra::Utils
+      include TurboCassandra::Model::Utils
       private
       def get_rid_of_null values
         values.map { |v|

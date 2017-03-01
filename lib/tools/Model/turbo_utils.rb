@@ -1,27 +1,44 @@
 module TurboCassandra
-  module Utils
+  module Model
+    module Utils
 
-    def prepare_names hash
-      hash.keys.map { |k| k.to_s }.join(",")
-    end
 
-    def prepare_values values
-      values.map { |v| "?" }.join(",")
-    end
+      def remove_null_values attr_properties
+        attr_properties.select { |k, v| not v.nil? }
+      end
 
-    def prepare_args hash
-      hash.values
-    end
+      def prepare_names hash
+        hash.keys.map { |k| k.to_s }.join(",")
+      end
 
-    def prepare_attributes hash
-      return prepare_names(hash),
-          prepare_values(hash), prepare_args(hash)
-    end
+      def prepare_values values
+        values.map { |v| "?" }.join(",")
+      end
 
-    def execute_query cql, args
-      session = TurboCluster.get_session
-      statement = session.prepare(cql)
-      session.execute(statement, arguments: args, consistency: :one)
+      def prepare_args hash
+        hash.values
+      end
+
+      def prepare_attributes hash
+        return prepare_names(hash),
+            prepare_values(hash), prepare_args(hash)
+      end
+
+      def prepare_attributes! attr_properties
+        properties = remove_null_values(attr_properties)
+        return prepare_names(properties), prepare_values(properties), prepare_args(properties)
+      end
+
+      def execute_query cql, args
+        session = TurboCluster.get_session
+        statement = session.prepare(cql)
+        session.execute(statement, arguments: args, consistency: :one)
+      end
     end
   end
 end
+
+
+
+
+

@@ -1,7 +1,7 @@
 module TurboCassandra
   module Model
     class MessageLog
-      include TurboCassandra::Utils
+      include TurboCassandra::Model::Utils
       private
 
       def insert_cql names, values

@@ -7,7 +7,7 @@ class Admin < Sinatra::Base
     set :customerController, TurboCassandra::Controller::Customer.new
     set :product_controller, TurboCassandra::Controller::Product.new
     set :loginBackEnd, TurboCassandra::Login.new
-    set :orderBackEnd, TurboCassandra::OrderBackEnd.new
+    set :orderController, TurboCassandra::Controller::Order.new
     set :attributeBackEnd, TurboCassandra::AttributeBackEnd.new
     set :attributeSetBackEnd, TurboCassandra::AttributeSetBackEnd.new
     set :adminController, TurboCassandra::Controller::Admin.new
@@ -29,11 +29,11 @@ class Admin < Sinatra::Base
   end
 
   get '/customer/:id/order/' do
-    settings.orderBackEnd.all(params[:id].to_i)
+    settings.orderController.all(params[:id].to_i)
   end
 
   get '/customer/order/:id' do
-    settings.orderBackEnd.find(params[:id].to_i)
+    settings.orderController.find(params[:id].to_i)
   end
 
   get '/attribute/' do

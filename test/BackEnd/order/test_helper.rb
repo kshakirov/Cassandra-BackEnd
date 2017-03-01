@@ -1,8 +1,0 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require 'json'
-require 'yaml'
-require 'cassandra'
-require 'prawn'
-require 'prawn/table'
-require_relative '../../../lib/sources'

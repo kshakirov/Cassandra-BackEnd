@@ -38,7 +38,7 @@ class Public < Sinatra::Base
     set :menuBackEnd, TurboCassandra::MenuBackEnd.new
     set :productController, TurboCassandra::Controller::Product.new
     set :loginBackEnd, TurboCassandra::Login.new
-    set :orderBackEnd, TurboCassandra::OrderBackEnd.new
+    set :orderBackEnd, TurboCassandra::Controller::Order.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
     set :messageLogController, TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection)
     set :md5, Digest::MD5.new
@@ -148,7 +148,7 @@ class Public < Sinatra::Base
 
   get '/frontend/order/:id/print' do
     content_type 'application/pdf'
-    settings.orderBackEnd.print(params[:id].to_i)
+    settings.orderController.print(params[:id].to_i)
   end
 
   get '/frontend/visitor/id/' do

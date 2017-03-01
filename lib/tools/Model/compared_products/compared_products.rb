@@ -1,6 +1,6 @@
 module TurboCassandra
   class ComparedProducts
-    include TurboCassandra::Utils
+    include TurboCassandra::Model::Utils
     private
 
     def create_insert_cql names, values

@@ -7,16 +7,15 @@ class TestCart < Minitest::Test
   end
 
   def test_find
-    cart = @cart_model.find 487
+    cart = @cart_model.find 12
     refute_nil  cart
   end
 
   def test_add_item
-    @cart_model.delete_product 487, 1
     product = @product_controller.get_product 1
-    @cart_model.add_product 487, product, 74.8, 2
-    count  = @cart_model.count_items(487)
-    assert_equal 2, count
+    @cart_model.add_product 12, product, 74.8, 2
+    count  = @cart_model.count_items(12)
+    assert_equal 2, count.to_i
 
   end
 

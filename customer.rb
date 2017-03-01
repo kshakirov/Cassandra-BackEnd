@@ -49,7 +49,7 @@ class Customer < Sinatra::Base
 
   configure do
     set :customerController, TurboCassandra::Controller::Customer.new
-    set :orderBackEnd, TurboCassandra::OrderBackEnd.new
+    set :orderController, TurboCassandra::Controller::Order.new
     set :groupPriceBackEnd, TurboCassandra::GroupPriceBackEnd.new
     set :cartController, TurboCassandra::Controller::Cart.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
@@ -73,7 +73,7 @@ class Customer < Sinatra::Base
   get '/order' do
     scopes, customer = request.env.values_at :scopes, :customer
     if scopes.include?('view_prices')
-      settings.orderBackEnd.get_order_by_customer_id(customer['id'])
+      settings.orderController.get_order_by_customer_id(customer['id'])
     else
       halt 403
     end
@@ -118,18 +118,18 @@ class Customer < Sinatra::Base
   get '/order/new' do
     customer = request.env.values_at :customer
     customer_id = customer.first['id']
-    settings.orderBackEnd.create_order(customer_id)
+    settings.orderController.create_order(customer_id)
   end
 
   get '/order/:id' do
-    settings.orderBackEnd.get_order(params[:id].to_i)
+    settings.orderController.get_order(params[:id].to_i)
   end
 
   post '/order/save' do
     customer = request.env.values_at :customer
     customer_id = customer.first['id']
     request_payload = JSON.parse request.body.read
-    order_data = settings.orderBackEnd.save(customer_id, request_payload)
+    order_data = settings.orderController.save(customer_id, request_payload)
     customer = settings.customerController.get_account customer_id
     email = Mailer.place_order customer, order_data
     begin
