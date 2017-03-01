@@ -2,7 +2,7 @@ module TurboCassandra
   module Controller
     class Order
       attr_accessor :order
-      include TurboCassandra::OrderPrint
+      include OrderPrint
       public
       def initialize
         @order = TurboCassandra::Model::Order.new

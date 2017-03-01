@@ -38,7 +38,7 @@ class Public < Sinatra::Base
     set :menuBackEnd, TurboCassandra::MenuBackEnd.new
     set :productController, TurboCassandra::Controller::Product.new
     set :loginBackEnd, TurboCassandra::Login.new
-    set :orderBackEnd, TurboCassandra::Controller::Order.new
+    set :orderController, TurboCassandra::Controller::Order.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
     set :messageLogController, TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection)
     set :md5, Digest::MD5.new

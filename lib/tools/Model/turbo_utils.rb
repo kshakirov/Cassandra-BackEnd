@@ -2,7 +2,6 @@ module TurboCassandra
   module Model
     module Utils
 
-
       def remove_null_values attr_properties
         attr_properties.select { |k, v| not v.nil? }
       end
@@ -33,6 +32,11 @@ module TurboCassandra
         session = TurboCluster.get_session
         statement = session.prepare(cql)
         session.execute(statement, arguments: args, consistency: :one)
+      end
+
+      def execute_query_inconsistent cql, args
+        statement, session = _execute(cql)
+        session.execute(statement, arguments: args)
       end
     end
   end
