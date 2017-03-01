@@ -43,7 +43,7 @@ module TurboCassandra
               sku: key,
               name: value['ti_part'],
               part_type: value['part_type'],
-              oem_part: value['oem_part'],
+              oem_part: value['oem_part'] || '',
               qty_ordered: value['qty'].to_s,
               qty_shipped: 0.to_s,
               base_row_total: value['subtotal'].to_s,
