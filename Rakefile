@@ -23,7 +23,6 @@ namespace :db do
       Rake::Task['db:migrate:order'].execute
       Rake::Task['db:migrate:attribute_set'].execute
       Rake::Task['db:migrate:product'].execute
-
     end
   end
   namespace :setup do
@@ -52,15 +51,19 @@ namespace :db do
     task :compared_products do
       ruby "tools/schema/compared_products/create_compared_products.rb"
     end
-
     task :message_log do
       ruby "tools/schema/message_log/create_message_log.rb"
+    end
+    task :order_product do
+      ruby "tools/schema/order/create_order_products.rb"
+      ruby "tools/schema/order/create_product_orders.rb"
     end
     task :all do
       Rake::Task['db:setup:base'].execute
       Rake::Task['db:setup:visitor_log'].execute
       Rake::Task['db:setup:compared_products'].execute
       Rake::Task['db:setup:message_log'].execute
+      Rake::Task['db:migrate:order_product'].execute
     end
   end
 

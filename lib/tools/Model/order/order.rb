@@ -3,7 +3,8 @@ module TurboCassandra
     class Order
 
       include SqlScheleton
-      include TurboCassandra::Model::Utils
+      include OrderProduct
+      include Utils
 
       def insert attr_properties
         names, values, args = prepare_attributes! attr_properties
