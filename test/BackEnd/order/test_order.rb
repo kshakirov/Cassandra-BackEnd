@@ -14,6 +14,8 @@ class TestOrder < Minitest::Test
   def test_create_order
     order = @order_controler.create_order 12
     assert order
+    id  = @order_controler.save 12, order
+    assert id
   end
 
   def test_next_id

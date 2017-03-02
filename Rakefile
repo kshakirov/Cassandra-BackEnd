@@ -75,7 +75,9 @@ namespace :db do
     task :customer do
       ruby "tools/fixtures/customer/populate.rb"
     end
-
+    task :order do
+      ruby "tools/fixtures/order/populate.rb"
+    end
     task :all do
       ruby "tools/fixtures/attribute/populate.rb"
       ruby "tools/fixtures/attribute_set/populate.rb"

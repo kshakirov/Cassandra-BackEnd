@@ -25,6 +25,10 @@ module TurboCassandra
         }
       end
 
+      def map_orders_from_products products
+        products.map { |p| p['order_id'] }
+      end
+
       public
       def register_order_product order_data
         products = map_order_products(order_data)
@@ -40,8 +44,15 @@ module TurboCassandra
         end
       end
 
+      def register_also_bought_products order_data
+        register_product_order(order_data)
+        register_order_product(order_data)
+      end
+
       def get_also_bought_products sku
-          @order_model.find_orders_by_product sku
+        orders = @order_model.find_orders_by_product sku
+        order_ids = map_orders_from_products(orders)
+        @order_model.find_products_by_order(order_ids)
       end
 
     end

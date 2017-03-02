@@ -7,8 +7,8 @@ module TurboCassandra
       def product_order_insert_cql names, values
         "INSERT INTO product_orders  (#{names})  VALUES (#{values})"
       end
-      def order_product_select_cql
-        "SELECT * FROM order_products  WHERE order_id=? "
+      def order_product_select_cql values
+        "SELECT * FROM order_products  WHERE order_id in (#{values}) "
       end
       def product_order_select_cql
         "SELECT * FROM product_orders  WHERE sku=? "

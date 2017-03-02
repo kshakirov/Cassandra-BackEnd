@@ -89,6 +89,7 @@ module TurboCassandra
         order_data['customer_id'] = customer_id
         @order.insert order_data
         @cart.empty_cart(customer_id)
+        @order.register_also_bought_products(order_data)
         order_data
       end
 

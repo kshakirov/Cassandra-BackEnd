@@ -2,11 +2,20 @@ module TurboCassandra
   module Model
     module OrderProduct
       def find_orders_by_product sku
-        execute_query_inconsistent(product_order_select_cql, [sku])
+        products = execute_query_inconsistent(product_order_select_cql, [sku])
+        unless products.nil?
+          return products.map{|p| p}
+        end
+        []
       end
 
-      def find_products_by_order order_id
-        execute_query_inconsistent(order_product_select_cql, [order_id])
+      def find_products_by_order order_ids
+        values = prepare_values(order_ids)
+        orders = execute_query_inconsistent(order_product_select_cql(values), order_ids)
+        unless orders.nil?
+          return orders.map{|o| o}
+        end
+        []
       end
 
       def insert_product_order attr_properties
