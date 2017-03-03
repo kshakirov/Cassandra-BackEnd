@@ -54,6 +54,15 @@ def read_orders_from_file
   JSON.parse data
 end
 
+def read_shipments_from_file
+  fd = File.open(
+      File.expand_path(check_environment('data/shipments.json'), File.dirname(__FILE__)), 'r'
+  )
+  data = fd.read
+  JSON.parse data
+end
+
+
 def read_customers_from_file
   fd = File.open(
       File.expand_path(check_environment('data/customers_production.json'), File.dirname(__FILE__)), 'r'

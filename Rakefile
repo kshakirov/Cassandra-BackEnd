@@ -58,6 +58,11 @@ namespace :db do
       ruby "tools/schema/order/create_order_products.rb"
       ruby "tools/schema/order/create_product_orders.rb"
     end
+
+    task :shipment do
+      ruby "tools/schema/order/create_shipments.rb"
+    end
+
     task :all do
       Rake::Task['db:setup:base'].execute
       Rake::Task['db:setup:visitor_log'].execute

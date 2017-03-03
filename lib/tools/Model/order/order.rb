@@ -5,6 +5,7 @@ module TurboCassandra
       include SqlScheleton
       include OrderProduct
       include Utils
+      include Shipment
 
       def insert attr_properties
         names, values, args = prepare_attributes! attr_properties
