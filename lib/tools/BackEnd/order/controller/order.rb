@@ -110,6 +110,10 @@ module TurboCassandra
         @order.all
       end
 
+      def all_shipments
+        @order.all_shipments
+      end
+
       def print order_id
         order = _get_order_by_id (order_id)
         print_order(order)
