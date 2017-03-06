@@ -10,6 +10,7 @@ namespace :db do
     end
     task :order do
       ruby "tools/schema/order/update_orders_1.rb"
+      ruby "tools/schema/order/update_orders_2.rb"
     end
     task :attribute_set do
       ruby "tools/schema/attribute_set/update_attribute_sets_1.rb"

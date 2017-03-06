@@ -1,19 +1,22 @@
 module TurboCassandra
   module API
     class OrderBatch
-      def process_order_data order_hash
-        order_hash['data'].select { |k, v| not v.nil? }
+
+      def coerce_products  products
+        products.map{|hash|   Hash[hash.map { |k, v| [k, v.to_s] }]}
       end
 
-      def process_order_products order_hash
-        order_hash['products'].map { |product|
-          product[0].select { |k, v| not v.nil? }
-        }
-      end
-
-      def remove_null_values order_hash
-        order_hash['data'] = process_order_data(order_hash)
-        order_hash['products'] = process_order_products(order_hash)
+      def coerce_data o
+        o['order_id'] = o['order_id'].to_i
+        o['customer_id'] = o['customer_id'].to_i
+        o['customer_id'] = o['customer_id'].to_i
+        o['grand_total_invoiced'] = o['ground_total_invoiced'].to_f
+        o.delete 'ground_total_invoiced'
+        o['subtotal'] = o['subtotal'].to_f
+        o['shipping_handling'] = o['shipping_handling'].to_f
+        o['grand_total'] = o['grand_total'].to_f
+        o['updated_at']  =  Time.parse o['updated_at']
+        o['products']  =  coerce_products(o['products'])
       end
     end
   end
