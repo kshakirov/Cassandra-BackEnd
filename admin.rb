@@ -72,6 +72,14 @@ class Admin < Sinatra::Base
     settings.orderController.all
   end
 
+  get '/shipment/' do
+    settings.orderController.all_shipments
+  end
+
+  get '/shipment/:id/order/:order_id' do
+    settings.orderController.find_shipment_by_order_id(params)
+  end
+
   get '/order/:id' do
 
   end

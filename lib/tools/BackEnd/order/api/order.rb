@@ -23,6 +23,10 @@ module TurboCassandra
 
           }
         end
+        shipments
+      end
+      def find_shipment_by_order_id order_id, id
+          @order_model.find_shipment_by_order_id(order_id, id)
       end
     end
   end

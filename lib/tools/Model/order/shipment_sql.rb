@@ -7,6 +7,11 @@ module TurboCassandra
       def shipment_select_all_cql names="*"
         "SELECT #{names} FROM shipments"
       end
+
+      def shipment_select_where_cql names="*"
+        "SELECT #{names} FROM shipments where order_id = ? and id = ?"
+      end
+
     end
   end
 end

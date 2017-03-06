@@ -19,6 +19,7 @@ module TurboCassandra
         h['total_weight'] = h['customer_id'].to_i
         h['created_at']  =  Time.parse h['created_at']
         h['updated_at']  =  Time.parse h['updated_at']
+        h['order_date']  =  Time.parse h['order_date']
       end
     end
   end

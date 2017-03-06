@@ -6,6 +6,7 @@ cql = %Q(CREATE TABLE  shipments
             customer_id bigint,
             created_at timestamp,
             updated_at timestamp,
+            order_date timestamp,
             items frozen <list<map<text,text>>>,
             total_qty int,
             total_weight int,
