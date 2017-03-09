@@ -14,6 +14,7 @@ class Admin < Sinatra::Base
     set :messageLogController,TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection)
     set :admin_email, "kyrylo.shakirov@zorallabs.com"
     set :productController, TurboCassandra::Controller::Product.new
+    set :groupPriceController, TurboCassandra::Controller::GroupPrice.new
   end
 
 
@@ -99,6 +100,10 @@ class Admin < Sinatra::Base
 
   get '/product/:id' do
     settings.productController.get_admin_product(params)
+  end
+
+  get '/price/:id/group/' do
+    settings.groupPriceController.get_prices(params)
   end
 
 
