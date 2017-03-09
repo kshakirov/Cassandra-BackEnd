@@ -1,11 +1,11 @@
 module TurboCassandra
   class ComparedProductsBackEnd
     extend Forwardable
-    def_delegator :@group_price_backend, :get_price, :get_price
+    def_delegator :@group_price_api, :find_by_sku_group_id, :get_price
     def initialize
       @compared_products = ComparedProducts.new
       @product_controller = TurboCassandra::Controller::Product.new
-      @group_price_backend = TurboCassandra::API::GroupPrice.new
+      @group_price_api = TurboCassandra::API::GroupPrice.new
     end
     private
 
