@@ -106,6 +106,10 @@ namespace :db do
       ruby "tools/fixtures/attribute/populate.rb"
     end
 
+    task :price do
+      ruby "tools/fixtures/group_price/populate.rb"
+    end
+
     task :attribute_set do
       ruby "tools/fixtures/attribute_set/populate.rb"
       ruby "tools/fixtures/attribute_set/update_1.rb"
