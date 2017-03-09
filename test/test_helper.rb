@@ -11,8 +11,8 @@ require_relative '../lib/tools/Model/attribute'
 require_relative '../lib/tools/Model/order/order_batch'
 require_relative '../lib/tools/Model/visitor_log/visitor_logs'
 require_relative '../lib/tools/Model/visitor_log/customer_logs'
-require_relative '../lib/tools/BackEnd/visitor_log/visitor_logs'
-require_relative '../lib/tools/BackEnd/product/product'
+require_relative '../lib/tools/API/visitor_log/visitor_logs'
+require_relative '../lib/tools/API/product/product'
 class MyCluster
   def initialize
     cluster =Cassandra.cluster(hosts: ['10.1.3.15', '10.1.3.16', '10.1.3.17'])

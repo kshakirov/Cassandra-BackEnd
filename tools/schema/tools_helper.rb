@@ -1,4 +1,4 @@
-require_relative '../../lib/tools/Model/turbo_cluster'
+require_relative '../../lib/Model/turbo_cluster'
 require 'json'
 require 'yaml'
 require 'cassandra'

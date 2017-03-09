@@ -2,7 +2,7 @@ require 'rake/testtask'
 
 Rake::TestTask.new do |t|
   t.libs << "test"
-  t.test_files = FileList['BackEnd/product/test_product.rb',
-  'BackEnd/compared_products/test_compared_products.rb']
+  t.test_files = FileList['API/product/test_product.rb',
+  'API/compared_products/test_compared_products.rb']
   t.verbose = true
 end

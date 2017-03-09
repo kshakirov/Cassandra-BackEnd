@@ -20,7 +20,7 @@ module TurboCassandra
     end
 
     def self.read_config
-      config = YAML::load_file(File.expand_path('../../../config/database.yml', File.dirname(__FILE__)))
+      config = YAML::load_file(File.expand_path('../../config/database.yml', File.dirname(__FILE__)))
       mode = get_mode
       if not mode.nil?
           config config[mode]
@@ -37,7 +37,7 @@ module TurboCassandra
     end
 
     def self.get_keyspacse
-      config = YAML::load_file( File.expand_path('../../../config/database.yml', File.dirname(__FILE__)))
+      config = YAML::load_file( File.expand_path('../../config/database.yml', File.dirname(__FILE__)))
       mode = get_mode
       unless mode.nil?
           return config[mode]['keyspace']

@@ -14,15 +14,14 @@ require 'active_support/all'
 require 'securerandom'
 require 'prawn'
 require 'prawn/table'
-require_relative 'lib/sources'
+require_relative '../../lib/sources'
 require_relative 'mailer'
 
 
 class Public < Sinatra::Base
   register Sinatra::ConfigFile
   helpers Sinatra::Cookies
-  #set :environments, %w{development test production staging}
-  config_file 'config/config.yaml'
+  config_file '../../config/config.yaml'
   set :rabbit_queue,
       TurboCassandra::Controller::RabbitQueue.
           new(self.send(ENV['TURBO_MODE'])['queue_host'])
