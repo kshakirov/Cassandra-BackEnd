@@ -5,7 +5,7 @@ module TurboCassandra
     def initialize
       @compared_products = ComparedProducts.new
       @product_controller = TurboCassandra::Controller::Product.new
-      @group_price_backend = TurboCassandra::GroupPriceBackEnd.new
+      @group_price_backend = TurboCassandra::API::GroupPrice.new
     end
     private
 

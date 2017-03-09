@@ -50,7 +50,7 @@ class Customer < Sinatra::Base
   configure do
     set :customerController, TurboCassandra::Controller::Customer.new
     set :orderController, TurboCassandra::Controller::Order.new
-    set :groupPriceBackEnd, TurboCassandra::GroupPriceBackEnd.new
+    set :groupPriceController, TurboCassandra::Controller::GroupPrice.new
     set :cartController, TurboCassandra::Controller::Cart.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
     set :comparedProductsBackEnd, TurboCassandra::ComparedProductsBackEnd.new
@@ -87,7 +87,7 @@ class Customer < Sinatra::Base
                                                ip: env['REMOTE_ADDR'],
                                                product: sku
                                            })
-    price = settings.groupPriceBackEnd.get_price(sku, customer.first['group'])
+    price = settings.groupPriceController.get_price(sku, customer.first['group'])
     {price: price}
 
   end

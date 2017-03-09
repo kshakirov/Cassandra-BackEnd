@@ -128,7 +128,6 @@ namespace :db do
       ruby "tools/fixtures/product/populate.rb"
       ruby "tools/fixtures/currency/populate.rb"
       ruby "tools/fixtures/featured_new_product/populate.rb"
-      ruby "tools/fixtures/order/shipments_populate.rb"
     end
   end
 end
