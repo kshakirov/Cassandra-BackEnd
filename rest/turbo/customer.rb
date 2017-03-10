@@ -53,7 +53,7 @@ class Customer < Sinatra::Base
     set :groupPriceController, TurboCassandra::Controller::GroupPrice.new
     set :cartController, TurboCassandra::Controller::Cart.new
     set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
-    set :comparedProductsBackEnd, TurboCassandra::ComparedProductsBackEnd.new
+    set :comparedProductsController, TurboCassandra::Controller::ComparedProducts.new
   end
 
 
@@ -169,18 +169,18 @@ class Customer < Sinatra::Base
 
   get '/compared_product/' do
     customer = request.env.values_at(:customer).first
-    settings.comparedProductsBackEnd.find_by_customer(customer['id'], customer['group'])
+    settings.comparedProductsController.find_by_customer(customer['id'], customer['group'])
   end
 
   put '/compared_product/:id' do
     customer = request.env.values_at(:customer).first
     payload = {product: params['id'].to_i, customer_id: customer['id']}
-    settings.comparedProductsBackEnd.update(payload)
+    settings.comparedProductsController.update(payload)
   end
 
   delete '/compared_product/:id' do
     customer = request.env.values_at(:customer).first
-    settings.comparedProductsBackEnd.delete(customer['id'], params['id'].to_i)
+    settings.comparedProductsController.delete(customer['id'], params['id'].to_i)
   end
 
   get '/product/:id/also_bought/' do

@@ -2,7 +2,7 @@ require '../test_helper'
 
 class TestComparedProducts < Minitest::Test
   def setup
-      @compared_product_model = TurboCassandra::ComparedProducts.new
+      @compared_product_model = TurboCassandra::Model::ComparedProducts.new
   end
   def test_insert
     result  = @compared_product_model.insert({product: 1, customer_id: 1, date:  Time.now.to_time})
