@@ -73,6 +73,10 @@ class Admin < Sinatra::Base
     settings.adminController.create_new_customer(request_payload['email'])
   end
 
+  post '/customer/new/' do
+    settings.adminController.create_new_customer_by_admin(request.body.read)
+  end
+
   post '/message/' do
     settings.messageLogController.add_password_sent_msg(request.body.read,
                                                    settings.admin_email)

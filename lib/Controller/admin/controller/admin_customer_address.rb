@@ -1,5 +1,5 @@
 module TurboCassandra
-  module AdminUtils
+  module AdminCustomerAddress
     def add_address
       {
           "city" => "",

@@ -45,6 +45,16 @@ module TurboCassandra
         session.execute("SELECT * FROM #{table}", page_size: page_size, paging_state: paging_state )
       end
 
+      def compact_objects hashes
+        if hashes.class.name == 'Hash'
+          hashes.compact!
+          Hash[hashes.map { |k, v| [k, remove_null_values(v)] }.flatten]
+        elsif hashes.class.name == "Array"
+          hashes.map{|hash| remove_null_values(hash)}
+        end
+        hashes
+      end
+
     end
   end
 end

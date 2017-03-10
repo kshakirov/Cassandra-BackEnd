@@ -26,6 +26,10 @@ module TurboCassandra
         @customer.new(hash)
       end
 
+      def delete id
+        @customer.delete(id)
+      end
+
     end
   end
 end
