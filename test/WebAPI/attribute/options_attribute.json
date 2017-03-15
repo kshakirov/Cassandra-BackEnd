@@ -1,0 +1,71 @@
+{
+  "attribute": {
+    "isWysiwygEnabled": true,
+    "isHtmlAllowedOnFront": true,
+    "usedForSortBy": true,
+    "isFilterable": true,
+    "isFilterableInSearch": true,
+    "isUsedInGrid": true,
+    "isVisibleInGrid": true,
+    "isFilterableInGrid": true,
+    "position": 0,
+    "applyTo": [
+      "string"
+    ],
+    "isSearchable": "yes",
+    "isVisibleInAdvancedSearch": "string",
+    "isComparable": "string",
+    "isUsedForPromoRules": "string",
+    "isVisibleOnFront": "string",
+    "usedInProductListing": "string",
+    "isVisible": true,
+    "scope": "string",
+    "extensionAttributes": {},
+    "attributeId": 0,
+    "attributeCode": "string",
+    "frontendInput": "string",
+    "entityTypeId": "string",
+    "isRequired": true,
+    "options": [
+      {
+        "label": "First",
+        "value": "string",
+        "sortOrder": 0,
+        "isDefault": true,
+        "storeLabels": [
+          {
+            "storeId": 0,
+            "label": "string"
+          }
+        ]
+      }
+    ],
+    "isUserDefined": true,
+    "defaultFrontendLabel": "Pims Options",
+    "frontendLabels": [
+      {
+        "storeId": 0,
+        "label": "string"
+      }
+    ],
+    "note": "string",
+    "backendType": "string",
+    "backendModel": "string",
+    "sourceModel": "string",
+    "defaultValue": "string",
+    "isUnique": "string",
+    "frontendClass": "string",
+    "validationRules": [
+      {
+        "key": "string",
+        "value": "string"
+      }
+    ],
+    "customAttributes": [
+      {
+        "attributeCode": "pimsOptions",
+        "value": "string"
+      }
+    ]
+  }
+}

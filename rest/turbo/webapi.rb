@@ -1,10 +1,11 @@
 require_relative '../../lib/WebAPI/web_source'
 class WebAPI < Sinatra::Base
 
-  use JwtAuth
+  #use JwtAuth
 
   configure do
-    set :attributeWebAPI, TurboCassandra::WebAPI::Attribute.new
+    set :attributeWebAPI, TurboCassandra::WebAPI::Attribute::Attribute.new
+    set :attributeTypeWebAPI, TurboCassandra::WebAPI::AttributeType::AttributeType.new
 
   end
 
@@ -13,15 +14,21 @@ class WebAPI < Sinatra::Base
     content_type :json
   end
 
-  get '/products/attributes/' do
-    settings.customerController.get_all
+  get '/products/attributes/types' do
+    settings.attributeTypeWebAPI.get
+  end
+
+  get '/products/attributes/:attribute_code' do
+    settings.attributeWebAPI.get(params)
+  end
+
+  delete '/products/attributes/:attribute_code' do
+    settings.attributeWebAPI.delete(params)
   end
 
   post '/products/attributes/' do
-    settings.customerController.get_all
+    settings.attributeWebAPI.create(request.body.read)
   end
-
-
 
   after do
     response.body = JSON.dump(response.body)

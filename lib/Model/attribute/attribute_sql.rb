@@ -1,26 +1,6 @@
 module TurboCassandra
   module Model
     module AttributeSql
-      def remove_null_values attr_properties
-        attr_properties.select { |k, v| not v.nil? }
-      end
-
-      def prepare_names properties
-        properties.keys.map { |k| k.to_s }.join(",")
-      end
-
-      def prepare_values properties
-        properties.map { |p| '?' }.join(",")
-      end
-
-      def prepare_args properties
-        properties.values
-      end
-
-      def prepare_attributes attr_properties
-        properties = remove_null_values(attr_properties)
-        return prepare_names(properties), prepare_values(properties), prepare_args(properties)
-      end
 
       def create_insert_cql names, values
         "INSERT INTO attributes  (#{names})  VALUES (#{values})"
@@ -28,6 +8,10 @@ module TurboCassandra
 
       def create_select_where_cql
         "SELECT * from  attributes  WHERE code = ?"
+      end
+
+      def create_delete_where_cql
+        "DELETE  from  attributes  WHERE code = ?"
       end
 
       def create_select_where_in_cql values

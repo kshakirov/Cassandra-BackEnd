@@ -3,6 +3,7 @@ module TurboCassandra
     module Attribute
       class Attribute
         include AttributeCreate
+        include AttributeGet
         attr_accessor :attribute_api
         def initialize
           @attribute_api = TurboCassandra::API::Attribute.new
@@ -17,12 +18,14 @@ module TurboCassandra
 
         end
 
-        def delete attribute_code
-
+        def delete params
+            attribute_code = params['attribute_code']
+            @attribute_api.delete attribute_code
         end
 
-        def get attribute_code
-
+        def get params
+          attribute_code = params['attribute_code']
+          _get(attribute_code)
         end
       end
     end
