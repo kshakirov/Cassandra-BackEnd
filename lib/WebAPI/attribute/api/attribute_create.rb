@@ -2,15 +2,14 @@ module TurboCassandra
   module WebAPI
     module Attribute
       module AttributeCreate
-        private
+
 
         def bool_2_i bool
-          case bool
-            when true,             1
-            when false,        0
-            else
-              0
-          end
+          bool ? 1: 0
+        end
+
+        def i_2_bool i
+          i == 1 ? true: false
         end
 
         def process_options attribute
@@ -29,7 +28,7 @@ module TurboCassandra
 
         def process_request attribute
           {
-              code: attribute['customAttributes'][0]['attributeCode'],
+              code: attribute['attribute_code'],
               filterable: bool_2_i(attribute['isFilterable'] ),
               is_filterable_in_search: bool_2_i(attribute['isFilterableInSearch']),
               is_visible_in_list: bool_2_i(attribute['isVisibleInGrid']),
@@ -39,11 +38,18 @@ module TurboCassandra
           }
         end
 
+        def respond attribute_data
+          attribute_data[:attributeCode] = attribute_data[:code]
+          attribute_data[:attribute_code] = attribute_data[:code]
+          attribute_data[:attributeId] = attribute_data[:code]
+          attribute_data
+        end
+
         def _create body
           attribute_data = process_request body['attribute']
           add_options(attribute_data, body['attribute'])
           @attribute_api.create attribute_data
-          attribute_data
+          respond attribute_data
         end
       end
     end

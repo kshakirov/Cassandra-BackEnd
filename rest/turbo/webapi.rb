@@ -26,12 +26,18 @@ class WebAPI < Sinatra::Base
     settings.attributeWebAPI.delete(params)
   end
 
-  post '/products/attributes/' do
+  post '/products/attributes' do
     settings.attributeWebAPI.create(request.body.read)
   end
 
+  post '/integration/admin/token' do
+    "testingToken333"
+  end
+
   after do
-    response.body = JSON.dump(response.body)
+    unless request.path_info.include? "token"
+      response.body = JSON.dump(response.body)
+    end
   end
 
 
