@@ -23,7 +23,7 @@ module TurboCassandra
 
       def _get_product sku
         sku = sku.to_i
-        product = @product_api.find_by_sku(sku).first
+        product = @product_api.find_by_sku(sku)
         if product.key? 'critical_decimal' and not product['critical_decimal'].nil?
           product['critical'] = add_critical_attributes(product)
         end

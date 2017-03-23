@@ -9,8 +9,7 @@ module TurboCassandra
     private
     def _each_interchange sku
         p = @product_api.find_by_sku sku
-        unless p.first.nil?
-          p = p.first
+        unless p.nil?
           {
               part_number: p['part_number'],
               part_number_clean: normalize_part_number(p['part_number']),

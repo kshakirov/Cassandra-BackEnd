@@ -57,7 +57,7 @@ module TurboCassandra
       end
 
       def get_product_with_price sku, customer_group_id
-        product = @product_api.find_by_sku(sku).first
+        product = @product_api.find_by_sku(sku)
         price = @group_price_api.find_by_sku_group_id(sku, customer_group_id)
         return product, price
       end

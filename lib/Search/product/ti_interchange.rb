@@ -18,8 +18,8 @@ module TurboCassandra
     end
 
     def is_ti_manufactured product
-      unless product .first.nil?
-          product.first['manufacturer']=='Turbo International'
+      unless product .nil?
+          product['manufacturer']=='Turbo International'
       end
     end
 
@@ -28,7 +28,7 @@ module TurboCassandra
       intgerchanges.select do |sku|
        product = @product.find_by_sku  sku
        if is_ti_manufactured(product)
-          response = prepare_response(product.first)
+          response = prepare_response(product)
        end
       end
       response

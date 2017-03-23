@@ -16,7 +16,7 @@ module TurboCassandra
 
       def get_interchanged_products interchanges
         interchanges.map  do |i|
-          @product_api.find_by_sku(i).first
+          @product_api.find_by_sku(i)
         end
       end
 

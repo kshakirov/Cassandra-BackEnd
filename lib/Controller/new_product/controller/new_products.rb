@@ -23,8 +23,8 @@ module TurboCassandra
 
       def _add_product sku
         product = @product_api.find_by_sku(sku)
-        if not product.nil? and product.first
-          @new_product_api.create(populate_featured_product(product.first))
+        if not product.nil?
+          @new_product_api.create(populate_featured_product(product))
          return  {
              result: true
          }
