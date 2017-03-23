@@ -49,8 +49,9 @@ module TurboCassandra
         }
       end
 
-
-
+      def delete sku
+          execute_query(create_delete_cql, [sku])
+      end
     end
   end
 end

@@ -23,6 +23,10 @@ module TurboCassandra
       def update_attribute_list attribute_set_code, attribute_code
         "UPDATE attribute_sets   SET attributes = [ '#{attribute_code}' ] + attributes WHERE code = '#{attribute_set_code}'"
       end
+
+      def create_delete_cql
+        "DELETE FROM products WHERE sku=?"
+      end
     end
   end
 end

@@ -19,12 +19,24 @@ class Admin < Sinatra::Base
     set :productController, TurboCassandra::Controller::Product.new
     set :productCreatedAtController, TurboCassandra::Controller::ProductCreatedAt.new
     set :groupPriceController, TurboCassandra::Controller::GroupPrice.new
+    set :menuController, TurboCassandra::Controller::Menu.new
   end
 
 
   before do
     content_type :json
   end
+
+
+  get '/manufacturer/' do
+    settings.menuController.get_manufacturers
+  end
+
+
+  get '/part_type/' do
+    settings.menuController.get_parts
+  end
+
 
   get '/customer/' do
     settings.customerController.get_all

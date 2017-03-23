@@ -13,6 +13,10 @@ module TurboCassandra
 
       end
 
+      def delete manufacturer, part_type, created_at
+        execute_query(create_delete_cql, [manufacturer, part_type, created_at])
+      end
+
       def paginate manufacturers, part_types, page_size=10, paging_state=nil
           manufacturers_list = prepare_ins(manufacturers)
           part_types_list = prepare_ins(part_types)

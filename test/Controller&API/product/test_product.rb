@@ -46,5 +46,10 @@ class TestProduct < Minitest::Test
     refute_nil products
   end
 
+  def test_product_delete
+    @product_api.delete 63064
+    assert true
+  end
+
 end
 

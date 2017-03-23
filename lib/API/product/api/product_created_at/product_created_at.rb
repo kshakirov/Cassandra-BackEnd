@@ -11,6 +11,10 @@ module TurboCassandra
       def where manufactures, part_types, page_size=10, paging_state=nil
         @product_created_at_model.paginate(manufactures, part_types, page_size, paging_state)
       end
+
+      def delete manufacturer, part_type, created_at
+        @product_created_at_model.delete manufacturer, part_type, created_at
+      end
     end
   end
 end
