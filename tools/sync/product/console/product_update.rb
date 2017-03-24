@@ -1,15 +1,11 @@
-require_relative '../../sync_helper'
-require_relative 'tcas_client'
-require_relative '../api/product'
-ENV['TURBO_MODE'] = "development"
-
-
+require_relative 'sync_helper'
+elastic_host = get_elastic_host
+tcas_host = get_tcas_host
+product_api = TurboCassandra::API::Product.new
+index_manager = TurboCassandra::ElasticIndex.new(elastic_host, tcas_host)
 updater = TurboCassandra::Sync::Product::Rest.new(TcasClient.new(get_tcas_host))
-
-(110..720).to_a.each  do |time|
-  start_time = Time.now
-  ids = ((time *100)..(time * 100 + 99)).to_a
-  updater.update_specific(ids)
-  elapsed_seconds = ((Time.now - start_time)).to_i
-  puts "[#{ids.size}]   [#{ids.first}]   -  [#{ids.last}]  Time [#{elapsed_seconds}]"
+product_hashes = updater.update
+product_hashes.map do |p|
+  product  = product_api.find_by_sku  p[:sku]
+  index_manager.add_product product
 end

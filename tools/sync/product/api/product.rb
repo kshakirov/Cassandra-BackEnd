@@ -16,6 +16,11 @@ module TurboCassandra
           JSON.parse response.body
         end
 
+        def query_update
+          response = RestClient.get("http://#{@metadata_server}:#{@metadata_server_port.to_s}/product/update/")
+          JSON.parse response.body
+        end
+
         def exists? sku
           @product_api.find_by_sku(sku)
         end
@@ -34,7 +39,15 @@ module TurboCassandra
           @product_batch.parse_critical_attributes(product)
         end
 
+        def return_operation_result action,  sku
+          {
+              sku: sku,
+              action: action
+          }
+        end
+
         def process_product product
+          action = product['action'] if product
           if product and product['action'] != 'delete'
             prepare_product_data(product)
             if exists? product['sku']
@@ -45,6 +58,7 @@ module TurboCassandra
           elsif product and product['action'] == 'delete'
               delete_product  product['sku']
           end
+          return_operation_result(action, product['sku']) if product
         end
 
         public
@@ -53,6 +67,10 @@ module TurboCassandra
           products.map { |product| process_product(product) }
         end
 
+        def update
+          products = query_update
+          products.map{|product| process_product(product)}
+        end
       end
     end
   end
