@@ -6,7 +6,6 @@ module TurboCassandra
 end
 
 
-
 class TestBaseModel < Minitest::Test
   def setup
     @generator = Cassandra::Uuid::Generator.new
@@ -22,10 +21,10 @@ class TestBaseModel < Minitest::Test
     id = @generator.now
     data = {
         customer_email: "kirill.shakirov4@gmail.com",
-        id:  id,
+        id: id,
         status: 'Queued',
-        date_start:  Time.now.to_time,
-        date_end:  Time.now.to_time,
+        date_start: Time.now.to_time,
+        date_end: Time.now.to_time,
         message: "Test Base Model"
     }
 
@@ -46,10 +45,13 @@ class TestBaseModel < Minitest::Test
     p out
   end
 
-  def test_other
-    Message.find_by({a: "fdf", b: "ccc"})
-    Message.find_by({a: "fdf"})
-    Message.find "test"
+  def test_paginated
+    paging_params = {
+        'paging_state' => nil,
+        'page_size' => 2
+    }
+    res = TurboCassandra::MessageLog.paginate(paging_params)
+    p res
 
   end
 end

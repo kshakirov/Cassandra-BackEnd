@@ -25,7 +25,7 @@ module TurboCassandra
 
 
     def self.class_name
-      self.to_s.tableize.gsub('turbo_cassandra/','')
+      self.to_s.tableize.gsub('turbo_cassandra/model/','')
     end
 
     def self.insert params
@@ -66,6 +66,11 @@ module TurboCassandra
       session.execute(statement, arguments: args, consistency: :one)
     end
 
+    def self.execute_paginate cql, paging_state, page_size,args=[]
+      session = TurboCluster.get_session
+      session.execute(cql, arguments: args, page_size: page_size, paging_state: paging_state)
+    end
+
     def self.prep_args hash
       args = hash.values
     end
@@ -76,7 +81,7 @@ module TurboCassandra
     end
 
     def self.select_find_template args
-      select_template("") + " WHERE #{args}"
+      select_template("*") + " WHERE #{args}"
     end
 
     def self
@@ -87,7 +92,8 @@ module TurboCassandra
       real_args = prep_args params
       args = prep_where_args params
       fields = '*'
-      result = execute(select_find_template(args), real_args)
+      results = execute(select_find_template(args), real_args)
+      prep_response(results)
     end
 
     def self.find_all
@@ -110,6 +116,27 @@ module TurboCassandra
     def self.all
      sql = select_template '*'
      prep_response(execute(sql,[]))
+    end
+
+    def self.prep_paginated_response rs
+      {
+          results: rs.map{|r| r},
+          last: rs.last_page?,
+          paging_state: rs.paging_state
+      }
+    end
+
+    def self.paginate paging_params, hash=nil
+      cql = select_template '*'
+      real_args = []
+      unless hash.nil?
+        args = prep_where_args hash
+        real_args = hash.values
+        cql = select_find_template args
+      end
+      rs = execute_paginate cql,paging_params['paging_state'], paging_params['page_size']
+      prep_paginated_response(rs)
+
     end
 
   end

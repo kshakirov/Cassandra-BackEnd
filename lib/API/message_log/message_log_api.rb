@@ -10,16 +10,17 @@ module TurboCassandra
             date_start:  Time.now.to_time,
             message: message_data[:message]
         }
-        @message_log_model.insert(message)
+        new_message = TurboCassandra::Model::MessageLog.new message
+        new_message.save
       end
 
       def _get_message_by_sender_email email
-        @message_log_model.find_by_sender_email(email)
+
+        TurboCassandra::Model::MessageLog.find_by customer_email: email
       end
 
       public
       def initialize
-        @message_log_model = TurboCassandra::Model::MessageLog.new
         @generator = Cassandra::Uuid::Generator.new
       end
 
@@ -36,7 +37,11 @@ module TurboCassandra
       end
 
       def update_message_by_id email, id, message_data
-        @message_log_model.update email, id, message_data
+        message = TurboCassandra::Model::MessageLog.find email, id
+        message.customer_email=message_data[:customer_email]
+        message.message= message_data[:message]
+        message.status= message_data[:status]
+        message.save
       end
     end
   end
