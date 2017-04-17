@@ -6,6 +6,19 @@ module TurboCassandra
       @attributes = hash
     end
 
+    def to_hash
+      @attributes
+    end
+
+    def method_missing(m, *args, &block)
+      method = m.to_s.gsub("=",'')
+      if @attributes.key? method
+        @attributes[method] = args.first
+      else
+        raise "No such a field available"
+      end
+    end
+
     def save
       self.class.insert @attributes
     end
@@ -34,8 +47,17 @@ module TurboCassandra
       "Select #{fields} from #{class_name}"
     end
 
+    def self.prep_primary_args
+      if @@primary_index.class.name == 'Array'
+        args = @@primary_index.map { |arg| "#{arg} = ? " }
+        args.join(" AND ")
+      else
+        "#{@@primary_index} = ?"
+      end
+    end
+
     def self.select_find_prim_template
-      select_template('*') + " WHERE #{@@primary_index} = ?"
+      select_template('*') + " WHERE #{prep_primary_args}"
     end
 
     def self.execute cql, args
@@ -72,8 +94,11 @@ module TurboCassandra
 
     end
 
-    def self.find param
-      execute select_find_prim_template, [param]
+    def self.find *params
+      result = execute select_find_prim_template, params
+      unless result.nil?
+       self.new result.first
+      end
     end
 
     def self.prep_response cas_results
