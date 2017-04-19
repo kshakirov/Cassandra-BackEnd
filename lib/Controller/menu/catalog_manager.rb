@@ -83,6 +83,12 @@ module TurboCassandra
           @filters
         end
 
+        def get_part_type_filters
+          @filters[0]['options'] = build_turbo_type_filter
+          @filters[1]['options'] = build_manufacturer_filter
+          [@filters[0], @filters[1]]
+        end
+
         def get_sorters
           @sorters
         end

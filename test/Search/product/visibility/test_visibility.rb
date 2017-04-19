@@ -3,8 +3,7 @@ require_relative "../test_helper"
 class TestVisibility < Minitest::Test
   def setup
     @product_api = TurboCassandra::API::Product.new
-    tcas_host = get_tcas_host
-    @product_transformer = TurboCassandra::EsProductTransformer.new(tcas_host)
+    @product_transformer = TurboCassandra::EsProductTransformer.new
   end
 
   def test_not_turbo

@@ -3,6 +3,7 @@ module TurboCassandra
     module Batch
       module TiPart
 
+
         def _prepare_ti_part interchanges
           tis = interchanges.select { |i| i['manufacturer'] == 'Turbo International' }
           unless tis.size == 0

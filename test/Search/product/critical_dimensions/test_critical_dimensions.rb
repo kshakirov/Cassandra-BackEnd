@@ -2,8 +2,7 @@ require_relative "../test_helper"
 class TestCriticalDims < Minitest::Test
   def setup
     @product = TurboCassandra::API::Product.new
-    tcas_host = get_tcas_host
-    @product_transformer = TurboCassandra::EsProductTransformer.new(tcas_host)
+    @product_transformer = TurboCassandra::EsProductTransformer.new
   end
 
   def test_all_critical

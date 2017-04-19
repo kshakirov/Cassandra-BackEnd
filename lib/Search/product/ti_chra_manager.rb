@@ -8,17 +8,13 @@ module TurboCassandra
     end
 
     def _get_ti_chra product
-      boms = query_bom_service(product['sku'])
-      boms.select { |b|
-        b['part_type'] == 'Cartridge' and not b['part_number'].nil?
-      }
+      cartridges = query_bom_service(product)
+      cartridges.select { |b| b['manufacturer']== 'Turbo International' }
     end
 
     def _get_foreign_chra product
-      boms = query_bom_service(product['sku'])
-      boms.select { |b|
-        b['part_type'] == 'Cartridge' and not b['oe_part_number'].nil?
-      }
+      cartridges = query_bom_service(product)
+      cartridges.select { |b| b['manufacturer'] != 'Turbo International' }
     end
 
     def prepare_ti_chra product
@@ -28,7 +24,8 @@ module TurboCassandra
           {
               part_number: ch['part_number'],
               url: "/#/part/sku/#{ch['sku']}",
-              sku: ch['sku'], id: 1
+              sku: ch['sku'].to_i,
+              id: 1
           }
         }
       end
@@ -39,9 +36,9 @@ module TurboCassandra
       if chra.class.name == "Array"
         chra.map { |ch|
           {
-              part_number: ch['oe_part_number'],
-              url: "/#/part/sku/#{ch['oe_sku']}",
-              sku: ch['oe_sku'], id: 1
+              part_number: ch['part_number'],
+              url: "/#/part/sku/#{ch['sku']}",
+              sku: ch['sku'], id: 1
           }
         }
       end

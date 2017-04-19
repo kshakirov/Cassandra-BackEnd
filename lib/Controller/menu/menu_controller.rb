@@ -14,7 +14,8 @@ module TurboCassandra
 
         private
         def normalize_list list
-          list.each_with_index.map { |l, i| [l, i] }
+          manufacturers = list.select{|l| NotExternalManufactures.is_external_manufacturer l}
+          manufacturers.each_with_index.map { |l, i| [l, i] }
         end
 
         def _get_manufacturers
@@ -88,6 +89,10 @@ module TurboCassandra
 
         def get_filters
           @catalog_manager.get_filters
+        end
+
+        def get_part_type_filters
+          @catalog_manager.get_part_type_filters
         end
 
         def get_sorters

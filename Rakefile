@@ -33,6 +33,10 @@ namespace :db do
       ruby "tools/schema/featured_product/update_featured_products.rb"
     end
 
+    task :product do
+      ruby "tools/schema/product/update_products_1.rb"
+    end
+
     task :all do
       Rake::Task['db:migrate:currency'].execute
       Rake::Task['db:migrate:attribute'].execute
@@ -40,6 +44,7 @@ namespace :db do
       Rake::Task['db:migrate:attribute_set'].execute
       Rake::Task['db:migrate:customer'].execute
       Rake::Task['db:migrate:featured_product'].execute
+      Rake::Task['db:migrate:product'].execute
     end
   end
   namespace :setup do

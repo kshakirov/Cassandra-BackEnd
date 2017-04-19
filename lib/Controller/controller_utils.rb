@@ -1,5 +1,13 @@
 module TurboCassandra
   module Controller
+    module NotExternalManufactures
+      @@not_external_manufacturer = ['I.H.I.']
+
+      def self.is_external_manufacturer manufacturer
+        index = @@not_external_manufacturer.find_index(manufacturer)
+        index.nil?
+      end
+    end
     module Utils
 
       def compact_objects hashes

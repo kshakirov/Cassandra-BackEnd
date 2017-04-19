@@ -3,8 +3,7 @@ class TestProductIndexe < Minitest::Test
   def setup
     @product = TurboCassandra::API::Product.new
     elastic_host = get_elastic_host
-    tcas_host = get_tcas_host
-    @product_indexer = TurboCassandra::ElasticIndex.new(elastic_host,tcas_host)
+    @product_indexer = TurboCassandra::ElasticIndex.new(elastic_host)
   end
 
   def test_delete
@@ -13,13 +12,13 @@ class TestProductIndexe < Minitest::Test
   end
 
   def test_add_ti
-    product  = @product.find_by_sku 48225
+    product  = @product.find_by_sku 54018
     response  = @product_indexer.add_product product
     refute_nil response
   end
 
   def test_add_not_external
-    product = @product.find_by_sku  47124
+    product = @product.find_by_sku  48228
     response  = @product_indexer.add_product product
     refute_nil response
   end

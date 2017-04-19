@@ -87,6 +87,10 @@ class Public < Sinatra::Base
     settings.menuController.get_manufacturer_filters
   end
 
+  get '/frontend/menu/part_type/filter' do
+    settings.menuController.get_part_type_filters
+  end
+
   get '/frontend/menu/standard/filter' do
     settings.menuController.get_filters
   end

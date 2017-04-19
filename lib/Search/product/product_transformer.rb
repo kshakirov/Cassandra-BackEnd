@@ -19,12 +19,11 @@ module TurboCassandra
       @part_types = attribute_api.find('part').first['options']
     end
 
-    def initialize tcas_server
+    def initialize
       @product_api = TurboCassandra::API::Product.new
        init_enums
       @criticas_manager = TurboCassandra::CriticalDimension.new
       @price_manager = TurboCassandra::PriceManager.new
-      @tcas_server = "http://" +  tcas_server + "/attrsreader"
     end
 
     def _create_turbo_model product
@@ -67,7 +66,10 @@ module TurboCassandra
     end
 
     def add_oe_ref_url skeleton, product
-      skeleton["oe_ref_urls"] = get_oe_ref_url(product)
+      skeleton["oe_ref_urls"], not_externals  = get_oe_ref_url(product)
+      unless not_externals.nil? and not_externals.class.name != Array
+        skeleton['not_external_part_number'] = not_externals
+      end
     end
 
     def add_critical_attributes skeleton, product
@@ -115,7 +117,7 @@ module TurboCassandra
 
     def add_if_not_external_manfr skeleton, product
       if is_not_external_manufacturer? product
-        map_product_to_ti(product, skeleton)
+        make_invisible(skeleton)
       end
     end
 

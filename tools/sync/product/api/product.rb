@@ -2,18 +2,28 @@ module TurboCassandra
   module Sync
     module Product
       class Rest
-        def initialize tcas_client, metadata_server, metadata_server_port=4568
+        def initialize metadata_server, metadata_server_port=4568
           @metadata_server = metadata_server
           @metadata_server_port = metadata_server_port
           @product_api = TurboCassandra::API::Product.new
           @product_batch = TurboCassandra::API::Batch::Product.new
-          @tcas_client = tcas_client
         end
 
         private
         def query_specific skus
           response = RestClient.post("http://#{@metadata_server}:#{@metadata_server_port.to_s}/product/update/specific", skus.to_json)
           JSON.parse response.body
+        end
+
+
+        def get_interchanged_products product
+          interchanges = product['interchanges']
+          unless interchanges.nil?
+            return  interchanges.map do |interchange|
+              @product_api.find_by_sku interchange
+            end
+          end
+          []
         end
 
         def query_update
@@ -35,7 +45,6 @@ module TurboCassandra
           sku = product['sku']
           @product_batch.remove_keys(product)
           @product_batch.prepare_interchanges(product)
-          @product_batch.prepare_ti_part(product, @tcas_client.query_interchanges(sku))
           @product_batch.parse_critical_attributes(product)
         end
 
@@ -47,6 +56,7 @@ module TurboCassandra
         end
 
         def process_product product
+          begin
           action = product['action'] if product
           if product and product['action'] != 'delete'
             prepare_product_data(product)
@@ -59,6 +69,11 @@ module TurboCassandra
               delete_product  product['sku']
           end
           return_operation_result(action, product['sku']) if product
+          rescue Exception => e
+            p product
+            puts e.message
+            exit
+          end
         end
 
         public
@@ -68,6 +83,7 @@ module TurboCassandra
         end
 
         def update_specific_array skus
+
           products = query_specific(skus)
           products.map { |product| process_product(product) }
         end

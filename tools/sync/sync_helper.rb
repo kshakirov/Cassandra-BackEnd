@@ -13,16 +13,11 @@ require 'securerandom'
 require 'prawn'
 require 'prawn/table'
 require_relative '../../lib/sources'
-require_relative 'product/console/tcas_client'
 require_relative 'product/api/product'
 require_relative '../../tools/search/product/indexer_helper'
 ENV['TURBO_MODE'] = "development"
 
 @config = YAML.load_file(File.expand_path('../../config/config.yaml', File.dirname(__FILE__)))
-
-def get_tcas_host
-  @config[ENV['TURBO_MODE']]['tcas_host']
-end
 
 def get_metdata_host
   @config[ENV['TURBO_MODE']]['metadata_server']

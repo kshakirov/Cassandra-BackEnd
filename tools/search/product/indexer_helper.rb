@@ -23,13 +23,3 @@ def get_elastic_host
     exit 1
   end
 end
-
-def get_tcas_host
-  config = YAML.load_file(File.expand_path( '../../../config/config.yaml', File.dirname(__FILE__)))
-  if not config.nil?
-    config[ENV['TURBO_MODE']]['tcas_host']
-  else
-    puts "SET ELASTIC_INSTANCE VARIABLE"
-    exit 1
-  end
-end
