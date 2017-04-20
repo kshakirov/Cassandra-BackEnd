@@ -6,4 +6,4 @@ require 'cassandra'
 require 'active_support/all'
 require_relative '../../lib/sources'
 
-ENV['TURBO_MODE'] = "test"
+ENV['TURBO_MODE'] = "development"

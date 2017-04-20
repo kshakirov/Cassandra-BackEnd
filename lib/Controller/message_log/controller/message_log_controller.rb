@@ -51,10 +51,10 @@ module TurboCassandra
       end
 
       def commit_log request
-        message_date = prepare_outcoming_message(request)
+        message_data = prepare_outcoming_message(request)
         message_id = Cassandra::TimeUuid.new(request['id'])
         @message_log_api.update_message_by_id(request['email'],
-                                              message_id, message_date)
+                                              message_id, message_data)
         {
             result: true
         }

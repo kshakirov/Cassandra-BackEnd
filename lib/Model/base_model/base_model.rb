@@ -134,7 +134,7 @@ module TurboCassandra
         real_args = hash.values
         cql = select_find_template args
       end
-      rs = execute_paginate cql,paging_params['paging_state'], paging_params['page_size']
+      rs = execute_paginate cql,paging_params['paging_state'], paging_params['page_size'], real_args
       prep_paginated_response(rs)
 
     end

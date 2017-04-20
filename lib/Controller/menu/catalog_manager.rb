@@ -3,6 +3,7 @@ module TurboCassandra
     module Menu
       class CatalogManager
         include TurboCassandra::Controller::Menu::CatalogHeader
+
         def initialize
           @attribute = TurboCassandra::API::Attribute.new
           @headers = initialize_headers
@@ -77,15 +78,18 @@ module TurboCassandra
         end
 
         def get_filters
-            @filters[0]['options'] = build_turbo_type_filter
-            @filters[1]['options'] = build_manufacturer_filter
-            @filters[2]['options'] = build_part_type_filter
+          unless @filters.class.name == 'Array' or @filters.size != 3
+            @filters = initialize_filters
+          end
+          @filters[0][:options] = build_turbo_type_filter
+          @filters[1][:options] = build_manufacturer_filter
+          @filters[2][:options] = build_part_type_filter
           @filters
         end
 
         def get_part_type_filters
-          @filters[0]['options'] = build_turbo_type_filter
-          @filters[1]['options'] = build_manufacturer_filter
+          @filters[0][:options] = build_turbo_type_filter
+          @filters[1][:options] = build_manufacturer_filter
           [@filters[0], @filters[1]]
         end
 
@@ -94,7 +98,7 @@ module TurboCassandra
         end
 
         def get_manufacturer_filters
-          @filters[0]['options'] = build_turbo_type_filter
+          @filters[0][:options] = build_turbo_type_filter
           [@filters[0]]
         end
 

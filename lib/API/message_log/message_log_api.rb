@@ -33,13 +33,20 @@ module TurboCassandra
       end
 
       def paginate params
-        @message_log_model.paginate params
+        if  not params['sender'].nil?
+          query = {
+              customer_email: params['sender']
+          }
+          TurboCassandra::Model::MessageLog.paginate params, query
+        else
+          TurboCassandra::Model::MessageLog.paginate params
+        end
       end
 
       def update_message_by_id email, id, message_data
         message = TurboCassandra::Model::MessageLog.find email, id
-        message.customer_email=message_data[:customer_email]
         message.message= message_data[:message]
+        message.date_end= message_data[:date_end]
         message.status= message_data[:status]
         message.save
       end

@@ -42,8 +42,10 @@ class TestMessageLogModel < Minitest::Test
         date_end: Time.now.to_time
     }
     result  = TurboCassandra::Model::MessageLog.find  "kirill.shakirov4@gmail.com",
-                                                       Cassandra::TimeUuid.new('813f4f20-2111-11e7-afa0-7db8bc900754')
+                                                       Cassandra::TimeUuid.new('c9e9e370-251c-11e7-aaf8-4191cfd22fae')
     result.message= "Updated 2"
+    result.status="Success"
+    result.date_end=Time.now.to_time
     result.save
 
     assert result
