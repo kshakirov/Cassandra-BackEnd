@@ -17,18 +17,12 @@ class TestUser < Minitest::Test
         must_change: true,
         authentication_node: 'Internal'
     }
-    #res = @user_api.add_user user
     @user_controller.create_user user.to_json
-    refute_nil res
   end
 
   def test_all
     all = @user_api.all
     assert_true 1, all.size
-  end
-
-  def test_delete
-    @user_api.delete_user 'kshakirov'
   end
 
   def test_find
@@ -48,7 +42,7 @@ class TestUser < Minitest::Test
   end
 
   def test_delete_controller
-    id = Cassandra::Uuid.new('9ba30fa5-fe93-44b0-ae4e-28cdcdc6e66d')
+    id = Cassandra::Uuid.new('2053217f-2140-4f40-9273-b4c7b275ea19')
     @user_api.delete_user id
   end
 

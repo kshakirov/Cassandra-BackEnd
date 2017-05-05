@@ -2,6 +2,7 @@ module TurboCassandra
   module Controller
     class User
       include TurboCassandra::Controller::PasswordHash
+      include UserNotification
       private
       def process_pass user_hash
         unless user_hash['password'].nil?
@@ -16,6 +17,10 @@ module TurboCassandra
           end
           raise "User With This Login already exists"
 
+      end
+
+      def send_email? user_hash
+          user_hash['send_data_2_user']
       end
 
       def is_updated_login_unique? user_hash
@@ -38,6 +43,7 @@ module TurboCassandra
       def initialize
         @user_api = API::User.new
         @generator = Cassandra::Uuid::Generator.new
+        @message_log_api = TurboCassandra::API::MessageLog.new
       end
 
       def get_users_list
@@ -56,8 +62,7 @@ module TurboCassandra
         @user_api.delete_user id
       end
 
-      def create_user body
-        user_hash = JSON.parse body
+      def create_user user_hash
         if is_login_unique? user_hash['login']
           add_id(user_hash)
           process_pass(user_hash)
@@ -65,8 +70,7 @@ module TurboCassandra
         end
       end
 
-      def update_user body
-        user_hash = JSON.parse body
+      def update_user user_hash
         if is_updated_login_unique? user_hash
           coerce_id(user_hash)
           process_pass(user_hash)

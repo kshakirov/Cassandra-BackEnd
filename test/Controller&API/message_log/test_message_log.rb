@@ -67,4 +67,15 @@ class TestMessageLogController < Minitest::Test
 
   end
 
+  def test_queue_notify
+    request = {
+        'email' => "kshakirov@zoral.com.ua",
+        password: 'test',
+        login: 'kshakirov'
+    }
+    result = @message_log_controller.queue_user_notification request.to_json
+    refute_nil result
+
+  end
+
 end

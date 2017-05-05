@@ -5,11 +5,15 @@ class SuperUser < Sinatra::Base
   register Sinatra::ConfigFile
   helpers Sinatra::Cookies
   config_file '../../config/config.yaml'
+  set :rabbit_queue,
+      TurboCassandra::Controller::RabbitQueue.
+          new(self.send(ENV['TURBO_MODE'])['queue_host'])
 
 
   configure do
     set :userController, TurboCassandra::Controller::User.new
     set :authNodeController, TurboCassandra::Controller::AuthenticationNode.new
+    set :messageLogController, TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection)
   end
 
 
@@ -19,7 +23,7 @@ class SuperUser < Sinatra::Base
       if group.first == 'superuser'
         true
       else
-       raise "You Are Not Authorized to View This Page"
+        raise "You Are Not Authorized to View This Page"
       end
     }
   }
@@ -38,22 +42,40 @@ class SuperUser < Sinatra::Base
   end
 
   post '/user/' do
-    settings.userController.create_user request.body.read
+    body = JSON.parse request.body.read
+    settings.userController.create_user body
+  end
+
+  post '/user/notify' do
+    body = JSON.parse request.body.read
+    password = body['password']
+    settings.userController.create_user body
+    body['password'] = password
+    settings.messageLogController.queue_user_notification body
   end
 
   put '/user/:id' do
-    settings.userController.update_user request.body.read
+    body = JSON.parse request.body.read
+    settings.userController.update_user(body)
+  end
+
+  put '/user/:id/notify' do
+    body = JSON.parse request.body.read
+    password = body['password']
+    settings.userController.update_user body
+    body['password'] = password
+    settings.messageLogController.queue_user_notification(body)
   end
 
   delete '/user/:id' do
     settings.userController.delete_user params
   end
 
-  get '/authentication_node/', :clearance  => true do
+  get '/authentication_node/', :clearance => true do
     settings.authNodeController.all
   end
 
-  post '/authentication_node/', :clearance => true  do
+  post '/authentication_node/', :clearance => true do
     settings.authNodeController.add_node request.body.read
   end
 

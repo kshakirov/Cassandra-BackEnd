@@ -57,6 +57,37 @@ module TurboCassandra
         }.to_json
       end
 
+      def prepare_notify_queue_payload request, message_id
+        {
+            "email": request['email'],
+            "notification_code": 'send_user_data',
+            "action": 'notification',
+            "id": message_id.to_s,
+            "data": {
+                "login": request['login'],
+                "authentication_node": get_auth_node(request),
+                "password": get_password(request)
+            }
+        }.to_json
+      end
+
+      def get_auth_node request
+        if not request['authentication_node'] == 'Internal'
+          node = @authentication_node.get_node(request['authentication_node'])
+          node.base_dn
+        else
+          "Internal"
+        end
+      end
+
+      def get_password request
+        if request['authentication_node'] == 'Internal'
+          request['password']
+        else
+          "use your external password"
+        end
+      end
+
       def log_task customer_email, message
         message_data = prepare_incoming_message(customer_email, message)
         @message_log_api.add_message(message_data)
@@ -79,6 +110,7 @@ module TurboCassandra
       public
       def initialize (rabbit_conn, queue='customer_email')
         @message_log_api = TurboCassandra::API::MessageLog.new
+        @authentication_node = TurboCassandra::API::AuthenticationNode.new
         @customer_api = TurboCassandra::API::Customer.new
         @queue = queue
         @channel = prepare_queue(rabbit_conn, queue)
@@ -120,6 +152,12 @@ module TurboCassandra
         request_payload = JSON.parse read
         message = "New  Customer [#{request_payload['email']}],  new password   [ #{request_payload['password']}]"
         commit_log(request_payload)
+      end
+
+      def queue_user_notification request
+        message_id = log_task(request["email"], "User Data [#{request['']}] Queued To Email")
+        task_payload = prepare_notify_queue_payload(request, message_id)
+        publish_task(task_payload)
       end
 
     end
