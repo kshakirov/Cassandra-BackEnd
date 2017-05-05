@@ -43,4 +43,21 @@ class TestTemplate < Minitest::Test
     assert response
   end
 
+  def test_notifcation_template
+    root = '/home/kshakirov/git/cassandra/ti_cassandra/sinatra_cassandra/rest/turbo'
+    body = {
+        action: 'notification',
+        notification_code: 'send_user_data',
+        email: 'kshakirov@zoral.com.ua',
+        data: {
+            login: 'kshakirov',
+            password: 'test',
+            name: 'Kirill Shakirov'
+
+        }
+    }
+    response = @template_controller.process body.to_json, root
+    assert response
+  end
+
 end

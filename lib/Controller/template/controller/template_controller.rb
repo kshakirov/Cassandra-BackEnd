@@ -1,6 +1,7 @@
 module TurboCassandra
   module Controller
     class Template
+      include TemplateNotification
 
       def initialize
         @order_api = TurboCassandra::API::Order.new
@@ -38,7 +39,7 @@ module TurboCassandra
         File.read(template_filename)
       end
 
-      def create_notification_template request, root
+      def create_forgotten_pass_template request, root
         template = read_template root, @templates[:notification]
         email, password = request['email'], request['password']
         renderer = ERB.new(template)
@@ -83,9 +84,11 @@ module TurboCassandra
       def process body, root
         request = JSON.parse body
         if request['action'] == 'forgotten_password'
-            create_notification_template(request, root)
+            create_forgotten_pass_template(request, root)
         elsif request['action'] == 'order'
           create_order_template(request, root)
+        elsif request['action'] =='notification'
+           create_notification_template(request, root)
         else
           {
               action: nil
