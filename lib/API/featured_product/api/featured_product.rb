@@ -5,7 +5,42 @@ module TurboCassandra
 
       def initialize
         @product_api = TurboCassandra::API::Product.new
-        @featured_product_model = TurboCassandra::Model::FeaturedProduct.new
+      end
+
+      def _prep_prod_hash product
+        {
+            sku: product['sku'],
+
+        }
+      end
+
+      def _update product
+        fp= TurboCassandra::Model::FeaturedProduct.find product['sku']
+        if product['ord'] != fp.ord
+          fp_ord_old =  TurboCassandra::Model::FeaturedProductOrder.find 1, product['ord']
+          if  not fp_ord_old.nil?
+            fp_old = TurboCassandra::Model::FeaturedProduct.find fp_ord_old.sku
+            fp_ord = TurboCassandra::Model::FeaturedProductOrder.find 1, fp.ord
+            fp_old.ord = fp.ord
+            fp_ord_old.ord = fp.ord
+            fp.ord=product['ord']
+            fp_ord.ord = product['ord']
+            fp.save; fp_ord.save; fp_old.save;fp_ord_old.save
+          else
+            old_ord = fp.ord
+            fp.ord = product['ord']
+            fp_ord =  TurboCassandra::Model::FeaturedProductOrder.find 1, old_ord
+            fp_ord.ord = product['ord']
+            fp.save;fp_ord.save
+            TurboCassandra::Model::FeaturedProductOrder.delete 1, old_ord
+          end
+        else
+            fp = TurboCassandra::Model::FeaturedProduct.new product
+            fp.save
+            product['cluster'] = 1
+            fp_ord = TurboCassandra::Model::FeaturedProductOrder.new product
+            fp_ord.save
+        end
       end
 
       private
@@ -39,27 +74,39 @@ module TurboCassandra
 
       public
       def get_featured_products
-        featured_product_ids = @featured_product_model.all
-        featured_product_ids.sort_by! { |id| id['ord'] }
+        featured_product_ids = TurboCassandra::Model::FeaturedProductOrder.find_by visible: true
         products = @product_api.where_skus(featured_product_ids.map { |f| f['sku'] })
         products = sort(products, featured_product_ids)
         _create_response(products)
       end
 
       def all
-        @featured_product_model.all
+        TurboCassandra::Model::FeaturedProductOrder.all
       end
 
       def update product
-        @featured_product_model.update(product)
+        _update product
       end
 
       def create product_data
-        @featured_product_model.insert(product_data)
+        featured_product = TurboCassandra::Model::FeaturedProduct.new product_data
+        featured_product.save
+        product_data['cluster'] = 1
+        featured_product_order = TurboCassandra::Model::FeaturedProductOrder.new product_data
+        featured_product_order.save
       end
 
       def delete sku
-        @featured_product_model.delete(sku)
+        featured_product = TurboCassandra::Model::FeaturedProduct.find sku
+        TurboCassandra::Model::FeaturedProductOrder.delete 1, featured_product.ord
+        TurboCassandra::Model::FeaturedProduct.delete sku
+      end
+
+      def next_order
+        order = TurboCassandra::Model::FeaturedProductOrder.max({'max' => 'ord', "by" => {
+            "cluster": 1
+        }})
+        order + 1
       end
 
     end

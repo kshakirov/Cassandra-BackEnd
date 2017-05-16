@@ -43,6 +43,10 @@ module TurboCassandra
       "SELECT  #{func}(#{aggregator}) FROM #{class_name}"
     end
 
+    def self.aggregation_params_template func, aggregator, values
+      "SELECT  #{func}(#{aggregator}) FROM #{class_name} " + " WHERE #{values}"
+    end
+
     def self.distinct_template key
       "Select distinct #{key} from #{class_name}"
     end
@@ -110,8 +114,8 @@ module TurboCassandra
       select_template("*") + " WHERE #{key} IN (#{args})"
     end
 
-    def self.delete params
-      execute delete_template, [params]
+    def self.delete *params
+      execute delete_template, params
       true
     end
 
@@ -133,17 +137,25 @@ module TurboCassandra
       prep_response(results)
     end
 
-    def self.max
-        result = execute(aggregation_template('MAX',primary_index.first),[])
-        result.first.values.first
+    def self.max params=nil
+      result = nil
+      if  params.nil?
+        result = execute(aggregation_template('MAX', primary_index.first), [])
+      else
+        real_args = prep_args params['by']
+        args = prep_where_args params['by']
+        result = execute(aggregation_params_template('MAX', params['max'], args), real_args)
+      end
+      result.first.values.first
     end
 
 
     def self.find *params
       result = execute select_find_prim_template, params
-      unless result.nil?
-        self.new result.first
+      unless result.nil? or result.first.nil?
+        return self.new result.first
       end
+      nil
     end
 
     def self.prep_response cas_results
@@ -167,9 +179,9 @@ module TurboCassandra
 
     def self.distinct key
       results = execute(distinct_template(key), [])
-       unless results.nil?
-          results.map{|r| r}
-        end
+      unless results.nil?
+        results.map { |r| r }
+      end
     end
 
     def self.paginate paging_params, hash=nil

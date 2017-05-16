@@ -7,36 +7,29 @@ module TurboCassandra
       end
 
       private
-      def _get_admin_scheleton featured_product, product
-        {
-            sku: product['sku'],
-            part_number: product['part_number'],
-            part_type: product['part_type'],
-            order: featured_product['ord'],
-            visible: featured_product['visible']
-        }
+
+      def get_next_order
+        @featured_product_api.next_order
       end
 
       def populate_featured_product product
         {
             sku: product['sku'],
-            ord: 100,
-            visible: false
+            ord: get_next_order,
+            visible: false,
+            part_number: product['part_number']
         }
       end
 
-      def _create_admin_response featured_products, products
-        featured_products = products.each_with_index.map { |p, index| _get_admin_scheleton(featured_products[index], p) }
-        featured_products.sort_by { |p| p[:order] }
-      end
+
 
       def _add_product sku
         product = @product_api.find_by_sku(sku)
-        if not product.nil?
+        unless product.nil?
           @featured_product_api.create(populate_featured_product(product))
-         return  {
-             result: true
-         }
+          return {
+              result: true
+          }
         end
         {
             result: false
@@ -45,11 +38,7 @@ module TurboCassandra
 
       public
       def get_admin_list
-        featured_product_ids = @featured_product_api.all
-        featured_product_ids.sort_by! { |fp| fp['sku'] }
-        products = @product_api.where_skus(featured_product_ids.map { |fp| fp['sku'] })
-        products.sort_by! { |p| p['sku'] }
-        _create_admin_response(featured_product_ids, products)
+        @featured_product_api.all
       end
 
       def update_featured_product body

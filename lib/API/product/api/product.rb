@@ -22,7 +22,7 @@ module TurboCassandra
 
       def initialize
         @product_model = TurboCassandra::Model::Product.new
-        @featured_product_model = TurboCassandra::Model::FeaturedProduct.new
+        #@featured_product_model = TurboCassandra::Model::FeaturedProduct.new
         @new_product_model = TurboCassandra::Model::NewProduct.new
         @product_created_at_model = TurboCassandra::Model::ProductCreatedAt.new
         @generator = Cassandra::Uuid::Generator.new

@@ -29,10 +29,6 @@ namespace :db do
       ruby "tools/schema/customer/add_email_index.rb"
     end
 
-    task :featured_product do
-      ruby "tools/schema/featured_product/update_featured_products.rb"
-    end
-
     task :product do
       ruby "tools/schema/product/update_products_1.rb"
     end
@@ -47,7 +43,6 @@ namespace :db do
       Rake::Task['db:migrate:order'].execute
       Rake::Task['db:migrate:attribute_set'].execute
       Rake::Task['db:migrate:customer'].execute
-      Rake::Task['db:migrate:featured_product'].execute
       Rake::Task['db:migrate:product'].execute
     end
   end
@@ -58,7 +53,6 @@ namespace :db do
       ruby "tools/schema/attribute/insert_default_attributes.rb"
       ruby "tools/schema/attribute_set/create_attribute_sets.rb"
       ruby "tools/schema/currency/create_currencies.rb"
-      ruby "tools/schema/featured_product/create_featured_products.rb"
       ruby "tools/schema/customer/create_customers.rb"
       ruby "tools/schema/group_price/create_group_price.rb"
       ruby "tools/schema/order/create_orders.rb"
@@ -145,6 +139,10 @@ namespace :db do
       ruby "tools/schema/notification/create_notification.rb"
     end
 
+    task :featured_product do
+      ruby "tools/schema/featured_product/create_featured_products.rb"
+    end
+
     task :all do
       Rake::Task['db:setup:base'].execute
       Rake::Task['db:setup:cart'].execute
@@ -213,6 +211,10 @@ namespace :db do
 
     task :notification do
       ruby "tools/fixtures/notification/populate.rb"
+    end
+
+    task :featured_product do
+      ruby "tools/fixtures/featured_new_product/populate.rb"
     end
 
     task :all do
