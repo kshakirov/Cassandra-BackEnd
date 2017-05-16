@@ -22,8 +22,8 @@ module TurboCassandra
 
       def initialize
         @product_model = TurboCassandra::Model::Product.new
-        #@featured_product_model = TurboCassandra::Model::FeaturedProduct.new
-        @new_product_model = TurboCassandra::Model::NewProduct.new
+        #@featured_product_api = TurboCassandra::API::FeaturedProduct.new
+        #@new_product_api = TurboCassandra::API::NewProduct.new
         @product_created_at_model = TurboCassandra::Model::ProductCreatedAt.new
         @generator = Cassandra::Uuid::Generator.new
       end
@@ -60,8 +60,8 @@ module TurboCassandra
           manufacturer, part_type, created_at = prepare_product_created_2_del(product_2_delete)
           @product_created_at_model.delete(manufacturer, part_type, created_at)
           @product_model.delete sku
-          @featured_product_model.delete sku
-          @new_product_model.delete sku
+          #@featured_product_api.delete sku
+          #@new_product_api.delete sku
         end
       end
 

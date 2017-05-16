@@ -160,6 +160,7 @@ namespace :db do
       Rake::Task['db:setup:authentication_node'].execute
       Rake::Task['db:setup:admin_email'].execute
       Rake::Task['db:setup:notification'].execute
+      Rake::Task['db:setup:featured_product'].execute
     end
   end
 
