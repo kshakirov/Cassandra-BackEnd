@@ -34,7 +34,7 @@ class Public < Sinatra::Base
   set :rabbit_queue,
       TurboCassandra::Controller::RabbitQueue.
           new(self.send(ENV['TURBO_MODE'])['queue_host'])
-  set :bind, '0.0.0.0'
+  #set :bind, '0.0.0.0'
   set :port, 4700
 
 

@@ -15,17 +15,17 @@ module TurboCassandra
 
         def get_manufacturers
           manr = @attribute.find 'manufacturer'
-          manr.first['options']
+          manr['options']
         end
 
         def get_part_types
           part = @attribute.find 'part'
-          part.first['options']
+          part['options']
         end
 
         def get_turbo_type
           turbo_types = @attribute.find 'turbo_type'
-          turbo_types.first['options']
+          turbo_types['options']
         end
 
         def build_manufacturer_filter_item manufacturer, id

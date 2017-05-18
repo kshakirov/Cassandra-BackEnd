@@ -20,14 +20,14 @@ module TurboCassandra
 
         def _get_manufacturers
           attr = @attribute.find 'manufacturer'
-          options = attr.first['options']
+          options = attr['options']
           normalize_list(options)
         end
 
 
         def _get_parts
           attr = @attribute.find 'part'
-          options = attr.first['options']
+          options = attr['options']
           normalize_list(options)
         end
 

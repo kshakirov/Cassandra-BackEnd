@@ -6,8 +6,8 @@ module TurboCassandra
         private
         def get_part_types
           attr = @attribute.find 'part'
-          if attr.first
-            options = attr.first['options']
+          unless attr.nil?
+            options = attr['options']
             create_part_type_hash(options)
           end
         end
