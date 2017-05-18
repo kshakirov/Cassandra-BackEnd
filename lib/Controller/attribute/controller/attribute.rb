@@ -25,6 +25,11 @@ module TurboCassandra
       def all
         @attribute.all
       end
+
+      def create body
+        attribute = JSON.parse body
+        @attribute.create attribute
+      end
     end
   end
 end

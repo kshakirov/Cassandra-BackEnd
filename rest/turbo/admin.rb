@@ -104,6 +104,10 @@ class Admin < Sinatra::Base
     settings.attributeController.find_all
   end
 
+  post '/attribute/' do
+    settings.attributeController.create(request.body.read)
+  end
+
   get '/attribute/:code' do
     settings.attributeController.find_by_code(params)
   end
