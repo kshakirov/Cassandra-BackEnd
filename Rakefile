@@ -182,7 +182,7 @@ namespace :db do
     end
 
     task :attribute do
-      #ruby "tools/fixtures/attribute/populate.rb"
+      ruby "tools/fixtures/attribute/populate.rb"
       ruby "tools/fixtures/attribute/insert_default_attributes.rb"
     end
 
