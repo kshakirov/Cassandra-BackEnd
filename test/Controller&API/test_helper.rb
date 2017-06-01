@@ -16,5 +16,6 @@ require 'prawn'
 require 'prawn/table'
 require 'carmen'
 require 'carmen/country'
+require 'arangorb'
 require_relative '../../lib/sources'
 ENV['TURBO_MODE'] = "development"

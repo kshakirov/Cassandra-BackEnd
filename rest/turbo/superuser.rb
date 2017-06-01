@@ -1,5 +1,4 @@
 class SuperUser < Sinatra::Base
-
   use JwtAuth
   use ExceptionHandling
   register Sinatra::ConfigFile
@@ -14,6 +13,7 @@ class SuperUser < Sinatra::Base
     set :userController, TurboCassandra::Controller::User.new
     set :authNodeController, TurboCassandra::Controller::AuthenticationNode.new
     set :messageLogController, TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection)
+    set :updateController,TurboCassandra::Controller::ProductUpdate.new
   end
 
 
@@ -113,6 +113,10 @@ class SuperUser < Sinatra::Base
 
   post '/user/:login/image/upload/' do
     settings.userController.add_profile_image params
+  end
+
+  get '/recurrent_update/', :clearance => true do
+    settings.updateController.recurent_update
   end
 
 

@@ -262,10 +262,10 @@ end
 namespace :sync do
   namespace :product do
     task :update do
-      ruby "tools/sync/product/console/product_update.rb"
+      ruby "tools/sync/product/console/product_update_1.rb"
     end
     task :up do
-      ruby "tools/sync/product/console/product_update.rb"
+      ruby "tools/sync/product/console/product_update_1.rb"
     end
   end
 end

@@ -36,6 +36,7 @@ module TurboCassandra
                 puts "PRODUCT [#{p[:sku]} ALREADY DELETED FROM ELASTIC"
               end
             end
+            p
           end
         end
 

@@ -24,6 +24,7 @@ require_relative 'jwt_auth'
 require_relative 'exception_handling'
 require_relative 'mailer'
 require 'multi_json'
+require 'arangorb'
 
 
 class Public < Sinatra::Base
@@ -31,6 +32,7 @@ class Public < Sinatra::Base
   register Sinatra::ConfigFile
   helpers Sinatra::Cookies
   config_file '../../config/config.yml'
+
   set :rabbit_queue,
       TurboCassandra::Controller::RabbitQueue.
           new(self.send(ENV['TURBO_MODE'])['queue_host'])
@@ -162,7 +164,6 @@ class Public < Sinatra::Base
     settings.messageLogController.queue_new_customer_task(
         request.body.read)
   end
-
 
   after  do
     unless  request.path_info.include?  "print"
