@@ -18,8 +18,7 @@ module TurboCassandra
 
       def last_5_visits request
         id = request.env['HTTP_X_VISITOR'].to_i
-        nth = 5
-         @visitor_log_api.last_nth id, nth
+         @visitor_log_api.last_nth id, 5
       end
 
       def new_customer_visit request, params
@@ -34,8 +33,8 @@ module TurboCassandra
       end
 
       def last_5_customer_visits request
-        customer_id = request.env.values_at( :customer).first['id']
-        @visitor_log_api.last_nth_customer customer_id
+        id = request.env.values_at( :customer).first['id']
+        @visitor_log_api.last_nth_customer id, 5
       end
 
     end

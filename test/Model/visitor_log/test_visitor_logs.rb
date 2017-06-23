@@ -60,4 +60,9 @@ class TestVisitorsLog < Minitest::Test
     results  = TurboCassandra::Model::CustomerLog.find_by  customer_id: 487
     p results
   end
+
+  def test_where_limit
+    res  = TurboCassandra::Model::VisitorLog.where(visitor_id: 576879073).limit(5).last
+    p res
+  end
 end

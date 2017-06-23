@@ -7,5 +7,6 @@ cql = %Q(CREATE TABLE  visitor_logs
             id timeuuid,
             ip inet,
             customer_id bigint,
-            product bigint, Primary Key(visitor_id, date, id, ip)))
+            product bigint, Primary Key(visitor_id, date, id, ip)) WITH CLUSTERING ORDER BY (date DESC, id DESC, ip ASC)
+)
 execute_lazy cql, []

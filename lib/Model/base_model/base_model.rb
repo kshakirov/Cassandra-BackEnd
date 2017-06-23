@@ -163,6 +163,15 @@ module TurboCassandra
     end
 
 
+    def self.last params, limit
+      real_args = prep_args params
+      args = prep_where_args params
+      template = select_find_template(args) + " LIMIT #{limit[:limit]}"
+      results = execute(template, real_args)
+      prep_response(results)
+    end
+
+
     def self.find_in_by params
       real_args = prep_args params
       args = prep_where_in_args params

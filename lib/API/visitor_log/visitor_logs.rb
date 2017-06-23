@@ -35,16 +35,16 @@ module TurboCassandra
         logger.save
       end
 
-      def last_nth_customer id
-        products = TurboCassandra::Model::CustomerLog.find_by customer_id: id
-        skus = products[0..5].map {|cl| cl['product']}
+      def last_nth_customer id, nth
+        products =  TurboCassandra::Model::CustomerLog.where(customer_id: id).limit(nth).last
+        skus = products.map {|cl| cl['product']}
         unless skus.nil?
           @product_controller.get_products(skus).map {|p| {sku: p['sku'], name: "#{p['part_type']} - #{p['part_number']}"}}
         end
       end
 
       def last_nth  id, nth
-        products = TurboCassandra::Model::VisitorLog.find_by visitor_id: id
+        products =  TurboCassandra::Model::VisitorLog.where(visitor_id: id).limit(nth).last
         skus = products.map {|vl| vl['product']}
         unless skus.nil?
           @product_controller.get_products(skus).map {|p| {sku: p['sku'], name: "#{p['part_type']} - #{p['part_number']}"}}
