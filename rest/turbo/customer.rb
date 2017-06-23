@@ -126,8 +126,7 @@ class Customer < Sinatra::Base
 
 
   get '/product/viewed' do
-
-    settings.visitorLog.last5_customer(customer_id)
+    settings.visitorLog.last_5_customer_visits(request)
   end
 
   put '/account/' do

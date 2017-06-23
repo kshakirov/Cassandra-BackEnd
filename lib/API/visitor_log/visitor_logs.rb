@@ -2,7 +2,6 @@ module TurboCassandra
   module API
     class VisitorLog
       def initialize
-        @customer_logs = TurboCassandra::CustomerLog.new
         @generator = Cassandra::Uuid::Generator.new
         @product_controller = TurboCassandra::Controller::Product.new
       end
@@ -31,12 +30,14 @@ module TurboCassandra
       end
 
       def create_customer_visit visit_data
-        log = prepare_data(visit_data)
-        @customer_logs.insert(log)
+        hash = prepare_data(visit_data)
+        logger = TurboCassandra::Model::CustomerLog.new hash
+        logger.save
       end
 
       def last_nth_customer id
-        skus = @customer_logs.last({:key => 'customer_id', :value => id}).map {|cl| cl['product']}
+        products = TurboCassandra::Model::CustomerLog.find_by customer_id: id
+        skus = products[0..5].map {|cl| cl['product']}
         unless skus.nil?
           @product_controller.get_products(skus).map {|p| {sku: p['sku'], name: "#{p['part_type']} - #{p['part_number']}"}}
         end

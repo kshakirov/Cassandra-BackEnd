@@ -5,7 +5,7 @@ class TestVisitorsLog < Minitest::Test
     @generator = Cassandra::Uuid::Generator.new
     @visitor_log_controller = TurboCassandra::Controller::VisitorLog.new
   end
-  def test_new
+  def test_new_visit
     hash = {
         visitor_id: 576879073,
         date: Time.now.to_time,
@@ -15,6 +15,20 @@ class TestVisitorsLog < Minitest::Test
         product: 123
     }
     log  = TurboCassandra::Model::VisitorLog.new hash
+    log.save
+  end
+
+
+  def test_new_customer_visit
+    hash = {
+        customer_id: 487,
+        date: Time.now.to_time,
+        id: @generator.now,
+        ip: Cassandra::Types::Inet.new('192.168.1.1'),
+        visitor_id: 12354,
+        product: 123
+    }
+    log  = TurboCassandra::Model::CustomerLog.new hash
     log.save
   end
 
@@ -39,6 +53,11 @@ class TestVisitorsLog < Minitest::Test
 
   def test_select
     results  = TurboCassandra::Model::VisitorLog.find_by  visitor_id: 576879073
+    p results
+  end
+
+  def test_select_customer_logs
+    results  = TurboCassandra::Model::CustomerLog.find_by  customer_id: 487
     p results
   end
 end
