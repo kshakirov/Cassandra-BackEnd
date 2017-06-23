@@ -1,7 +1,5 @@
 module TurboCassandra
-
-
-  class CustomerLog
+  class CustomerLogOld
     include Tools
 
     private
@@ -30,5 +28,11 @@ module TurboCassandra
     def last  pair
       execute(create_select_last(pair[:key]),  [pair[:value]])
     end
+  end
+
+  module Model
+    class CustomerLog < BaseModel
+    end
+    CustomerLog.primary_index = %W(customer_id date id ip)
   end
 end

@@ -83,7 +83,7 @@ namespace :db do
 
     task :visitor_log do
       ruby "tools/schema/visitor_log/create_visitor_log.rb"
-      ruby "tools/schema/visitor_log/create_customer_log.rb"
+      #ruby "tools/schema/visitor_log/create_customer_log.rb"
     end
 
     task :compared_products do

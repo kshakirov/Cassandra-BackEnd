@@ -43,7 +43,7 @@ class Public < Sinatra::Base
     set :productController, TurboCassandra::Controller::Product.new
     set :loginController, TurboCassandra::Controller::Login.new
     set :orderController, TurboCassandra::Controller::Order.new
-    set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
+    set :visitorLog, TurboCassandra::Controller::VisitorLog.new
     set :messageLogController,
         TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection,
                                                    settings.queue_name)
@@ -113,15 +113,9 @@ class Public < Sinatra::Base
   end
 
   post '/frontend/product' do
-    request_payload = JSON.parse request.body.read
-    if (cookies[:visitorid])
-      settings.logBackEnd.new_visit({
-                                        visitor_id: cookies[:visitorid].gsub('"', ''),
-                                        ip: env['REMOTE_ADDR'],
-                                        product: request_payload['sku'].to_i
-                                    })
-    end
-    settings.productController.get_product(request_payload['sku'])
+    payload = JSON.parse request.body.read
+    settings.visitorLog.new_visit(request)
+    settings.productController.get_product(payload['sku'])
   end
 
 
@@ -138,9 +132,7 @@ class Public < Sinatra::Base
 
 
   get '/frontend/product/viewed' do
-    if cookies[:visitorid]
-      settings.logBackEnd.last5_visitor(cookies[:visitorid].gsub('"', ''))
-    end
+      settings.visitorLog.last_5_visits(request)
   end
 
 

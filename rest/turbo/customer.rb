@@ -31,7 +31,7 @@ class Customer < Sinatra::Base
     set :orderController, TurboCassandra::Controller::Order.new
     set :groupPriceController, TurboCassandra::Controller::GroupPrice.new
     set :cartController, TurboCassandra::Controller::Cart.new
-    set :logBackEnd, TurboCassandra::VisitorLogBackEnd.new
+    set :visitorLog, TurboCassandra::Controller::VisitorLog.new
     set :comparedProductsController, TurboCassandra::Controller::ComparedProducts.new
     set :messageLogController,
         TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection, settings.queue_name)
@@ -62,15 +62,12 @@ class Customer < Sinatra::Base
   end
 
   get '/product/:id/price' do
-    customer = request.env.values_at :customer
+    settings.visitorLog.new_customer_visit(   request, params)
+    customer_group = request.env.values_at( :customer).first['group']
     sku = params[:id].to_i
-    settings.logBackEnd.new_customer_visit({
-                                               customer_id: customer.first['id'],
-                                               ip: env['REMOTE_ADDR'],
-                                               product: sku
-                                           })
-    price = settings.groupPriceController.get_price(sku, customer.first['group'])
-    {price: price}
+    {
+        price:  settings.groupPriceController.get_price(sku, customer_group)
+    }
 
   end
 
@@ -129,9 +126,8 @@ class Customer < Sinatra::Base
 
 
   get '/product/viewed' do
-    customer = request.env.values_at :customer
-    customer_id = customer.first['id']
-    settings.logBackEnd.last5_customer(customer_id)
+
+    settings.visitorLog.last5_customer(customer_id)
   end
 
   put '/account/' do
