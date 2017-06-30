@@ -140,6 +140,14 @@ namespace :db do
       ruby "tools/schema/featured_product/create_featured_products.rb"
     end
 
+    task :bot do
+      ruby "tools/schema/bot/create_bots.rb"
+    end
+
+    task :product_rank do
+      ruby "tools/schema/product/product_rank/create_product_ranks.rb"
+    end
+
     task :all do
       Rake::Task['db:setup:base'].execute
       Rake::Task['db:setup:cart'].execute
@@ -159,6 +167,8 @@ namespace :db do
       Rake::Task['db:setup:admin_email'].execute
       Rake::Task['db:setup:notification'].execute
       Rake::Task['db:setup:featured_product'].execute
+      Rake::Task['db:setup:bot'].execute
+      Rake::Task['db:setup:product_rank'].execute
     end
   end
 
