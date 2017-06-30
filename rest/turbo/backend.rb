@@ -35,6 +35,7 @@ class Public < Sinatra::Base
       TurboCassandra::Controller::RabbitQueue.
           new(self.send(ENV['TURBO_MODE'])['queue_host'])
   set :queue_name, self.send(ENV['TURBO_MODE'])['queue_name']
+  set :stats_queue_name, self.send(ENV['TURBO_MODE'])['stats_queue_name']
   set :port, 4700
 
 
@@ -43,7 +44,8 @@ class Public < Sinatra::Base
     set :productController, TurboCassandra::Controller::Product.new
     set :loginController, TurboCassandra::Controller::Login.new
     set :orderController, TurboCassandra::Controller::Order.new
-    set :visitorLog, TurboCassandra::Controller::VisitorLog.new
+    set :visitorLog, TurboCassandra::Controller::VisitorLog.new(
+        settings.rabbit_queue.connection,  settings.stats_queue_name)
     set :messageLogController,
         TurboCassandra::Controller::MessageLog.new(settings.rabbit_queue.connection,
                                                    settings.queue_name)

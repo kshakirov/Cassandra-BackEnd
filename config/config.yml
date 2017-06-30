@@ -10,6 +10,7 @@ development:
   metadata_server:  'timms.turbointernational.com'
   active_directory: '162.249.218.162'
   queue_name: 'development_customer_email'
+  stats_queue_name: 'development_stats_queue'
 
 staging:
    queue_host:  '10.8.0.1'
@@ -17,6 +18,7 @@ staging:
    metadata_server: 'timms.turbointernational.com'
    active_directory: '162.249.218.162'
    queue_name: 'staging_customer_email'
+   stats_queue_name: 'staging_stats_queue'
 
 production:
    queue_host:  '10.8.0.1'
@@ -24,4 +26,5 @@ production:
    metadata_server: 'timms.turbointernational.com'
    active_directory: '162.249.218.162'
    queue_name: 'customer_email'
+   stats_queue_name: 'production_stats_queue'
 

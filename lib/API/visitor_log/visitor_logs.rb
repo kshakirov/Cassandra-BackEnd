@@ -26,7 +26,7 @@ module TurboCassandra
         hash = prepare_data(visit_data)
         logger = TurboCassandra::Model::VisitorLog.new hash
         logger.save
-
+        hash
       end
 
       def create_customer_visit visit_data
