@@ -21,21 +21,20 @@ module TurboCassandra
       public
 
       def initialize
-        @product_created_at_model = TurboCassandra::Model::ProductCreatedAt.new
         @generator = Cassandra::Uuid::Generator.new
       end
 
       def find_by_sku sku
-        product =TurboCassandra::Model::Product.find  sku
+        product =TurboCassandra::Model::Product.find sku
         product.to_hash
       end
 
       def find sku
-        product =TurboCassandra::Model::Product.find  sku
+        product =TurboCassandra::Model::Product.find sku
       end
 
       def where_skus skus
-        TurboCassandra::Model::Product.find_in_by  sku: skus
+        TurboCassandra::Model::Product.find_in_by sku: skus
       end
 
       def each &block
@@ -52,13 +51,14 @@ module TurboCassandra
 
       def create product_hash
         product_hash['created_at'] =@generator.now
-        product  = TurboCassandra::Model::Product.new  product_hash
+        product = TurboCassandra::Model::Product.new product_hash
         product.save
-        @product_created_at_model.insert(prepare_product_created_at(product_hash))
+        product_created_at = TurboCassandra::Model::ProductCreatedAtinsert.new(prepare_product_created_at(product_hash))
+        product_created_at.save
       end
 
       def update product_hash
-        product  = TurboCassandra::Model::Product.new  product_hash
+        product = TurboCassandra::Model::Product.new product_hash
         product.save
       end
 
@@ -66,7 +66,7 @@ module TurboCassandra
         product_2_delete = TurboCassandra::Model::Product.find(sku).to_hash
         if product_2_delete
           manufacturer, part_type, created_at = prepare_product_created_2_del(product_2_delete)
-          @product_created_at_model.delete(manufacturer, part_type, created_at)
+          TurboCassandra::Model::ProductCreatedAt.delete manufacturer, part_type, created_at
           TurboCassandra::Model::Product.delete sku
         end
       end
