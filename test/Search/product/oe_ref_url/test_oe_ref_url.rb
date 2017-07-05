@@ -7,11 +7,11 @@ class TestOeRefUrl < Minitest::Test
 
 
   def test_ti_oe_ref_2
-    product = @product.find_by_sku  45452
+    product = @product.find_by_sku  6307
     refute_nil product
     elastic_product = @product_transformer.run product
     refute_nil elastic_product
-    assert_equal elastic_product['oe_ref_urls'], []
+    assert_nil   elastic_product['oe_ref_urls']
   end
 
   def test_ti_oe_ref_not_ext
@@ -19,7 +19,7 @@ class TestOeRefUrl < Minitest::Test
     refute_nil product
     elastic_product = @product_transformer.run product
     refute_nil elastic_product
-    assert_equal elastic_product['oe_ref_urls'][:part_number], '078145703H'
+    assert_equal  '078145703H', elastic_product['oe_ref_urls'][:part_number]
   end
 end
 

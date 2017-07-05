@@ -1,11 +1,9 @@
 module TurboCassandra
   module Model
-    class Product
+    class ProductOld
       include ProductSql
       include Utils
-      private
 
-      public
 
       def each &block
         result = start_iteration
@@ -53,5 +51,9 @@ module TurboCassandra
           execute_query(create_delete_cql, [sku])
       end
     end
+    class Product < BaseModel
+
+    end
+    Product.primary_index = ['sku']
   end
 end
