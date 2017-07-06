@@ -13,6 +13,13 @@ module TurboCassandra
         }
       end
 
+      def prepare_prod_part_number product
+        {
+            part_number: product['part_number'],
+            sku: product['sku']
+        }
+      end
+
       def prepare_product_created_2_del product
         return product['manufacturer'], product['part_type'],
             product['created_at']
@@ -26,11 +33,22 @@ module TurboCassandra
 
       def find_by_sku sku
         product =TurboCassandra::Model::Product.find sku
-        product.to_hash
+        begin
+          product.to_hash
+        rescue
+          nil
+        end
+      end
+
+      def find_by_part_number part_number
+        part_number = TurboCassandra::Model::ProductPartNumber.find part_number
+        unless part_number.nil?
+          find_by_sku part_number.sku
+        end
       end
 
       def find sku
-        product =TurboCassandra::Model::Product.find sku
+        TurboCassandra::Model::Product.find sku
       end
 
       def where_skus skus
@@ -55,6 +73,8 @@ module TurboCassandra
         product.save
         product_created_at = TurboCassandra::Model::ProductCreatedAtinsert.new(prepare_product_created_at(product_hash))
         product_created_at.save
+        product_part_number = TurboCassandra::Model::ProductPartNumber.new(prepare_prod_part_number(product_hash))
+        product_part_number.save
       end
 
       def update product_hash
@@ -67,6 +87,7 @@ module TurboCassandra
         if product_2_delete
           manufacturer, part_type, created_at = prepare_product_created_2_del(product_2_delete)
           TurboCassandra::Model::ProductCreatedAt.delete manufacturer, part_type, created_at
+          TurboCassandra::Model::ProductPartNumber.delete product_2_delete['part_number']
           TurboCassandra::Model::Product.delete sku
         end
       end

@@ -44,6 +44,27 @@ class TestProduct < Minitest::Test
     refute_nil product[:price]
   end
 
+  def test_admin_product_sku
+    body = { 'id' => 43747 }
+    product = @product_controller.get_admin_product body
+    refute_nil product
+    assert_equal 43747, product['sku']
+  end
+
+
+  def test_admin_product_sku_ambi
+    body = { 'id' => '4027907' }
+    product = @product_controller.get_admin_product body
+    refute_nil product
+    assert_equal 6049, product['sku']
+  end
+
+  def test_admin_product_part_number
+    body = { 'id' =>  '3-A-0281'}
+    product = @product_controller.get_admin_product body
+    refute_nil product
+  end
+
   def test_admin_product_non_ti
     body = {'customer_group_id' => '2', 'id' => 840 }
     product = @product_controller.get_admin_prouct_with_price body

@@ -148,6 +148,10 @@ namespace :db do
       ruby "tools/schema/product/product_rank/create_product_ranks.rb"
     end
 
+    task :product_part_number do
+      ruby "tools/schema/product/product_part_number/create_product_part_numbers.rb"
+    end
+
     task :all do
       Rake::Task['db:setup:base'].execute
       Rake::Task['db:setup:cart'].execute
@@ -169,6 +173,7 @@ namespace :db do
       Rake::Task['db:setup:featured_product'].execute
       Rake::Task['db:setup:bot'].execute
       Rake::Task['db:setup:product_rank'].execute
+      Rake::Task['db:setup:product_part_number'].execute
     end
   end
 

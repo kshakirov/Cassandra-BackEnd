@@ -5,10 +5,10 @@ module TurboCassandra
       include TurboCassandra::Controller::CriticalDims
       include TurboCassandra::Controller::TiPart
       include ProductAdminWithPrice
+      include ProductAdmin
       include Pagination
       include ProductApplication
 
-      public
       def initialize
         @product_api = TurboCassandra::API::Product.new
         @attribute = TurboCassandra::API::Attribute.new
@@ -57,7 +57,7 @@ module TurboCassandra
 
       def get_admin_product(params)
         sku = params['id']
-        _get_product(sku)
+        _admin_get_product(sku)
       end
 
       def get_admin_prouct_with_price params

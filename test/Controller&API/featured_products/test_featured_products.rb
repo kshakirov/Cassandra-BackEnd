@@ -60,4 +60,11 @@ class TestFeaturedProduct < Minitest::Test
     @featured_product_controller.add_product params
   end
 
+  def test_add_part_number
+    params = {
+        'id' => '5-A-0333',
+    }
+    @featured_product_controller.add_product params
+  end
+
 end
