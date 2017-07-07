@@ -1,5 +1,3 @@
-ENV['TURBO_MODE'] ='development'
-
 require_relative '../../current_helper'
 
 def populate_prod_part_num products
