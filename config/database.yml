@@ -16,7 +16,7 @@ staging:
    hosts:
      - '10.8.0.6'
      - '10.8.0.9'
-     - '10.8.0.10'
+     - '10.8.0.16'
    keyspace: turbo_staging
 
 production:
@@ -24,4 +24,5 @@ production:
      - '10.8.0.6'
      - '10.8.0.9'
      - '10.8.0.10'
+     - '10.8.0.16'
    keyspace: turbo_production

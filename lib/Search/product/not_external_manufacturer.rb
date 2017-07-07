@@ -1,6 +1,6 @@
 module TurboCassandra
   module NotExternalManufacturer
-    @@not_external_manufacturer = ['I.H.I.']
+    @@not_external_manufacturer = []
     private
     def is_not_external_manufacturer? product
       key = nil

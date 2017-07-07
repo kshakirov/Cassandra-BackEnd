@@ -20,12 +20,12 @@ OUT_FILE=$LOG_PATH/$APP_NAME.out
 ERR_FILE=$LOG_PATH/$APP_NAME.err
 # ---------------------------------------------------
 
-JRUBY_HOME=/home/kshakirov/.rvm/rubies/jruby-9.1.2.0
+JRUBY_HOME=/home/ubuntu/.rvm/rubies/jruby-9.1.6.0
 JRUBY=$JRUBY_HOME/bin/jruby
 GEM=$JRUBY_HOME/bin/gem
 
-export GEM_PATH=/home/kshakirov/.rvm/gems/jruby-9.1.2.0:/home/kshakirov/.rvm/gems/jruby-9.1.2.0@global
-export GEM_HOME=/home/kshakirov/.rvm/gems/jruby-9.1.2.0
+export GEM_PATH=/home/ubuntu/.rvm/gems/jruby-9.1.6.0:/home/ubuntu/.rvm/gems/jruby-9.1.6.0@global
+export GEM_HOME=/home/ubuntu/.rvm/gems/jruby-9.1.6.0
 
 if [ $LOGGING -eq 1 ]; then
   mkdir -p $LOG_PATH
