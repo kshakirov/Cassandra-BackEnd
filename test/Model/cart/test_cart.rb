@@ -1,17 +1,11 @@
-require '../test_helper'
+require_relative '../test_helper'
 
 class TestCartModel < Minitest::Test
-  def setup
-    @cart_model = TurboCassandra::Model::Cart.new
+
+  def test_load
+    cart  = TurboCassandra::Model::Cart.find 487
+    assert_equal cart.id, 487
   end
-  def test_insert
-    items  = @cart_model.count_items(632)
-    assert_true 2, items
-  end
-
-
-
-
 
 end
 
