@@ -24,8 +24,8 @@ module TurboCassandra
       end
 
       def calculate_order order, rate
-        order['subtotal'] = (order['subtotal'] * rate).round(2)
-        order['grand_total'] = (order['grand_total'] * rate).round(2)
+        order['subtotal'] = (BigDecimal.new(order['subtotal']) * rate).round(2)
+        order['grand_total'] = (BigDecimal(order['grand_total']) * rate).round(2)
       end
 
       def calculate_prices order

@@ -111,6 +111,14 @@ module TurboCassandra
       end
     end
 
+    def self.agreg_funcs_primary_args
+      if self.primary_index.class.name == 'Array'
+        primary_index.first
+      else
+        primary_index
+      end
+    end
+
     def self.select_find_prim_template
       select_template('*') + " WHERE #{prep_primary_args}"
     end
@@ -184,7 +192,7 @@ module TurboCassandra
     def self.max params=nil
       result = nil
       if  params.nil?
-        result = execute(aggregation_template('MAX', primary_index.first), [])
+        result = execute(aggregation_template('MAX', agreg_funcs_primary_args), [])
       else
         real_args = prep_args params['by']
         args = prep_where_args params['by']

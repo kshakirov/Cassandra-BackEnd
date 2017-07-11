@@ -115,7 +115,7 @@ module TurboCassandra
 
       def empty_cart customer_id
         cart =TurboCassandra::Model::Cart.find customer_id
-        cart.update_attributes items: {}, subtotal: 0.0
+        cart.update_attributes items: {}, subtotal: BigDecimal.new(0)
         true
       end
 

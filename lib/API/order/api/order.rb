@@ -6,18 +6,33 @@ module TurboCassandra
       include ProductInterchangeResolver
       include AlsoBought
       def initialize
-        @order_model = TurboCassandra::Model::Order.new
         @product_api = TurboCassandra::API::Product.new
         @invoice_api = TurboCassandra::API::Invoice.new
       end
 
-      def_delegator :@order_model, :find_by_customer_id, :find_by_customer_id
-      def_delegator :@order_model, :find_by_id, :find_by_id
-      def_delegator :@order_model, :get_next_order_id, :get_next_order_id
-      def_delegator :@order_model, :insert, :insert
+
+      def find_by_customer_id customer_id
+        TurboCassandra::Model::Order.find_by customer_id: customer_id
+      end
+
+      def find_by_id order_id
+        order = TurboCassandra::Model::Order.find order_id
+        unless order.nil?
+          order.to_hash
+        end
+      end
+
+      def get_next_order_id
+        TurboCassandra::Model::Order.max
+      end
+
+      def insert order_hash
+        order = TurboCassandra::Model::Order.new order_hash
+        order.save
+      end
 
       def all
-        @order_model.find_all
+        TurboCassandra::Model::Order.all
       end
       def all_shipments values = []
         shipments = @order_model.find_all_shipments
