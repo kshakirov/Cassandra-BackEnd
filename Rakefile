@@ -55,7 +55,6 @@ namespace :db do
       ruby "tools/schema/attribute_set/create_attribute_sets.rb"
       ruby "tools/schema/currency/create_currencies.rb"
       ruby "tools/schema/customer/create_customers.rb"
-      ruby "tools/schema/group_price/create_group_price.rb"
       ruby "tools/schema/order/create_orders.rb"
     end
 
@@ -156,6 +155,7 @@ namespace :db do
     task :all do
       Rake::Task['db:setup:base'].execute
       Rake::Task['db:setup:cart'].execute
+      Rake::Task['db:setup:group_price'].execute
       Rake::Task['db:setup:visitor_log'].execute
       Rake::Task['db:setup:compared_products'].execute
       Rake::Task['db:setup:message_log'].execute

@@ -138,6 +138,10 @@ module TurboCassandra
         cart =TurboCassandra::Model::Cart.find customer_id
         cart.to_hash
       end
+
+      def all
+        TurboCassandra::Model::Cart.all
+      end
     end
   end
 end
