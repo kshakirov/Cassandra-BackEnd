@@ -200,6 +200,10 @@ class Admin < Sinatra::Base
     settings.groupPriceController.get_prices(params)
   end
 
+  post '/price/group/' do
+    settings.groupPriceController.set_prices(request.body.read)
+  end
+
   get '/featured_product/' do
     settings.featuredProductController.get_admin_list
   end

@@ -59,6 +59,11 @@ namespace :db do
       ruby "tools/schema/order/create_orders.rb"
     end
 
+
+    task :group_price do
+      ruby "tools/schema/group_price/create_group_price.rb"
+    end
+
     task :pims_attribute do
       ruby "tools/schema/attribute/create_attributes.rb"
       ruby "tools/schema/attribute/add_attribute_set_index.rb"
