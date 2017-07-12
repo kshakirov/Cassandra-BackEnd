@@ -7,5 +7,6 @@ price:
     order:
       item: 3
       total: 2
+      subtotal: 2
     group_price:
       item: 3

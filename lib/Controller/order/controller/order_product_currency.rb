@@ -8,24 +8,24 @@ module TurboCassandra
       end
 
 
-      def render_price price, rate
-        price = price.to_f * rate
-        "#{price.round(2)}"
+      def render_price price, rate, scale
+        price = BigDecimal.new(price) .round(scale, BigDecimal::EXCEPTION_NaN) * rate
+        "#{price.round(scale)}"
       end
 
       def calculate_products products, rate
         products.map do |product|
-          product['row_total'] =  render_price(product['row_total'], rate)
-          product['subtotal'] = render_price(product['subtotal'],rate)
-          product['price'] = render_price(product['price'], rate)
-          product['original_price'] = render_price(product['original_price'],rate)
+          product['row_total'] =  render_price(product['row_total'], rate, @scale['total'])
+          product['subtotal'] = render_price(product['subtotal'],rate, @scale['subtotal'])
+          product['price'] = render_price(product['price'], rate, @scale['item'])
+          product['original_price'] = render_price(product['original_price'],rate, @scale['item'])
           product
         end
       end
 
       def calculate_order order, rate
-        order['subtotal'] = (BigDecimal.new(order['subtotal']) * rate).round(2)
-        order['grand_total'] = (BigDecimal(order['grand_total']) * rate).round(2)
+        order['subtotal'] = (BigDecimal.new(order['subtotal'].to_s) * rate).round(@scale['subtotal'])
+        order['grand_total'] = (BigDecimal.new(order['grand_total'].to_s) * rate).round(@scale['total'])
       end
 
       def calculate_prices order

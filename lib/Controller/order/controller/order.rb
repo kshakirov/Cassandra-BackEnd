@@ -15,6 +15,8 @@ module TurboCassandra
         @currency_api = TurboCassandra::API::Currency.new
         @group_price_api = TurboCassandra::API::GroupPrice.new
         @product_api = TurboCassandra::API::Product.new
+        config = TurboCassandra::System::Config.instance
+        @scale = config.get_order_scale
       end
 
       private

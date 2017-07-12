@@ -80,6 +80,9 @@ module TurboCassandra
       def get_cart_scale
         @config['price']['scale']['cart']
       end
+      def get_order_scale
+        @config['price']['scale']['order']
+      end
     end
 
   end
