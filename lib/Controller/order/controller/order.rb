@@ -17,6 +17,7 @@ module TurboCassandra
         @product_api = TurboCassandra::API::Product.new
         config = TurboCassandra::System::Config.instance
         @scale = config.get_order_scale
+        @total_keys = ['subtotal', 'discount_amount','row_total', 'tax_amount']
       end
 
       private
