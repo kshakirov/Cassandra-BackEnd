@@ -13,11 +13,13 @@ module TurboCassandra
         data = {
             id: customer_id,
             currency: 'USD',
-            customer_id: customer_id
+            customer_id: customer_id,
+            items: {},
+            size: 0,
+            subtotal: BigDecimal.new("0.0")
         }
         cart =TurboCassandra::Model::Cart.new data
         cart.save
-        cart
       end
 
       def is_product_in_cart? items, product
@@ -113,7 +115,8 @@ module TurboCassandra
       def add_product customer_id, product, price, qty
         cart =TurboCassandra::Model::Cart.find customer_id
         if cart.nil?
-          cart = create customer_id
+          create customer_id
+          cart =  TurboCassandra::Model::Cart.find customer_id
         end
         items = _add_product(cart.items, product, price, qty)
         cart.update_attributes items: items
