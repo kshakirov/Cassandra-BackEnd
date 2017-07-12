@@ -11,6 +11,11 @@ module TurboCassandra
         @group_price_api.find(params['id'].to_i)
       end
 
+      def set_prices body
+        hash = JSON.parse body
+        @group_price_api.create hash
+      end
+
       def_delegator :@group_price_api, :find_by_sku_group_id, :get_price
     end
   end

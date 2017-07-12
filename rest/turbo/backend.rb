@@ -26,6 +26,18 @@ require_relative 'mailer'
 require 'multi_json'
 
 
+class BigDecimal
+
+  def to_json(options = nil) #:nodoc:
+    if finite?
+      self.to_s
+    else
+      NilClass::AS_JSON
+    end
+  end
+end
+
+
 class Public < Sinatra::Base
   use ExceptionHandling
   register Sinatra::ConfigFile

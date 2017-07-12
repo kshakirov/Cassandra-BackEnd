@@ -13,15 +13,9 @@ namespace :db do
       ruby "tools/schema/currency/update_currencies_2.rb"
     end
     task :attribute do
-      # ruby "tools/schema/attribute/update_attributes_1.rb"
-      # ruby "tools/schema/attribute/update_attributes_2.rb"
+       ruby "tools/schema/attribute/update_attributes_1.rb"
+       ruby "tools/schema/attribute/update_attributes_2.rb"
       ruby "tools/schema/attribute/update_attributes_3.rb"
-    end
-    task :order do
-      ruby "tools/schema/order/update_orders_1.rb"
-      ruby "tools/schema/order/update_orders_2.rb"
-      ruby "tools/schema/order/add_customer_index.rb"
-      ruby "tools/schema/order/update_orders_3.rb"
     end
     task :attribute_set do
       ruby "tools/schema/attribute_set/update_attribute_sets_1.rb"
@@ -35,7 +29,7 @@ namespace :db do
     end
 
     task :user do
-      #ruby "tools/schema/user/update_user_1.rb"
+      ruby "tools/schema/user/update_user_1.rb"
       ruby "tools/schema/user/update_user_2.rb"
     end
 
@@ -55,8 +49,15 @@ namespace :db do
       ruby "tools/schema/attribute_set/create_attribute_sets.rb"
       ruby "tools/schema/currency/create_currencies.rb"
       ruby "tools/schema/customer/create_customers.rb"
-      ruby "tools/schema/group_price/create_group_price.rb"
+
+    end
+
+    task :order do
       ruby "tools/schema/order/create_orders.rb"
+    end
+
+    task :group_price do
+      ruby "tools/schema/group_price/create_group_price.rb"
     end
 
     task :pims_attribute do
@@ -92,10 +93,6 @@ namespace :db do
     task :message_log do
       ruby "tools/schema/message_log/create_message_log.rb"
       ruby "tools/schema/message_log/add_index.rb"
-    end
-    task :order_product do
-      ruby "tools/schema/order/create_order_products.rb"
-      ruby "tools/schema/order/create_product_orders.rb"
     end
 
     task :shipment do
@@ -155,6 +152,8 @@ namespace :db do
     task :all do
       Rake::Task['db:setup:base'].execute
       Rake::Task['db:setup:cart'].execute
+      Rake::Task['db:setup:order'].execute
+      Rake::Task['db:setup:group_price'].execute
       Rake::Task['db:setup:visitor_log'].execute
       Rake::Task['db:setup:compared_products'].execute
       Rake::Task['db:setup:message_log'].execute
