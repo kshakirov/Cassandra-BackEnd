@@ -36,16 +36,16 @@ module TurboCassandra
       end
 
       def scale_subtotal cart
-          cart.items.each do |sku,value|
-            cart.items[sku]['subtotal'] = BigDecimal.new( cart.items[sku]['subtotal']).
-                round(@scale['subtotal'],BigDecimal::EXCEPTION_NaN).to_s
-          end
+        cart.items.each do |sku, value|
+          cart.items[sku]['subtotal'] = BigDecimal.new(cart.items[sku]['subtotal']).
+              round(@scale['subtotal'], BigDecimal::EXCEPTION_NaN).to_s
+        end
       end
 
       def change_qty items, product, qty
         item = items[product['sku']]
         item['qty'] = (item['qty'].to_i + qty).to_s
-        item['subtotal'] = get_subtotal(BigDecimal( item['unit_price']), item['qty'].to_i)
+        item['subtotal'] = get_subtotal(BigDecimal(item['unit_price']), item['qty'].to_i)
         items
       end
 
@@ -123,10 +123,10 @@ module TurboCassandra
 
       def update cart
         cart = TurboCassandra::Model::Cart.new cart
-        cart.subtotal = BigDecimal.new(cart.subtotal.to_s).round(@scale['subtotal'],BigDecimal::EXCEPTION_NaN)
+        cart.subtotal = BigDecimal.new(cart.subtotal.to_s).round(@scale['subtotal'], BigDecimal::EXCEPTION_NaN)
         scale_subtotal(cart)
         cart.save
-         _count_items(cart.items).to_s
+        _count_items(cart.items).to_s
       end
 
       def delete_product customer_id, product_sku
@@ -143,9 +143,11 @@ module TurboCassandra
 
       def count_products customer_id
         cart =TurboCassandra::Model::Cart.find customer_id
-        items = cart.items
-        unless items.nil? or items.first.nil?
-          _count_items(items)
+        unless cart.nil?
+          items = cart.items
+          unless items.nil? or items.first.nil?
+            _count_items(items)
+          end
         end
       end
 
