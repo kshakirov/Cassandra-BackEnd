@@ -29,7 +29,7 @@ namespace :db do
     end
 
     task :user do
-      #ruby "tools/schema/user/update_user_1.rb"
+      ruby "tools/schema/user/update_user_1.rb"
       ruby "tools/schema/user/update_user_2.rb"
     end
 
