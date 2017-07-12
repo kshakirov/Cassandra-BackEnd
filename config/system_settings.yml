@@ -1,0 +1,11 @@
+price:
+  scale:
+    cart:
+      item: 3
+      total: 2
+      subtotal: 2
+    order:
+      item: 3
+      total: 2
+    group_price:
+      item: 3

@@ -70,7 +70,21 @@ module TurboCassandra
 
     end
   end
+
+  module System
+    class Config
+      include Singleton
+      def initialize
+        @config = YAML.load_file(File.expand_path('../../config/system_settings.yml', File.dirname(__FILE__)))
+      end
+      def get_cart_scale
+        @config['price']['scale']['cart']
+      end
+    end
+
+  end
 end
+
 
 
 

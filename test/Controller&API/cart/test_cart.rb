@@ -55,4 +55,9 @@ class TestCart < Minitest::Test
     assert_equal 2, count.to_i
   end
 
+  def test_scale
+    config  =TurboCassandra::System::Config.instance
+    p config
+  end
+
 end

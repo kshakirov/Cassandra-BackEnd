@@ -2,6 +2,12 @@ module TurboCassandra
   module API
     class Cart
       extend Forwardable
+
+      def initialize
+        config = TurboCassandra::System::Config.instance
+        @scale = config.get_cart_scale
+      end
+
       private
       def create customer_id
         data = {
@@ -22,13 +28,26 @@ module TurboCassandra
         end
       end
 
+
+      def get_subtotal price, qty
+        subtotal = price * qty
+        subtotal = subtotal.round(@scale['subtotal'])
+        subtotal.to_s
+      end
+
+      def scale_subtotal cart
+          cart.items.each do |sku,value|
+            cart.items[sku]['subtotal'] = BigDecimal.new( cart.items[sku]['subtotal']).
+                round(@scale['subtotal'],BigDecimal::EXCEPTION_NaN).to_s
+          end
+      end
+
       def change_qty items, product, qty
         item = items[product['sku']]
         item['qty'] = (item['qty'].to_i + qty).to_s
-        item['subtotal'] = (item['qty'].to_i * item['unit_price'].to_f).to_s
+        item['subtotal'] = get_subtotal(BigDecimal( item['unit_price']), item['qty'].to_i)
         items
       end
-
 
       def prepare_product_item product, price, qty
         item_hash = {}
@@ -46,7 +65,7 @@ module TurboCassandra
         item_content['part_type'] =product['part_type']
         item_content['unit_price'] =price.to_s
         item_content['qty'] =qty.to_s
-        item_content['subtotal'] =(price * qty).to_s
+        item_content['subtotal'] = get_subtotal(price, qty)
         item_hash
       end
 
@@ -69,9 +88,10 @@ module TurboCassandra
 
 
       def get_grand_total cart
-        cart.items.inject(0) {|sum, p|
-          sum + p[1]['subtotal'].to_f
+        subtotal = cart.items.inject(0) {|sum, p|
+          sum + BigDecimal.new(p[1]['subtotal'])
         }
+        subtotal.round(@scale['total'])
       end
 
       def _delete_item items, product_sku
@@ -103,6 +123,8 @@ module TurboCassandra
 
       def update cart
         cart = TurboCassandra::Model::Cart.new cart
+        cart.subtotal = BigDecimal.new(cart.subtotal.to_s).round(@scale['subtotal'],BigDecimal::EXCEPTION_NaN)
+        scale_subtotal(cart)
         cart.save
          _count_items(cart.items).to_s
       end
