@@ -158,7 +158,9 @@ module TurboCassandra
 
       def find customer_id
         cart =TurboCassandra::Model::Cart.find customer_id
-        cart.to_hash
+        unless cart.nil?
+          cart.to_hash
+        end
       end
 
       def all
