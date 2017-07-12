@@ -83,6 +83,10 @@ module TurboCassandra
       def get_order_scale
         @config['price']['scale']['order']
       end
+
+      def get_group_price
+        @config['price']['scale']['group_price']
+      end
     end
 
   end
