@@ -135,7 +135,8 @@ module TurboCassandra
       def delete_product customer_id, product_sku
         cart =TurboCassandra::Model::Cart.find customer_id
         items = _delete_item cart.items, product_sku
-        cart.update_attributes items: items
+        subtotal = get_grand_total(cart)
+        cart.update_attributes items: items,  subtotal: subtotal
       end
 
       def empty_cart customer_id
