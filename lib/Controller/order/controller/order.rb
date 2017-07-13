@@ -59,7 +59,7 @@ module TurboCassandra
 
 
       def get_products cart
-        cart['items'].map {|key, value|
+        products = cart['items'].map {|key, value|
           {
               sku: key,
               name: value['ti_part'],
@@ -73,6 +73,7 @@ module TurboCassandra
               item_status: 'Ordered'
           }
         }
+        products.sort{|a,b| a[:sku] <=> b[:sku] }
       end
 
 
