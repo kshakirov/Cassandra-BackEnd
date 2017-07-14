@@ -11,6 +11,14 @@ module TurboCassandra
         env_customer.first['id']
       end
 
+      def check_currency cart
+        if cart['currency'].class.name == 'Hash'
+          cart['currency']['code']
+        else
+            cart['currency']
+        end
+      end
+
       def verify_map_text map
         Hash[map.map{|m| [m[0].to_s, m[1].to_s]}]
       end
@@ -53,6 +61,7 @@ module TurboCassandra
       def update_cart body
         cart = JSON.parse(body)['cart']
         cart['items'] = cart_items_to_int(cart['items'])
+        cart['currency'] = check_currency(cart)
         @cart_api.update cart
       end
 

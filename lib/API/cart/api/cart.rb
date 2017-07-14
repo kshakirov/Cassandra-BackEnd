@@ -37,6 +37,10 @@ module TurboCassandra
         subtotal.to_s
       end
 
+      def update_currency cart
+
+      end
+
       def scale_subtotal cart
         cart.items.each do |sku, value|
           cart.items[sku]['subtotal'] = BigDecimal.new(cart.items[sku]['subtotal']).
