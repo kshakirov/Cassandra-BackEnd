@@ -83,8 +83,9 @@ module TurboCassandra
       end
 
       def delete sku
-        product_2_delete = TurboCassandra::Model::Product.find(sku).to_hash
+        product_2_delete = TurboCassandra::Model::Product.find(sku)
         if product_2_delete
+          product_2_delete =  product_2_delete.to_hash
           manufacturer, part_type, created_at = prepare_product_created_2_del(product_2_delete)
           TurboCassandra::Model::ProductCreatedAt.delete manufacturer, part_type, created_at
           TurboCassandra::Model::ProductPartNumber.delete product_2_delete['part_number']
