@@ -17,8 +17,8 @@ module TurboCassandra
 
       def create_order_data order_id
         order = @order_api.find_by_id(order_id)
-        customer = @customer_api.find_by_customer_id(order.first['customer_id'])
-       return order.first, customer.to_hash
+        customer = @customer_api.find_by_customer_id(order['customer_id'])
+       return order, customer.to_hash
       end
 
       def prep_response template, sender_email, sender_name, template_data

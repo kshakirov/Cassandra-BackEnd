@@ -134,7 +134,7 @@ module TurboCassandra
 
       def get_cart_items_number customer
         cart = @cart.find(customer['id'])
-        unless cart.nil?
+        unless cart.nil? or cart['items'].nil?
           cart['items'].keys.size
         end
       end

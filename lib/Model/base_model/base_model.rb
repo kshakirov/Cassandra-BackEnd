@@ -47,7 +47,11 @@ module TurboCassandra
 
 
     def self.class_name
-      self.to_s.tableize.gsub('turbo_cassandra/model/', '')
+      if self.table_name.nil?
+        self.to_s.tableize.gsub('turbo_cassandra/model/', '')
+      else
+        self.table_name
+      end
     end
 
     def self.insert params
@@ -95,7 +99,7 @@ module TurboCassandra
     end
 
     class << self
-      attr_accessor :primary_index
+      attr_accessor :primary_index, :table_name
     end
 
     def self.select_template fields
@@ -108,6 +112,14 @@ module TurboCassandra
         args.join(" AND ")
       else
         "#{self.primary_index} = ?"
+      end
+    end
+
+    def self.agreg_funcs_primary_args
+      if self.primary_index.class.name == 'Array'
+        primary_index.first
+      else
+        primary_index
       end
     end
 
@@ -132,6 +144,11 @@ module TurboCassandra
 
     def self.prep_where_args hash
       args = hash.keys.map { |key| "#{key} = ? " }
+      args.join(" AND ")
+    end
+
+    def self.prep_where_args_in hash
+      args = hash.keys.map { |key| "#{key} in   (#{hash[key].map{|v| '?'}.join(',')}) " }
       args.join(" AND ")
     end
 
@@ -184,7 +201,7 @@ module TurboCassandra
     def self.max params=nil
       result = nil
       if  params.nil?
-        result = execute(aggregation_template('MAX', primary_index.first), [])
+        result = execute(aggregation_template('MAX', agreg_funcs_primary_args), [])
       else
         real_args = prep_args params['by']
         args = prep_where_args params['by']
@@ -228,12 +245,22 @@ module TurboCassandra
       end
     end
 
+
+    def self.prepare_cql hash
+      if hash.values.first.class.name == "Array"
+        args = hash.values.flatten
+          return prep_where_args_in(hash), args
+      else
+        return  prep_where_args(hash),  hash.values
+      end
+    end
+
+
     def self.paginate paging_params, hash=nil
       cql = select_template '*'
       real_args = []
       unless hash.nil?
-        args = prep_where_args hash
-        real_args = hash.values
+        args,real_args = prepare_cql(hash)
         cql = select_find_template args
       end
       rs = execute_paginate cql, paging_params['paging_state'], paging_params['page_size'], real_args

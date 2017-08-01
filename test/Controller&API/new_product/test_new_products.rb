@@ -26,6 +26,12 @@ class TestNewProduct < Minitest::Test
     assert_equal  true, result[:result]
   end
 
+  def test_add_product_by_part_num
+    params = {'id' => '3-A-0279'}
+    result = @new_product_controller.add_product params
+    assert_equal  true, result[:result]
+  end
+
   def test_menu_product
 
     result = @new_product_api.get_new_products

@@ -7,11 +7,13 @@ module TurboCassandra
       end
 
       def build_tolerance tolerance_attribute, tolerance_value
-        {
-            "inches": tolerance_value[0],
-            "scale": tolerance_attribute['scale'],
-            "centimeters": tolerance_value[0] * 25.4
-        }
+        unless tolerance_value.empty?
+          {
+              "inches": tolerance_value[0],
+              "scale": tolerance_attribute['scale'],
+              "centimeters": tolerance_value[0] * 25.4
+          }
+        end
       end
 
       def get_tolerance key_value, attrs, product_critical
@@ -56,7 +58,7 @@ module TurboCassandra
 
 
       def is_applicable_non_dec value
-        unless  value.nil?
+        unless value.nil?
           if value.class.name =="String" and value == "-99"
             return false
           else
@@ -80,12 +82,11 @@ module TurboCassandra
       end
 
 
-
       def get_non_critical_value key, product
         if not product['critical_enum'].nil? and
             product['critical_enum'].key? key
           product['critical_enum'][key]
-        elsif not product['critical_integer'].nil?  and
+        elsif not product['critical_integer'].nil? and
             product['critical_integer'].key? key
           product['critical_integer'][key]
         end

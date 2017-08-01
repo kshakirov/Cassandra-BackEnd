@@ -26,6 +26,11 @@ module TurboCassandra
         group_prices = TurboCassandra::Model::GroupPrice.find sku
         group_prices.update_attributes hashes
       end
+
+      def all
+        TurboCassandra::Model::GroupPrice.all
+      end
+
     end
   end
 end

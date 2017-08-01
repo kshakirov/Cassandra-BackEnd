@@ -7,9 +7,9 @@ class TestProductCreatedAt < Minitest::Test
 
   def test_where
     body = {
-        manufacturers: ['Turbo International'],
-        part_types: ['Backplate', 'Compressor Wheel'],
-        page_size: 10
+        "manufacturer" => ['Turbo International'],
+        "part_type" =>  ['Backplate', 'Compressor Wheel'],
+        "page_size" => 10
     }
     response = @product_created_at_controller.where body.to_json
     refute_nil response

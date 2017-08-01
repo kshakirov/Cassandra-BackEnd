@@ -1,6 +1,7 @@
 module TurboCassandra
   module Controller
     class NewProduct
+      include ProductAdmin
       def initialize
         @product_api = TurboCassandra::API::Product.new
         @new_product_api = TurboCassandra::API::NewProduct.new
@@ -27,7 +28,8 @@ module TurboCassandra
       end
 
       def _add_product sku
-        product = @product_api.find_by_sku(sku)
+        #product = @product_api.find_by_sku(sku)
+        product = get_by_sku_or_part_nubmer sku
         if not product.nil?
           @new_product_api.create(populate_featured_product(product))
          return  {
@@ -50,7 +52,7 @@ module TurboCassandra
       end
 
       def add_product params
-        sku = params['id'].to_i
+        sku = params['id']
         _add_product(sku)
       end
 

@@ -1,9 +1,9 @@
-require_relative '../test_helper'
+require_relative '../../test_helper'
 
 
 class TestProductCreatedAt < Minitest::Test
   def setup
-    @product_created_at_model = TurboCassandra::Model::ProductCreatedAt.new
+
   end
 
   def test_insert
@@ -11,14 +11,20 @@ class TestProductCreatedAt < Minitest::Test
   end
 
   def test_select
-    m_list = ['Turbo International']
-    p_list = ['Backplate']
-    res =  @product_created_at_model.paginate(m_list, p_list, 1)
+    params = {
+    "manufacturer" => 'Turbo International',
+    "part_type" => 'Backplate'
+    }
+    paginate_state = {
+        "paging_state" => nil,
+        "page_size" => 5
+    }
+    res =  TurboCassandra::Model::ProductCreatedAt.paginate paginate_state, params
     refute_nil res
-    assert_equal 1, res[:results].size
+    assert_equal 5, res[:results].size
     paging = res[:paging_state]
-    res =  @product_created_at_model.paginate(m_list, p_list, 1, paging)
-    assert_equal 1, res[:results].size
+    res =  TurboCassandra::Model::ProductCreatedAt.paginate paginate_state, params
+    assert_equal 5, res[:results].size
   end
 
 end

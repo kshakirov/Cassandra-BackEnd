@@ -13,6 +13,13 @@ module TurboCassandra
         }
       end
 
+      def prepare_prod_part_number product
+        {
+            part_number: product['part_number'],
+            sku: product['sku']
+        }
+      end
+
       def prepare_product_created_2_del product
         return product['manufacturer'], product['part_type'],
             product['created_at']
@@ -21,47 +28,70 @@ module TurboCassandra
       public
 
       def initialize
-        @product_model = TurboCassandra::Model::Product.new
-        #@featured_product_api = TurboCassandra::API::FeaturedProduct.new
-        #@new_product_api = TurboCassandra::API::NewProduct.new
-        @product_created_at_model = TurboCassandra::Model::ProductCreatedAt.new
         @generator = Cassandra::Uuid::Generator.new
       end
 
       def find_by_sku sku
-        @product_model.find [sku]
+        product =TurboCassandra::Model::Product.find sku
+        begin
+          product.to_hash
+        rescue
+          nil
+        end
+      end
+
+      def find_by_part_number part_number
+        part_number = TurboCassandra::Model::ProductPartNumber.find part_number
+        unless part_number.nil?
+          find_by_sku part_number.sku
+        end
+      end
+
+      def find sku
+        TurboCassandra::Model::Product.find sku
       end
 
       def where_skus skus
-        @product_model.where skus
+        TurboCassandra::Model::Product.find_in_by sku: skus
       end
 
       def each &block
-        @product_model.each &block
+        TurboCassandra::Model::Product.all.each do |product|
+          yield product
+        end
       end
 
       def paginate paging_state, page_size
-        @product_model.paginate paging_state, page_size
+        paging_params = {
+            'paging_state' => paging_state,
+            'page_size' => page_size
+        }
+        TurboCassandra::Model::Product.paginate paging_params
       end
 
       def create product_hash
         product_hash['created_at'] =@generator.now
-        @product_model.insert product_hash
-        @product_created_at_model.insert(prepare_product_created_at(product_hash))
+        product = TurboCassandra::Model::Product.new product_hash
+        product.save
+        product_created_at = TurboCassandra::Model::ProductCreatedAtinsert.new(prepare_product_created_at(product_hash))
+        product_created_at.save
+        product_part_number = TurboCassandra::Model::ProductPartNumber.new(prepare_prod_part_number(product_hash))
+        product_part_number.save
       end
 
       def update product_hash
-        @product_model.insert product_hash
+        product = TurboCassandra::Model::Product.new product_hash
+        product.save
       end
 
       def delete sku
-        product_2_delete = @product_model.find([sku])
+        product_2_delete = TurboCassandra::Model::Product.find(sku)
         if product_2_delete
+          product_2_delete = product_2_delete.to_hash
           manufacturer, part_type, created_at = prepare_product_created_2_del(product_2_delete)
-          @product_created_at_model.delete(manufacturer, part_type, created_at)
-          @product_model.delete sku
-          #@featured_product_api.delete sku
-          #@new_product_api.delete sku
+          TurboCassandra::Model::ProductCreatedAt.delete manufacturer, part_type, created_at
+          TurboCassandra::Model::ProductPartNumber.delete product_2_delete['part_number']
+          TurboCassandra::Model::Product.delete sku
         end
       end
 
