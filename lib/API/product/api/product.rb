@@ -56,7 +56,9 @@ module TurboCassandra
       end
 
       def each &block
-        @product_model.each &block
+        TurboCassandra::Model::Product.all.each do |product|
+          yield product
+        end
       end
 
       def paginate paging_state, page_size
@@ -85,7 +87,7 @@ module TurboCassandra
       def delete sku
         product_2_delete = TurboCassandra::Model::Product.find(sku)
         if product_2_delete
-          product_2_delete =  product_2_delete.to_hash
+          product_2_delete = product_2_delete.to_hash
           manufacturer, part_type, created_at = prepare_product_created_2_del(product_2_delete)
           TurboCassandra::Model::ProductCreatedAt.delete manufacturer, part_type, created_at
           TurboCassandra::Model::ProductPartNumber.delete product_2_delete['part_number']

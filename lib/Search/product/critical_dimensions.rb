@@ -28,7 +28,7 @@ module TurboCassandra
         v = tolerance.first['tolerance']  * (10  ** (-1 * tolerance.first['scale']))
         {
             inches: v.to_f,
-            centimeters: v.to_f * 2.54,
+            centimeters: v.to_f * 25.4,
             scale: tolerance.first['scale']
         }
       end
@@ -42,7 +42,7 @@ module TurboCassandra
             k => {
                 value: {
                     inches: product[k],
-                    centimeters: product[k] * 2.54
+                    centimeters: product[k] * 25.4
                 },
                 scale: get_attribute(k)['scale'],
                 units: get_attribute(k)['unit'],
