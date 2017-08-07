@@ -36,12 +36,16 @@ module TurboCassandra
             np_ord_old.ord = np.ord
             np.ord=product['ord']
             np_ord.ord = product['ord']
+            np.visible=product['visible']
+            np_ord.visible = product['visible']
             np.save; np_ord.save; np_old.save;np_ord_old.save
           else
             old_ord = np.ord
             np.ord = product['ord']
+            np.visible=product['visible']
             np_ord =  TurboCassandra::Model::NewProductOrder.find 1, old_ord
             np_ord.ord = product['ord']
+            np_ord.visible = product['visible']
             np.save;np_ord.save
             TurboCassandra::Model::NewProductOrder.delete 1, old_ord
           end
@@ -65,9 +69,11 @@ module TurboCassandra
 
       def create product_data
         new_product = TurboCassandra::Model::NewProduct.new product_data
+        new_product.visible= true
         new_product.save
         product_data['cluster'] = 1
         new_product_order = TurboCassandra::Model::NewProductOrder.new product_data
+        new_product_order.visible= true
         new_product_order.save
       end
 
@@ -108,8 +114,11 @@ module TurboCassandra
       end
 
       def next_order
-        order = TurboCassandra::Model::FeaturedProductOrder.max({'max' => 'ord', "by" => {
-            "cluster": 1
+        order = TurboCassandra::Model::NewProductOrder.max(
+            {
+                'max' => 'ord',
+             "by" => {
+              "cluster" => 1
         }})
         order.nil?  ? 1 : order + 1
       end

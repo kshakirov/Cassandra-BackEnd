@@ -67,4 +67,6 @@ class TestFeaturedProduct < Minitest::Test
     @featured_product_controller.add_product params
   end
 
+ 
+
 end

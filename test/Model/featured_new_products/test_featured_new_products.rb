@@ -65,6 +65,10 @@ class TestCustomer < Minitest::Test
     TurboCassandra::Model::FeaturedProductOrder.delete  1, 100
   end
 
+  def test_delete_fp
+    TurboCassandra::Model::FeaturedProduct.delete  64142
+  end
+
   def test_max
     max = TurboCassandra::Model::FeaturedProductOrder.max({'max' => 'ord', "by" => {
         "cluster": 1
