@@ -25,7 +25,6 @@ module TurboCassandra
 
 
       def _add_product sku
-        #product = @product_api.find_by_sku(sku)
         product = get_by_sku_or_part_nubmer sku
         unless product.nil?
           @featured_product_api.create(populate_featured_product(product))

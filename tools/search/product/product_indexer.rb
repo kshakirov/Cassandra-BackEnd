@@ -27,7 +27,6 @@ until done do
       puts "Problematic Product #{p['sku']}"
       puts e.message
       exit 1
-
     end
-  }
-end
+}
+  end

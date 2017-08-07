@@ -25,12 +25,16 @@ module TurboCassandra
             fp_ord_old.ord = fp.ord
             fp.ord=product['ord']
             fp_ord.ord = product['ord']
+            fp.visible=product['visible']
+            fp_ord.visible = product['visible']
             fp.save; fp_ord.save; fp_old.save;fp_ord_old.save
           else
             old_ord = fp.ord
             fp.ord = product['ord']
+            fp.visible = product['visible']
             fp_ord =  TurboCassandra::Model::FeaturedProductOrder.find 1, old_ord
             fp_ord.ord = product['ord']
+            fp_ord.visible = product['visible']
             fp.save;fp_ord.save
             TurboCassandra::Model::FeaturedProductOrder.delete 1, old_ord
           end
@@ -90,9 +94,11 @@ module TurboCassandra
 
       def create product_data
         featured_product = TurboCassandra::Model::FeaturedProduct.new product_data
+        featured_product.visible= true
         featured_product.save
         product_data['cluster'] = 1
         featured_product_order = TurboCassandra::Model::FeaturedProductOrder.new product_data
+        featured_product_order.visible= true
         featured_product_order.save
       end
 
