@@ -18,18 +18,24 @@ module TurboCassandra
         else
           @attributes[method] = args.first
         end
+      elsif @attributes.key? method.to_sym
+        if args.empty?
+          @attributes[method.to_sym]
+        else
+          @attributes[method.to_sym] = args.first
+        end
       else
         raise "No such a field available"
       end
     end
 
     def self.excl_prim_ind_keys params
-      params.select{|a|  not self.primary_index.include? a and
-          not params[a].nil? }
+      params.select {|a| not self.primary_index.include? a and
+          not params[a].nil?}
     end
 
     def self.get_prim_ind_val params
-      pairs = params.select{|a|   self.primary_index.include? a  }
+      pairs = params.select {|a| self.primary_index.include? a}
       pairs.values
     end
 
@@ -56,20 +62,20 @@ module TurboCassandra
 
     def self.insert params
       names = params.keys.join(',')
-      values = params.keys.map { |key| '?' }.join(',')
+      values = params.keys.map {|key| '?'}.join(',')
       real_args =params.values
       execute(insert_template(names, values), real_args)
     end
 
     def self.update params
       attributes= excl_prim_ind_keys params
-      key_value_pairs  = attributes.keys.map { |key| "#{key}=?" }.join(',')
+      key_value_pairs = attributes.keys.map {|key| "#{key}=?"}.join(',')
       real_args =attributes.values + get_prim_ind_val(params)
       execute(update_template(key_value_pairs), real_args)
     end
 
     def self.update_attributes hash, attributes
-      key_value_pairs = hash.keys.map { |key| "#{key}=?" }.join(',')
+      key_value_pairs = hash.keys.map {|key| "#{key}=?"}.join(',')
       real_args =hash.values + get_prim_ind_val(attributes)
       execute(update_template(key_value_pairs), real_args)
     end
@@ -108,7 +114,7 @@ module TurboCassandra
 
     def self.prep_primary_args
       if self.primary_index.class.name == 'Array'
-        args = self.primary_index.map { |arg| "#{arg} = ? " }
+        args = self.primary_index.map {|arg| "#{arg} = ? "}
         args.join(" AND ")
       else
         "#{self.primary_index} = ?"
@@ -143,18 +149,18 @@ module TurboCassandra
     end
 
     def self.prep_where_args hash
-      args = hash.keys.map { |key| "#{key} = ? " }
+      args = hash.keys.map {|key| "#{key} = ? "}
       args.join(" AND ")
     end
 
     def self.prep_where_args_in hash
-      args = hash.keys.map { |key| "#{key} in   (#{hash[key].map{|v| '?'}.join(',')}) " }
+      args = hash.keys.map {|key| "#{key} in   (#{hash[key].map {|v| '?'}.join(',')}) "}
       args.join(" AND ")
     end
 
     def self.prep_where_in_args hash
       args = hash.values.first
-      args = args.map { |arg| '?' }
+      args = args.map {|arg| '?'}
       args.join(",")
     end
 
@@ -200,7 +206,7 @@ module TurboCassandra
 
     def self.max params=nil
       result = nil
-      if  params.nil?
+      if params.nil?
         result = execute(aggregation_template('MAX', agreg_funcs_primary_args), [])
       else
         real_args = prep_args params['by']
@@ -221,7 +227,7 @@ module TurboCassandra
 
     def self.prep_response cas_results
       unless cas_results.nil?
-        cas_results.map { |r| r }
+        cas_results.map {|r| r}
       end
     end
 
@@ -232,7 +238,7 @@ module TurboCassandra
 
     def self.prep_paginated_response rs
       {
-          results: rs.map { |r| r },
+          results: rs.map {|r| r},
           last: rs.last_page?,
           paging_state: rs.paging_state
       }
@@ -241,7 +247,7 @@ module TurboCassandra
     def self.distinct key
       results = execute(distinct_template(key), [])
       unless results.nil?
-        results.map { |r| r }
+        results.map {|r| r}
       end
     end
 
@@ -249,9 +255,9 @@ module TurboCassandra
     def self.prepare_cql hash
       if hash.values.first.class.name == "Array"
         args = hash.values.flatten
-          return prep_where_args_in(hash), args
+        return prep_where_args_in(hash), args
       else
-        return  prep_where_args(hash),  hash.values
+        return prep_where_args(hash), hash.values
       end
     end
 
@@ -260,7 +266,7 @@ module TurboCassandra
       cql = select_template '*'
       real_args = []
       unless hash.nil?
-        args,real_args = prepare_cql(hash)
+        args, real_args = prepare_cql(hash)
         cql = select_find_template args
       end
       rs = execute_paginate cql, paging_params['paging_state'], paging_params['page_size'], real_args

@@ -27,15 +27,7 @@ until done do
       puts "Problematic Product #{p['sku']}"
       puts e.message
       exit 1
-
     end
-    elapsed_seconds = ((Time.now - start_time)).to_i
-    puts " #{counter} : #{p['sku']}  Time Elapsed [#{elapsed_seconds.to_s}]"
-    counter+=1
-  rescue Exception => e
-    puts "Problematic Product #{p['sku']}"
-    puts e.message
-    exit 1
-
+}
   end
 }
