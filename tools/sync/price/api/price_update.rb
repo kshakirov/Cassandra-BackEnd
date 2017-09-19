@@ -3,7 +3,7 @@ module TurboCassandra
     module Price
       class PriceUpdater
         def initialize
-          @product_model =TurboCassandra::Model::ProductCreatedAt.new
+         # @product_model =TurboCassandra::Model::ProductCreatedAt.new
           @price_rest = TurboCassandra::Sync::Price::Rest.new
           @group_price_api = TurboCassandra::API::GroupPrice.new
           config = TurboCassandra::System::Config.instance
@@ -35,7 +35,11 @@ module TurboCassandra
         end
 
         def process_response paging_state
-          response = @product_model.paginate_by_manufacturer "Turbo International", 100, paging_state
+          paging_params = {
+              'paging_state' => paging_state,
+              'page_size' => 100
+          }
+          response = TurboCassandra::Model::ProductCreatedAt.paginate  paging_params, manufacturer:"Turbo International"
           update_product_prices(@price_rest.run response[:results])
           return response[:last], response[:paging_state]
         end
