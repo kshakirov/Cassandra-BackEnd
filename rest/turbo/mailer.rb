@@ -1,22 +1,24 @@
+# ActionMailer::Base.raise_delivery_errors = true
+# ActionMailer::Base.delivery_method = :smtp
+# ActionMailer::Base.smtp_settings = {
+#     :address   => "localhost",
+#     :port      => 25,
+#     :authentication => nil,
+#     :enable_starttls_auto => false
+#
+# }
+# ActionMailer::Base.view_paths= "/home/kshakirov/git/cassandra/ti_cassandra/sinatra_cassandra/views"
+
 class Mailer < ActionMailer::Base
-  def notification mail_data
-    @mail_data = mail_data
+  def notification payload
+    @payload = payload
     mail(
-        :to      => "kirill.shakirov4@gmail.com",
+        :to      => "kyrylo.shakirov@zorallabs.com",
         :from    => "kyrylo.shakirov@zorallabs.com",
         :subject => "Comment from Contact Us") do |format|
       format.text
       format.html
     end
   end
-  def place_order customer, order
-    @customer = customer
-    @order = order
-    mail(
-        :to      => @customer['email'],
-        :from    => "kyrylo.shakirov@zorallabs.com",
-        :subject => "Order Placement") do |format|
-      format.html
-    end
-  end
+
 end

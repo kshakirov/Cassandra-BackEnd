@@ -7,12 +7,10 @@ class Customer < Sinatra::Base
   use JwtAuth
   use ExceptionHandling
   ActionMailer::Base.smtp_settings = {
-      :address => "smtp.office365.com",
-      :port => '587',
-      :authentication => :login,
-      :enable_starttls_auto => true,
-      :user_name => 'kyrylo.shakirov@zorallabs.com',
-      :password => 'Servantes1',
+      :address => "localhost",
+      :port => '25',
+      :authentication => :nil,
+      :enable_starttls_auto => false,
   }
   ActionMailer::Base.view_paths = 'views/'
 
