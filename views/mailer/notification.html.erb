@@ -1,14 +1,6 @@
-<h3>You have received this email because you requested  <a href="http://store.turbointernational.com">Store TurboInternational</a>
-  account with this email address.<br>If you did not intend to, you can ignore
-  this emai.</h3>
 
-<h4> You are getting access ... </h4>
-<table>
-  <tr>
-    <td>Login: <%=email %><b></b></td>
-  </tr>
-  <tr>
-    <td>Password: <%=password%><b></b></td>
-  </tr>
-</table>
-<h3><a href="http://store.turbointernational.com">Continue to work with Store TurboInternational</a></h3>
+<h3>Message from  <%= @payload['name'] %> with email <%= @payload['email']%></h3>
+
+<p>
+  <%= @payload['comment']%>
+</p>
