@@ -1,5 +1,8 @@
 Message from  <%= @payload['name'] %> with email <%= @payload['email']%>
 
+<% if @payload['telephone'] %>
+      Phone  <%= @payload['telephone'] %>
+<% end %>
 
   <%= @payload['comment']%>
 

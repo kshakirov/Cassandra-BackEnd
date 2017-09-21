@@ -1,6 +1,9 @@
-
-<h3>Message from  <%= @payload['name'] %> with email <%= @payload['email']%></h3>
-
+<h3>Message from  <%= @payload['name'] %>, email <%= @payload['email'] %></h3>
+<% if @payload['telephone'] %>
+    <p>
+      Phone  <%= @payload['telephone'] %>
+    </p>
+<% end %>
 <p>
-  <%= @payload['comment']%>
+  <%= @payload['comment'] %>
 </p>
