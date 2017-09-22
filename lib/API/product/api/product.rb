@@ -73,7 +73,7 @@ module TurboCassandra
         product_hash['created_at'] =@generator.now
         product = TurboCassandra::Model::Product.new product_hash
         product.save
-        product_created_at = TurboCassandra::Model::ProductCreatedAtinsert.new(prepare_product_created_at(product_hash))
+        product_created_at = TurboCassandra::Model::ProductCreatedAt.new(prepare_product_created_at(product_hash))
         product_created_at.save
         product_part_number = TurboCassandra::Model::ProductPartNumber.new(prepare_prod_part_number(product_hash))
         product_part_number.save
