@@ -78,7 +78,7 @@ module TurboCassandra
           rescue Exception => e
             p product
             puts e.message
-            exit
+            #exit
           end
         end
 
