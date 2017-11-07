@@ -272,6 +272,9 @@ namespace :search do
   task :index_application do
     ruby "tools/search/application/application_indexer.rb"
   end
+  task :bulk_index_product do
+    ruby "tools/search/product/product_parallel_indexer.rb"
+  end
 end
 
 namespace :sync do

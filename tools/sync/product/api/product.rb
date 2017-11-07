@@ -75,7 +75,7 @@ module TurboCassandra
               delete_product  product['sku']
           end
           return_operation_result(action, product['sku']) if product
-          rescue Exception => e
+          rescue StandardError => e
             p product
             puts e.message
             #exit
