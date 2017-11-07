@@ -7,12 +7,16 @@ if answer.chop == 'YES'
   puts answer
   product = TurboCassandra::API::Product.new
 
-  (0..78000).to_a.each do |id|
+  (43628..78000).to_a.each do |id|
 
     prd = product.find id
     unless prd.nil?
       puts "Deleting Product [ #{prd.sku}]"
-      product.delete prd.sku
+      begin
+      product.delete prd.sku if prd.sku
+      rescue StandardError => se
+        puts se.message
+      end
     end
   end
 else
