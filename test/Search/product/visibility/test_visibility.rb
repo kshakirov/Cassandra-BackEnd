@@ -25,7 +25,7 @@ class TestVisibility < Minitest::Test
   end
 
   def test_turbo_with_ti_chra
-    product = @product_api.find_by_sku 19191
+    product = @product_api.find_by_sku 6892
     elastiic_product = @product_transformer.run(product)
     assert_equal true, elastiic_product['visible_in_catalog']
   end
