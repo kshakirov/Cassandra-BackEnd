@@ -7,7 +7,7 @@ metadata_port = 4569
 @worker = Worker.pool size: pool_size, args: [metadata_server, metadata_port]
 
 
-(0..790).to_a.each do |time|
+(0..800).to_a.each do |time|
 
   ids = ((time *100 * pool_size)..(time * 100 *pool_size + 100 * pool_size -1)).to_a
   futures = []
