@@ -1,5 +1,6 @@
 class BulkUpdateActive
   include Celluloid
+
   def initialize metadata_server, metadata_server_port=4568
     @part_rest_client = PartRestClient.new metadata_server, metadata_server_port
     @logger = ::Logger.new(STDOUT)
@@ -32,9 +33,13 @@ class BulkUpdateActive
   def run group
     parts = bulk_get_parts group
     parts.each do |part|
-      product = prepare_product_data part
-      @product_api.create product
-      @logger.info "Updated [#{part['sku']}]"
+      begin
+        product = prepare_product_data part
+        @product_api.create product
+        @logger.info "Updated [#{part['sku']}]"
+      rescue StandardError => e
+        @logger.error "Failed Part #{product}"
+      end
     end
   end
 end
