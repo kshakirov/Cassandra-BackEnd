@@ -6,7 +6,7 @@ unless ARGV[0].to_i > 0
 end
 
 pool_size = ARGV[0].to_i
-metadata_server = "timms.turbointernational.com"
+metadata_server = get_metdata_host
 metadata_port = 4569
 
 bulk_deleter = BulkDeleteInactive.new metadata_server, metadata_port
