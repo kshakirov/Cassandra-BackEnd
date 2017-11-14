@@ -287,5 +287,13 @@ namespace :sync do
       puts "Running Update in #{args[:pool_size]} Threads"
       ruby "tools/sync/product/console/product_update_all.rb #{args[:pool_size]}"
     end
+    task :update_specified, [:ids] do |t, args|
+      if args[:ids].nil?
+        puts "No Ids are provided"
+        exit
+      end
+      puts "Running Update of Spefiied products  [#{args[:ids]}]"
+      ruby "tools/sync/product/console/product_update_by_ids.rb #{args[:ids].split(' ').join(',')}"
+    end
   end
 end

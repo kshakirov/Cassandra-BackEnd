@@ -1,4 +1,4 @@
-require_relative 'product_sync_all_header'
+require_relative 'product_update_all_header'
 
 unless ARGV[0].to_i > 0
   puts "Set Workers Number"
