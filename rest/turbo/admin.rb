@@ -238,11 +238,11 @@ class Admin < Sinatra::Base
         request.body.read)
   end
 
-  get '/currency/current' do
+  get '/currency/data_migration' do
     settings.currencyController.all
   end
 
-  post '/currency/current' do
+  post '/currency/data_migration' do
     settings.currencyController.update_all(request.body.read)
   end
 

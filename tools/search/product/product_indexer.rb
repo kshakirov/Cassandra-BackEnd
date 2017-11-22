@@ -23,7 +23,7 @@ until done do
       counter+=1
       paging_state = response[:paging_state]
       done = response[:last]
-    rescue Exception => e
+    rescue StandardError => e
       puts "Problematic Product #{p['sku']}"
       puts e.message
       exit 1

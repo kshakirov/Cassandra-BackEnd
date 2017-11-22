@@ -7,7 +7,7 @@ class Customer < Sinatra::Base
   use JwtAuth
   use ExceptionHandling
   ActionMailer::Base.smtp_settings = {
-      :address => "localhost",
+      :address => "turbo.turbointernational.com",
       :port => '25',
       :authentication => :nil,
       :enable_starttls_auto => false,

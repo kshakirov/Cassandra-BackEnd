@@ -13,8 +13,8 @@ class Mailer < ActionMailer::Base
   def notification payload
     @payload = payload
     mail(
-        :to      => "kyrylo.shakirov@zorallabs.com",
-        :from    => "kyrylo.shakirov@zorallabs.com",
+        :to      => "support@turbointernational.com",
+        :from    => "admin@turbointernational.com",
         :subject => "Comment from Contact Us") do |format|
       format.text
       format.html

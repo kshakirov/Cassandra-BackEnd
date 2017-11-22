@@ -1,7 +1,7 @@
 module TurboCassandra
   module Controller
     module NotExternalManufactures
-      @@not_external_manufacturer = ['I.H.I.']
+      @@not_external_manufacturer = []
 
       def self.is_external_manufacturer manufacturer
         index = @@not_external_manufacturer.find_index(manufacturer)

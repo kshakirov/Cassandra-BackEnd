@@ -13,8 +13,8 @@ namespace :db do
       ruby "tools/schema/currency/update_currencies_2.rb"
     end
     task :attribute do
-       ruby "tools/schema/attribute/update_attributes_1.rb"
-       ruby "tools/schema/attribute/update_attributes_2.rb"
+      ruby "tools/schema/attribute/update_attributes_1.rb"
+      ruby "tools/schema/attribute/update_attributes_2.rb"
       ruby "tools/schema/attribute/update_attributes_3.rb"
     end
     task :attribute_set do
@@ -272,15 +272,28 @@ namespace :search do
   task :index_application do
     ruby "tools/search/application/application_indexer.rb"
   end
+  task :bulk_index_product do
+    ruby "tools/search/product/product_parallel_indexer.rb"
+  end
 end
 
 namespace :sync do
   namespace :product do
-    task :update do
-      ruby "tools/sync/product/console/product_update.rb"
+    task :update, [:pool_size] do |t, args|
+      if args[:pool_size].nil?
+        puts "No Pool Size provided, using Default 4"
+        args[:pool_size] = 4
+      end
+      puts "Running Update in #{args[:pool_size]} Threads"
+      ruby "tools/sync/product/console/product_update_all.rb #{args[:pool_size]}"
     end
-    task :up do
-      ruby "tools/sync/product/console/product_update.rb"
+    task :update_specified, [:ids] do |t, args|
+      if args[:ids].nil?
+        puts "No Ids are provided"
+        exit
+      end
+      puts "Running Update of Spefiied products  [#{args[:ids]}]"
+      ruby "tools/sync/product/console/product_update_by_ids.rb #{args[:ids].split(' ').join(',')}"
     end
   end
 end

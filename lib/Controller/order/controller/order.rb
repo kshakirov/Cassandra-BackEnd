@@ -97,7 +97,7 @@ module TurboCassandra
       end
 
       def get_address_name order, address_type
-        unless order[address_type].nil?
+        unless order['address_type'].nil?
           if order[address_type].key? 'name'
             order[address_type]['name']
           elsif order[address_type].key? 'lastname'
