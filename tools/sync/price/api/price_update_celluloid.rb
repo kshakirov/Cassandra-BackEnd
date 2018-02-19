@@ -56,6 +56,9 @@ module TurboCassandra
             puts "Updated #{counter}  from #{products.size} products"
           end
         end
+        def get_our_products
+          get_all_ti_products
+        end
       end
     end
   end
