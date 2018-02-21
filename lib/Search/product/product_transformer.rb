@@ -85,6 +85,7 @@ module TurboCassandra
 
     def add_part_type skeleton, product
       skeleton["part_type"] = get_part_type(product)
+      skeleton["part_type_name"] = get_part_type_name(product)
     end
 
     def add_price skeleton, product

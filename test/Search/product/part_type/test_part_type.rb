@@ -9,5 +9,6 @@ class TestPartType < Minitest::Test
     p = @product.find_by_sku  43747
     elastic_product = @product_transformer.run p
     assert_equal 4, elastic_product['part_type']
+    assert_equal 'Compressor Wheel', elastic_product['part_type_name']
   end
 end
