@@ -1,13 +1,14 @@
 module TurboCassandra
   module Sync
     module Price
-      class PriceUpdater1
+      class PriceUpdater
         def initialize
-         # @product_model =TurboCassandra::Model::ProductCreatedAt.new
           @price_rest = TurboCassandra::Sync::Price::Rest.new
           @group_price_api = TurboCassandra::API::GroupPrice.new
+          @product_api = TurboCassandra::API::Product.new
           config = TurboCassandra::System::Config.instance
           @scale = config.get_group_price
+          @batch_size = 100
         end
 
         private
@@ -34,27 +35,29 @@ module TurboCassandra
           end
         end
 
-        def process_response paging_state
-          paging_params = {
-              'paging_state' => paging_state,
-              'page_size' => 100
-          }
-          response = TurboCassandra::Model::ProductCreatedAt.paginate  paging_params, manufacturer:"Turbo International"
-          update_product_prices(@price_rest.run response[:results])
-          return response[:last], response[:paging_state]
+        def get_all_ti_products
+          response = @product_api.paginate nil, @batch_size
+          products = response[:results].select {|p| p['manufacturer'] == "Turbo International"}
+          until response[:last] do
+            response = @product_api.paginate response[:paging_state], @batch_size
+            products = products + response[:results].select {|p| p['manufacturer'] == "Turbo International"}
+          end
+          products
         end
 
         public
         def run
+          products = get_all_ti_products
           counter = 0
-          paging_state = nil
-          last_batch = false
-
-          until last_batch do
-            last_batch, paging_state = process_response paging_state
-            counter+=1
-            puts "Processed   [#{counter * 100}] Products"
+          products.each_slice(@batch_size) do |ps_slice|
+            prices = @price_rest.run ps_slice
+            update_product_prices prices
+            counter += ps_slice.size
+            puts "Updated #{counter}  from #{products.size} products"
           end
+        end
+        def get_our_products
+          get_all_ti_products
         end
       end
     end

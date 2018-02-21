@@ -11,5 +11,9 @@ module TurboCassandra
     def get_part_type product
       _get_part_type product
     end
+
+    def get_part_type_name product
+        product['part_type']
+    end
   end
 end

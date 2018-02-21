@@ -272,8 +272,13 @@ namespace :search do
   task :index_application do
     ruby "tools/search/application/application_indexer.rb"
   end
-  task :bulk_index_product do
-    ruby "tools/search/product/product_parallel_indexer.rb"
+  task :bulk_index_product, [:pool_size] do |t,args|
+    if args[:pool_size].nil?
+      puts "No Pool Size provided, using Default 4"
+      args[:pool_size] = 4
+    end
+    puts "Running Update in #{args[:pool_size]} Threads"
+    ruby "tools/search/product/product_parallel_indexer.rb  #{args[:pool_size]}"
   end
 end
 

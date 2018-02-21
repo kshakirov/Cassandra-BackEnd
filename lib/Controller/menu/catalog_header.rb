@@ -15,6 +15,11 @@ module TurboCassandra
                   "type": "string"
               },
               {
+                "name": "TYPE",
+              "code": "part_type_name",
+              "type": "string"
+              },
+              {
                   "name": "Description ",
                   "code": "description",
                   "type": "string"

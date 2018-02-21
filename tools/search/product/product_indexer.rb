@@ -28,5 +28,5 @@ until done do
       puts e.message
       exit 1
     end
-}
-  end
+  }
+end
