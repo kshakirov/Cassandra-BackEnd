@@ -98,7 +98,7 @@ module TurboCassandra
         crit_attrs = attrs.keys.map {|key|
           if product['critical_decimal'].has_key? key
             p = create_critical_item(attrs[key], product['critical_decimal'][key])
-            p['tolerance'] = get_tolerance(key, attrs, product['critical_decimal'])
+            p[:tolerance] = get_tolerance(key, attrs, product['critical_decimal'])
             p
           else
             create_critical_item_non_dec(attrs[key], get_non_critical_value(key, product))
