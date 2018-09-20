@@ -1,14 +1,16 @@
 test:
-  queue_host:  'localhost'
-  elastic_host:  '10.1.3.16'
-  metadata_server: 'localhost'
-  active_directory: '162.249.218.162'
-
-
+   queue_host:  'localhost'
+   elastic_host:  '10.1.3.16'
+   metadata_server:  '192.99.147.128'
+   metadata_port:  8081
+   active_directory: '162.249.218.162'
+   queue_name: 'development_customer_email'
+   stats_queue_name: 'development_stats_queue'
 development:
   queue_host:  'localhost'
   elastic_host:  '10.1.3.16'
-  metadata_server:  'timms.turbointernational.com'
+  metadata_server:  '192.99.147.128'
+  metadata_port:  8081
   active_directory: '162.249.218.162'
   queue_name: 'development_customer_email'
   stats_queue_name: 'development_stats_queue'
@@ -16,7 +18,8 @@ development:
 staging:
    queue_host:  '10.8.0.1'
    elastic_host:  '10.8.0.11'
-   metadata_server: 'timms.turbointernational.com'
+   metadata_server: '192.99.147.128'
+   metadata_port:  8081
    active_directory: '162.249.218.162'
    queue_name: 'staging_customer_email'
    stats_queue_name: 'staging_stats_queue'
@@ -25,6 +28,7 @@ production:
    queue_host:  '10.8.0.1'
    elastic_host:  '10.8.0.11'
    metadata_server: 'timms.turbointernational.com'
+   metadata_port:  8081
    active_directory: '162.249.218.162'
    queue_name: 'customer_email'
    stats_queue_name: 'production_stats_queue'

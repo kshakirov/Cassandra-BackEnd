@@ -47,6 +47,6 @@ class ProductUpdateById
 end
 
 metadata_server = get_metdata_host
-metadata_port = 4569
+metadata_port = get_metdata_port
 updater = ProductUpdateById.new metadata_server, metadata_port
-updater.update  ARGV[0]
+updater.update ARGV[0]

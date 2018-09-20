@@ -32,14 +32,18 @@ class BulkUpdateActive
 
   def run group
     parts = bulk_get_parts group
-    parts.each do |part|
-      begin
-        product = prepare_product_data part
-        @product_api.create product
-        @logger.info "Updated [#{part['sku']}]"
-      rescue StandardError => e
-        @logger.error "Failed Part #{product}"
+    if not parts.nil?
+      parts.each do |part|
+        begin
+          product = prepare_product_data part
+          @product_api.create product
+          @logger.info "Updated [#{part['sku']}]"
+        rescue StandardError => e
+          @logger.error "Failed Part #{product}"
+        end
       end
+    else
+      puts "The response is nil, the group is #{group}"
     end
   end
 end

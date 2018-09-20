@@ -33,6 +33,10 @@ def get_metdata_host
   @config[ENV['TURBO_MODE']]['metadata_server']
 end
 
+def get_metdata_port
+  @config[ENV['TURBO_MODE']]['metadata_port']
+end
+
 def get_index_name
   "turbointernational_#{ENV['TURBO_MODE'].downcase}"
 end

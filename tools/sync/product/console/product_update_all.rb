@@ -7,7 +7,7 @@ end
 
 pool_size = ARGV[0].to_i
 metadata_server = get_metdata_host
-metadata_port = 4569
+metadata_port = get_metdata_port
 
 bulk_deleter = BulkDeleteInactive.new metadata_server, metadata_port
 bulk_updater = BulkUpdateActive.pool size: pool_size, args: [metadata_server, metadata_port]

@@ -10,10 +10,13 @@ class PartRestClient
   private
   def base_query url, payload
     begin
-      tries = 5
-      RestClient.post(url, payload)
+      tries = 1
+      #RestClient.post(url, payload,{content_type: :json, accept: :json})
+      RestClient::Request.execute(:method => :post, :url => url, :timeout => 300, :open_timeout => 300, :payload => payload,
+                                  headers: {content_type: :json, accept: :json})
     rescue StandardError => e
-      if (tries -= 1) > 0
+      #if (tries -= 1) > 0
+      if false
         time_to_sleep = @range.rand(20)
         puts "Failed Payload #{payload}  Attempt [#{tries.to_s}], Sleeping #{time_to_sleep} sec ... "
         sleep time_to_sleep
