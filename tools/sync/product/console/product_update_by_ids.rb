@@ -48,5 +48,8 @@ end
 
 metadata_server = get_metdata_host
 metadata_port = get_metdata_port
+
+p metadata_server
+p metadata_port
 updater = ProductUpdateById.new metadata_server, metadata_port
 updater.update ARGV[0]

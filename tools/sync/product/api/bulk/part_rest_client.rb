@@ -10,7 +10,8 @@ class PartRestClient
   private
   def base_query url, payload
     begin
-      tries = 1
+      tries = 5
+      #p url
       #RestClient.post(url, payload,{content_type: :json, accept: :json})
       RestClient::Request.execute(:method => :post, :url => url, :timeout => 300, :open_timeout => 300, :payload => payload,
                                   headers: {content_type: :json, accept: :json})
